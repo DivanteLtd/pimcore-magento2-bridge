@@ -1,0 +1,38 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  Divante\MagentoIntegrationBundle\EventListener\ObjectListener:
+    tags:
+    - { name: kernel.event_listener, event: pimcore.dataobject.preAdd,     method: onPreUpdate,  priority: 50 }
+    - { name: kernel.event_listener, event: pimcore.dataobject.postAdd,    method: onPostUpdate, priority: 50 }
+    - { name: kernel.event_listener, event: pimcore.dataobject.preUpdate,  method: onPreUpdate,  priority: 50 }
+    - { name: kernel.event_listener, event: pimcore.dataobject.postUpdate, method: onPostUpdate, priority: 50 }
+    - { name: kernel.event_listener, event: pimcore.dataobject.postDelete, method: onPostDelete, priority: 50 }
+
+  Divante\MagentoIntegrationBundle\EventListener\IntegrationConfigurationListener:
+    tags:
+    - { name: kernel.event_listener, event: pimcore.dataobject.preAdd,     method: onPreUpdate,  priority: 40 }
+    - { name: kernel.event_listener, event: pimcore.dataobject.preUpdate,  method: onPreUpdate,  priority: 40 }
+
+  Divante\MagentoIntegrationBundle\EventListener\AssetListener:
+    tags:
+    - { name: kernel.event_listener, event: pimcore.asset.postUpdate, method: onPostAssetUpdate, priority: 50 }
+
+
+  Divante\MagentoIntegrationBundle\EventListener\DeleteObjectEventListener:
+    tags:
+      - { name: kernel.event_listener, event: magento_integration.object.pre-delete, method: hideChildrenElements, priority: 100 }
+      - { name: kernel.event_listener, event: magento_integration.object.pre-delete, method: sendRemoveNotification, priority: 80 }
+      - { name: kernel.event_listener, event: magento_integration.object.pre-delete, method: setObjectDeleteStatus, priority: 90 }
+      - { name: kernel.event_listener, event: magento_integration.object.delete,     method: sendRemoveNotification, priority: 80 }
+
+  Divante\MagentoIntegrationBundle\EventListener\UpdateObjectEventListener:
+    tags:
+    - { name: kernel.event_listener, event: magento_integration.object.pre-update, method: validateObject, priority: 100 }
+    - { name: kernel.event_listener, event: magento_integration.object.pre-update, method: setSendStatus, priority: 90 }
+    - { name: kernel.event_listener, event: magento_integration.object.update, method: sendUpdateNotification, priority: 50 }
+    calls:
+      - [setContainer, ["@service_container"]]

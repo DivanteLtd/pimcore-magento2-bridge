@@ -1,0 +1,13 @@
+product:
+  deleteUrl: '/rest/V1/bridge/catalog/product/delete/'
+  sendUrl: '/rest/V1/bridge/catalog/product/add'
+  payloadAttribute: 'product_id'
+asset:
+  deleteUrl: '/rest/V1/bridge/asset/delete/'
+  sendUrl: '/rest/V1/bridge/asset/add'
+  payloadAttribute: 'asset_id'
+category:
+  deleteUrl: '/rest/V1/bridge/catalog/category/delete/'
+  sendUrl: '/rest/V1/bridge/catalog/category/add'
+  payloadAttribute: 'category_id'
+getStoreViewsUrl: "/rest/V1/store/storeViews"

@@ -1,0 +1,13 @@
+language: php
+php:
+  - 7
+  - 7.1
+  - 7.2
+
+install:
+  - composer install
+  - pear install PHP_CodeSniffer
+  - phpenv rehash
+
+script:
+  - phpcs --standard=PSR2 $(find src/ -name '*.php')

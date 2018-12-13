@@ -1,0 +1,10 @@
+.td-icon[class*="pimcore_icon"] {
+    background-position: left center!important;
+}
+.td-icon {
+    padding-left: 15px;
+}
+
+.mapper-required-field {
+    color: #ff0000;
+}

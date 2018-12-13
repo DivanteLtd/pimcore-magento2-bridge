@@ -1,0 +1,4 @@
+magento_integration_api_rest:
+    resource: "@DivanteMagentoIntegrationBundle/Controller/Rest/"
+    type:     annotation
+    prefix:   /webservice/rest

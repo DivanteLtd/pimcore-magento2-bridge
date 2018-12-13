@@ -1,0 +1,42 @@
+{
+  "name": "magento2-pimcore5-bridge/pimcore5-module-magento2-integration",
+  "type": "pimcore-bundle",
+  "license": "GPL-3.0-or-later",
+  "description": "Integration module allows to integrate Pimcore platform with Magento 2",
+  "keywords": [
+    "pimcore",
+    "pimcore-plugin",
+    "Magento2-integration"
+  ],
+  "homepage": "https://divante.co",
+  "authors": [
+    {
+      "name": "Michał Bolka",
+      "email": "mbolka@divante.pl",
+      "homepage": "https://divante.co",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": ">=7.1",
+    "ext-json": "*",
+    "pimcore/core-version": "^5.2.0",
+    "divanteltd/pimcoredevkit": "dev-master",
+    "divante-ltd/pimcore5-notifications": "dev-master",
+    "coreshop/resource-bundle": "^2.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Divante\\MagentoIntegrationBundle\\": "/src",
+      "Divante\\ObjectMapperBundle\\": "/src"
+    }
+  },
+  "extra": {
+    "pimcore": {
+      "bundles": [
+        "Divante\\MagentoIntegrationBundle\\DivanteMagentoIntegrationBundle",
+        "Divante\\ObjectMapperBundle\\DivanteObjectMapperBundle"
+      ]
+    }
+  }
+}

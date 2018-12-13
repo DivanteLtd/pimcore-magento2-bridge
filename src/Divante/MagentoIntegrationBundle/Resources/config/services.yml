@@ -1,0 +1,81 @@
+imports:
+- { resource: listeners.yml }
+- { resource: requestServices.yml }
+- { resource: operators.yml }
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    Divante\MagentoIntegrationBundle\Service\RestClient:
+      public: true
+
+    Divante\MagentoIntegrationBundle\Service\RestClientBuilder:
+      public: true
+    Divante\MagentoIntegrationBundle\Provider\ClassList:
+      public: true
+
+    Divante\MagentoIntegrationBundle\Service\IntegrationConfigurationService:
+      public: true
+
+    magento2_integration.magento_integrated_object_service:
+      class: Divante\MagentoIntegrationBundle\Service\IntegratedObjectService
+      public: true
+
+    Divante\MagentoIntegrationBundle\Model\Webservice\Service:
+      public: true
+
+
+    Divante\MagentoIntegrationBundle\Service\Product\ProductStatusService:
+      public: true
+      calls:
+        - [setContainer, ["@service_container"]]
+
+    Divante\MagentoIntegrationBundle\Service\Product\ProductService:
+      public: true
+      calls:
+        - [setContainer, ["@service_container"]]
+
+    Divante\MagentoIntegrationBundle\Service\Category\CategoryService:
+      public: true
+      calls:
+        - [setContainer, ["@service_container"]]
+
+    Divante\MagentoIntegrationBundle\Service\Category\CategoryStatusService:
+      public: true
+      calls:
+        - [setContainer, ["@service_container"]]
+
+    Divante\MagentoIntegrationBundle\Resolver\RequestDTOResolver:
+        arguments:
+            - '@validator'
+        tags:
+            - { name: controller.request_value_resolver, priority: 50 }
+
+    Divante\MagentoIntegrationBundle\Controller\:
+        resource: '../../Controller'
+        public: true
+        tags: ['controller.service_arguments']
+
+    Divante\MagentoIntegrationBundle\Migrations\Installer:
+        public: true
+        arguments:
+          $bundle: "@=service('kernel').getBundle('DivanteMagentoIntegrationBundle')"
+
+    Divante\MagentoIntegrationBundle\Event\DeleteEventObjectFactory:
+        public: true
+
+    Divante\MagentoIntegrationBundle\Provider\MagentoRestOutputProvider:
+      public: true
+
+    magento2_integration.storeprovider:
+      class: Divante\MagentoIntegrationBundle\Provider\MagentoStore
+      public: true
+
+    Divante\MagentoIntegrationBundle\Provider\ClassificationStore:
+      public: true
+    Divante\MagentoIntegrationBundle\Provider\MagentoStore:
+      public: true
+

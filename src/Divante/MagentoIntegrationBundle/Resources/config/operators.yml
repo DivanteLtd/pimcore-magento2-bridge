@@ -1,0 +1,12 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  pimcore.data_object.grid_column_config.operator.factory.any_property_getter:
+    class: Pimcore\DataObject\GridColumnConfig\Operator\Factory\DefaultOperatorFactory
+    arguments:
+      $className: Divante\MagentoIntegrationBundle\DataObject\GridColumnConfig\Operator\AnyPropertyGetter
+    tags:
+    - { name: pimcore.data_object.grid_column_config.operator_factory, id: AnyPropertyGetter }
