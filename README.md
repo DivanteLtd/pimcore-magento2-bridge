@@ -16,15 +16,19 @@ Pimcore 5 Module Magento 2 Integration allows you to **integrate your Pimcore pl
 	- [About Authors](#authors)
 	
 ## <a name="description"></a>Description	
-This plugin allows to send all data about products and categories to remote eCommerce systems. 
+This plugin allows to send all data about products and categories to remote eCommerce systems.
+For Magento integration plugin visit [DivanteLtd/magento2-pimcore-bridge](https://github.com/DivanteLtd/magento2-pimcore-bridge) 
 
 
 ## <a name="compability"></a>Compatibility	
-Pimcore >= 5.1
+Pimcore >= 5.2
 
 ## <a name="requirements"></a>Requirements
-DivanteLtd/pimcore-devkit
+[DivanteLtd/pimcore-devkit](https://github.com/DivanteLtd/pimcore-devkit)
 
+[DivanteLtd/pimcore5-notifications](https://github.com/DivanteLtd/pimcore5-notifications)
+
+[coreshop/resource-bundle](https://github.com/coreshop/ResourceBundle)
 
 ## <a name="installing"></a>Installing/Getting started	
 - Install via composer ```composer require magento2-pimcore5-bridge/pimcore5-module-magento2-integration:dev```
