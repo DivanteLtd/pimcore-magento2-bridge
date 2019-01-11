@@ -20,7 +20,7 @@
   "require": {
     "php": ">=7.1",
     "ext-json": "*",
-    "pimcore/core-version": "^5.2.0",
+    "pimcore/core-version": "^5.6.0",
     "divanteltd/pimcoredevkit": "dev-master",
     "divante-ltd/pimcore5-notifications": "dev-master",
     "coreshop/resource-bundle": "^2.0"
