@@ -79,3 +79,5 @@ services:
     Divante\MagentoIntegrationBundle\Provider\MagentoStore:
       public: true
 
+    Divante\MagentoIntegrationBundle\Interfaces\MapperInterface:
+      class: Divante\MagentoIntegrationBundle\Service\MapperService
