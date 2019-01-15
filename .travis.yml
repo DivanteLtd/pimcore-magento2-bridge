@@ -5,7 +5,7 @@ php:
   - 7.2
 
 install:
-  - COMPOSER_MEMORY_LIMIT=-1 composer install
+  - COMPOSER_MEMORY_LIMIT=-1 travis_retry composer install
   - pear install PHP_CodeSniffer
   - phpenv rehash
 
