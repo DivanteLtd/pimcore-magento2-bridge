@@ -31,7 +31,7 @@ Pimcore >= 5.2
 [coreshop/resource-bundle](https://github.com/coreshop/ResourceBundle)
 
 ## <a name="installing"></a>Installing/Getting started	
-- Install via composer ```composer require magento2-pimcore5-bridge/pimcore5-module-magento2-integration:dev```
+- Install via composer ```composer require divante-ltd/pimcore-magento2-bridge:dev```
 - Enable Bundles by running ```bin/console pimcore:bundle:enable DivanteMagentoIntegrationBundle```
 - ```bin/console pimcore:bundle:enable DivanteObjectMapperBundle```
 - Clear cache by running ```bin/console cache:clear --no-warmup```

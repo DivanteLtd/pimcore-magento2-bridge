@@ -1,5 +1,5 @@
 {
-  "name": "magento2-pimcore5-bridge/pimcore5-module-magento2-integration",
+  "name": "divante-ltd/pimcore-magento2-bridge",
   "type": "pimcore-bundle",
   "license": "GPL-3.0-or-later",
   "description": "Integration module allows to integrate Pimcore platform with Magento 2",
@@ -21,8 +21,8 @@
     "php": ">=7.1",
     "ext-json": "*",
     "pimcore/core-version": "^5.2.0",
-    "divanteltd/pimcoredevkit": "dev-master",
-    "divante-ltd/pimcore5-notifications": "dev-master",
+    "divanteltd/pimcoredevkit": "^0.7.4",
+    "divante-ltd/pimcore5-notifications": "^1.1.3",
     "coreshop/resource-bundle": "^2.0"
   },
   "autoload": {
