@@ -20,11 +20,17 @@ class MapperHelper
     const TEXT_AREA_TYPES = ['textarea'];
     const WYSIWYG_TYPES   = ['wysiwyg'];
     const DATE_TYPES = ['date', 'datetime', 'time'];
-    const BOOL_TYPES = ['booleanSelect'];
+    const BOOL_TYPES = ['booleanSelect', 'checkbox'];
     const SELECT_TYPES = ['select'];
     const QUANTITY_VALUE_TYPES = ['inputQuantityValue', 'quantityValue'];
-    const OBJECT_TYPES = ['href', 'image'];
-    const MULTI_OBJECT_TYPES = ['multihref', 'imageGallery', 'objects'];
+    const OBJECT_TYPES = ['href', 'image', 'manyToOneRelation', 'manyToOneObjectRelation'];
+    const MULTI_OBJECT_TYPES = [
+        'multihref',
+        'imageGallery',
+        'objects',
+        'manyToManyRelation',
+        'manyToManyObjectRelation'
+    ];
     const STRUCTURED_TYPES = ['localizedfields'];
     const USER_TYPES = ['user'];
     const IMAGE_TYPES = ['image', 'imageGallery'];
