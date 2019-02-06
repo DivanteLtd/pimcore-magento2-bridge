@@ -13,7 +13,7 @@ use Pimcore\Model\DataObject\ClassDefinition\Data;
 use Pimcore\Model\DataObject\ClassDefinition\DynamicOptionsProvider\SelectOptionsProviderInterface;
 use Pimcore\Model\DataObject\IntegrationConfiguration;
 
-use Divante\MagentoIntegrationBundle\Service\RestClient\RestClient;
+use Divante\MagentoIntegrationBundle\Service\RestClient;
 use Psr\Container\NotFoundExceptionInterface;
 
 /**
