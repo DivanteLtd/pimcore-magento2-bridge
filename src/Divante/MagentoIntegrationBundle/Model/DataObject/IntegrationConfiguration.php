@@ -31,6 +31,8 @@ abstract class IntegrationConfiguration extends Concrete implements IntegrationC
     /** @var mixed */
     protected $clientSecret;
 
+    protected $magentoStore;
+
     /**
      * @return mixed
      */
@@ -132,5 +134,13 @@ abstract class IntegrationConfiguration extends Concrete implements IntegrationC
             $parent = $parent->getParent();
         }
         return true;
+    }
+
+    /**
+     * @return int
+     */
+    public function getMagentoStore()
+    {
+        return $this->magentoStore;
     }
 }

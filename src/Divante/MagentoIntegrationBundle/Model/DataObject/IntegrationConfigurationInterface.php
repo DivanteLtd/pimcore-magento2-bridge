@@ -57,4 +57,7 @@ interface IntegrationConfigurationInterface
      * @return bool
      */
     public function areParentsPublished(Concrete $object): bool;
+
+    /** @return int */
+    public function getMagentoStore();
 }
