@@ -285,6 +285,7 @@ class RestClient
                         "Could not get stores list from "
                         . $this->getUrl($this->provider->getStoreViewsEndpointUrl())
                     );
+                    return [];
                 });
             $value = $promise->wait();
             return $value;
@@ -293,6 +294,7 @@ class RestClient
                 "Could not get stores list from "
                 . $this->getUrl($this->provider->getStoreViewsEndpointUrl())
             );
+            return [];
         }
     }
 }
