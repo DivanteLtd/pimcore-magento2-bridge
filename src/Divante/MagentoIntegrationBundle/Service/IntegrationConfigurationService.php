@@ -70,7 +70,7 @@ class IntegrationConfigurationService
     public function getConfigurations(
         DataObject\AbstractObject $object,
         string $instanceUrl = null,
-        int $storeView = 0
+        $storeView = 0
     ): array {
         $conditionData = $this->getConfigurationConditions($object, $instanceUrl, $storeView);
         try {

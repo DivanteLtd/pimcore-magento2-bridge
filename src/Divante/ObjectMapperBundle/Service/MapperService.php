@@ -8,6 +8,7 @@
 
 namespace Divante\ObjectMapperBundle\Service;
 
+use Divante\MagentoIntegrationBundle\Helper\IntegrationHelper;
 use Divante\MagentoIntegrationBundle\Model\DataObject\IntegrationConfiguration;
 use Pimcore\Cache\Core\Exception\InvalidArgumentException;
 use Pimcore\Model\DataObject;

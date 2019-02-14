@@ -103,7 +103,7 @@ class ProductService extends AbstractObjectService
                 return $elem->getId();
             },
             $element->getChildren([
-                DataObject\AbstractObject::OBJECT_TYPE_VARIANT
+                DataObject\AbstractObject::OBJECT_TYPE_OBJECT
             ])
         );
     }
@@ -119,7 +119,10 @@ class ProductService extends AbstractObjectService
         $this->getMapper()->loadSelectFieldData($out, $object);
 
         $mappedObject = $this->getMapper()->map($out, $configuration, IntegrationHelper::OBJECT_TYPE_PRODUCT);
-        if ($object->hasProperty('configurable_attributes') && !(get_class($object->getParent()) == get_class($object))) {
+        if (
+            $object->hasProperty('configurable_attributes')
+            && !(get_class($object->getParent()) == get_class($object))
+        ) {
             $mappedObject->type = IntegrationHelper::PRODUCT_TYPE_CONFIGURABLE;
             $this->mapper->enrichConfigurableProduct(
                 $mappedObject,

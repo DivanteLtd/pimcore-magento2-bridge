@@ -48,8 +48,9 @@ class MapMultiSelectValue extends MapTextValue
     /**
      * @param Element $field
      * @param         $language
+     * @return array
      */
-    protected function getFieldValues(Element $field, $language): void
+    protected function getFieldValues(Element $field, $language)
     {
         $values = [];
         foreach ($field->value as $value) {
@@ -59,5 +60,6 @@ class MapMultiSelectValue extends MapTextValue
                     'value' => $value['value']
                 ];
         }
+        return $values;
     }
 }

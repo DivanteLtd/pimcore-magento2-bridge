@@ -137,16 +137,14 @@ class UpdateObjectEventListener implements ContainerAwareInterface
         }
         AbstractObject::setHideUnpublished(true);
         $children = $element->getChildren(
-            [AbstractObject::OBJECT_TYPE_VARIANT]
+            [AbstractObject::OBJECT_TYPE_OBJECT]
         );
         if (count($children) > 0 && !$element->hasProperty(IntegrationHelper::PRODUCT_TYPE_CONFIGURABLE_ATTRIBUTE)) {
             throw new ValidationException(
                 "Configurable product cannot be published without specified configurable attribute. Add property: "
                 . IntegrationHelper::PRODUCT_TYPE_CONFIGURABLE_ATTRIBUTE . "."
             );
-        } elseif ($element->getParent() instanceof DataObject\Concrete
-            && $element->getType() == AbstractObject::OBJECT_TYPE_VARIANT
-        ) {
+        } elseif ($element->getParent() instanceof DataObject\Concrete) {
             if ($element->getParent()->isPublished() == false) {
                 throw new ValidationException(
                     "To publish a variant its parent must be published."
