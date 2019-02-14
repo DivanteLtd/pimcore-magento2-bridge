@@ -197,7 +197,7 @@ class RestClient
     {
         $payload     = [
             $this->provider->getAssetConfig()->getPayloadAttribute() => $asset->getId(),
-            'store_view_id'                => IntegrationHelper::DEFAULT_MAGENTO_STORE
+            'store_view_id'                => $this->configuration->getMagentoStore()
         ];
         $encodedData = json_encode(['data' => $payload], JSON_FORCE_OBJECT);
         try {
@@ -220,7 +220,7 @@ class RestClient
     {
         $payload     = [
              $config->getPayloadAttribute() => $object->getId(),
-            'store_view_id' => IntegrationHelper::DEFAULT_MAGENTO_STORE
+            'store_view_id' => $this->configuration->getMagentoStore()
         ];
 
         $encodedData = json_encode(['data' => $payload], JSON_FORCE_OBJECT);

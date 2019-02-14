@@ -56,7 +56,7 @@ class MapMultiObjectValue extends AbstractMapStrategy
             if (in_array($field->type, MapperHelper::IMAGE_TYPES)) {
                 $values[] = array('id' => $element['image__image']);
             } else {
-                $values['value'][] = $element;
+                $values[] = $element;
             }
         }
         return $values;
