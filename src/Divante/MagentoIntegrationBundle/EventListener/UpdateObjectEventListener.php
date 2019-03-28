@@ -137,7 +137,7 @@ class UpdateObjectEventListener implements ContainerAwareInterface
         }
         AbstractObject::setHideUnpublished(true);
         $children = $element->getChildren(
-            [AbstractObject::OBJECT_TYPE_OBJECT]
+            [AbstractObject::OBJECT_TYPE_OBJECT, AbstractObject::OBJECT_TYPE_VARIANT]
         );
         if (count($children) > 0 && !$element->hasProperty(IntegrationHelper::PRODUCT_TYPE_CONFIGURABLE_ATTRIBUTE)) {
             throw new ValidationException(

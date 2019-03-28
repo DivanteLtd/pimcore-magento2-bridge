@@ -48,7 +48,7 @@ class MapObjectValue extends AbstractMapStrategy
     {
         if ($field->value) {
             if (in_array($field->type, MapperHelper::IMAGE_TYPES)) {
-                return ['id' =>  $field->value];
+                return ['id' =>  $field->value, 'type' => 'asset'];
             } else {
                 return $field->value;
             }

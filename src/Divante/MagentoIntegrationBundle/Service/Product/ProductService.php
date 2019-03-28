@@ -103,7 +103,8 @@ class ProductService extends AbstractObjectService
                 return $elem->getId();
             },
             $element->getChildren([
-                DataObject\AbstractObject::OBJECT_TYPE_OBJECT
+                DataObject\AbstractObject::OBJECT_TYPE_OBJECT,
+                DataObject\AbstractObject::OBJECT_TYPE_VARIANT
             ])
         );
     }
