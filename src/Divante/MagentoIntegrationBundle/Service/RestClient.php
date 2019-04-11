@@ -288,7 +288,7 @@ class RestClient
                     return [];
                 });
             $value = $promise->wait();
-            return $value;
+            return is_array($value) ? $value : [];
         } catch (Throwable $throwable) {
             $this->logError(
                 "Could not get stores list from "
