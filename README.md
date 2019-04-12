@@ -83,7 +83,7 @@ Before getting started, please install: [DivanteLtd/pimcore-devkit](https://gith
 If you'd like to contribute, please fork the repository and use a feature branch. Pull requests are warmly welcome.
 
 ## <a name="licensing"></a>Licensing
-The code in this project is licensed under the MIT license.
+The code in this project is licensed under the GPL license.
 
 ## <a name="standards"></a>Standards & Code Quality
 This module respects PSR-2 code quality rules and our own PHPCS and PHPMD rulesets.
