@@ -34,7 +34,7 @@ class IntegrationConfigurationService
             throw new \Exception(
                 sprintf(
                     '[ERROR] Missing configuration for object: %d, instanceUrl:%s, store view: %d.',
-                    $object->getId().
+                    $object->getId(),
                     $instanceUrl,
                     $storeView
                 )
