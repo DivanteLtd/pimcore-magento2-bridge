@@ -15,6 +15,7 @@ use Divante\MagentoIntegrationBundle\Helper\IntegrationHelper;
 use Divante\MagentoIntegrationBundle\Interfaces\MapperInterface;
 use Divante\MagentoIntegrationBundle\Model\Request\GetObject;
 use Divante\MagentoIntegrationBundle\Service\AbstractObjectService;
+use Pimcore\Log\Simple;
 use Pimcore\Model\DataObject\Concrete;
 use Divante\MagentoIntegrationBundle\Model\DataObject\IntegrationConfiguration;
 
@@ -41,6 +42,7 @@ class CategoryService extends AbstractObjectService
                 $configuration = $this->getConfigurationForObject($object, $request);
                 $mappedObjects[$object->getId()] = $this->getMappedObject($object, $configuration);
             } catch (\Exception $exception) {
+                Simple::log('magento2-connector/category-integration', $exception->getMessage());
                 $missingData[$object->getId()] = $this->getLoggedErrorMessage($exception->getMessage());
             }
         }
@@ -63,9 +65,14 @@ class CategoryService extends AbstractObjectService
         $this->checkObjectPermission($object);
         $configuration = $this->getConfigurationForObject($object, $request);
         if ($configuration->getConnectionType($object) !== IntegrationHelper::IS_CATEGORY) {
-            throw new \Exception(
-                sprintf('User has requested object: %d as a category, but it is not configured.', $object->getId())
+            $msg = sprintf(
+                'Object with id: %d was requested as a category,'
+                . 'but was not configured for instance %s and store view %d',
+                $request->id,
+                $request->instaceUrl,
+                $request->storeViewId
             );
+            throw new \Exception($msg);
         }
     }
 

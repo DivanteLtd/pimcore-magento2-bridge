@@ -22,8 +22,8 @@
     "ext-json": "*",
     "pimcore/core-version": "^5.2.0",
     "divanteltd/pimcoredevkit": "^0.7.4",
-    "divante-ltd/pimcore5-notifications": "^1.1.3",
-    "coreshop/resource-bundle": "^2.0"
+    "coreshop/resource-bundle": "^2.0",
+    "divante-ltd/pimcore-magento2-bridge": "dev-master"
   },
   "autoload": {
     "psr-4": {

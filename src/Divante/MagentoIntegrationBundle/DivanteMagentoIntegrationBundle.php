@@ -9,7 +9,6 @@
 namespace Divante\MagentoIntegrationBundle;
 
 use Divante\MagentoIntegrationBundle\Migrations\Installer;
-use Divante\MagentoIntegrationBundle\Service\RestClient\MagentoRestClient\RequestHelperFactoryCompiler;
 use Pimcore\Extension\Bundle\AbstractPimcoreBundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 

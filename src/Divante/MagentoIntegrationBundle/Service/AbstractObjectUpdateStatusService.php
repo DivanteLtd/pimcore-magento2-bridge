@@ -13,6 +13,7 @@ use Divante\MagentoIntegrationBundle\Helper\IntegrationHelper;
 use Divante\MagentoIntegrationBundle\Model\DataObject\IntegrationConfiguration;
 use Divante\MagentoIntegrationBundle\Model\Request\AbstractObjectRequest;
 use Divante\MagentoIntegrationBundle\Model\Request\UpdateStatus;
+use Pimcore\Log\Simple;
 use Pimcore\Model\DataObject\Concrete;
 
 /**
@@ -64,6 +65,7 @@ abstract class AbstractObjectUpdateStatusService extends AbstractObjectService
             }
             $this->processObject($object, $updateStatus);
         } catch (\Exception $exception) {
+            Simple::log('magento2-connector/product-staus-update', $exception->getMessage());
             return $this->getLoggedNotFoundResponse($updateStatus);
         }
         return $this->getOkResponse();

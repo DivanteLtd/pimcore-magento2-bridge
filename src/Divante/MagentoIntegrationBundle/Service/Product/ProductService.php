@@ -18,6 +18,7 @@ use Divante\MagentoIntegrationBundle\Model\Request\GetObject;
 use Divante\MagentoIntegrationBundle\Model\Webservice\Data\DataObject\Concrete\Out;
 use Divante\MagentoIntegrationBundle\Service\AbstractObjectService;
 use Pimcore\Model\DataObject;
+use Pimcore\Model\DataObject\Concrete;
 
 /**
  * Class ProductService
@@ -49,7 +50,7 @@ class ProductService extends AbstractObjectService
             }
         }
         if (!$mappedObjects) {
-            return $this->getLoggedNotFoundResponse($request);
+            return $this->getNotFoundResponse($request);
         }
         $data = ['data' => $mappedObjects, 'missing_objects' => $missingData, 'success' => true];
         return $data;
@@ -57,22 +58,15 @@ class ProductService extends AbstractObjectService
 
     /**
      * @param DataObject\Concrete   $object
-     * @param AbstractObjectRequest $request
+     * @param GetObject $request
      * @return array|\stdClass
      * @throws \Exception
      */
     protected function processObject(DataObject\Concrete $object, AbstractObjectRequest $request)
     {
-        $this->checkObjectPermission($object);
+        $this->validateObject($object, $request);
         $configuration = $this->getConfigurationForObject($object, $request);
 
-        /** @var DataObject\IntegrationConfiguration $configuration */
-        if (!($configuration->getConnectionType($object) === IntegrationHelper::IS_PRODUCT)) {
-            $this->getLoggedErrorMessage(
-                sprintf('User has requested object: %d as a product, but it is not configured.', $object->getId())
-            );
-            throw new \Exception($this->getNotFoundMessage($object->getId()));
-        }
         $this->eventDispatcher->dispatch(Type::PRE_PRODUCT_MAP, new IntegratedObjectEvent($object));
 
         /** @var Out $out */
@@ -88,6 +82,27 @@ class ProductService extends AbstractObjectService
         );
 
         return $mappedObject;
+    }
+
+    /**
+     * @param Concrete  $object
+     * @param GetObject $request
+     * @throws \Exception
+     */
+    protected function validateObject(Concrete $object, GetObject $request)
+    {
+        $this->checkObjectPermission($object);
+        $configuration = $this->getConfigurationForObject($object, $request);
+        if ($configuration->getConnectionType($object) !== IntegrationHelper::IS_PRODUCT) {
+            $msg = sprintf(
+                'Object with id: %d was requested as a product,'
+                . 'but was not configured for instance %s and store view %d',
+                $request->id,
+                $request->instaceUrl,
+                $request->storeViewId
+            );
+            throw new \Exception($msg);
+        }
     }
 
 

@@ -15,6 +15,7 @@ use Divante\MagentoIntegrationBundle\Model\Request\AbstractObjectRequest;
 use Divante\MagentoIntegrationBundle\Model\Request\UpdateStatus;
 use Pimcore\Bundle\AdminBundle\Security\User\TokenStorageUserResolver;
 use Pimcore\Log\ApplicationLogger;
+use Pimcore\Log\Simple;
 use Pimcore\Model\DataObject;
 use Pimcore\Model\Element\AbstractElement;
 use Pimcore\Model\Element\Note;
@@ -148,7 +149,7 @@ abstract class AbstractObjectService implements ContainerAwareInterface
      * @param string $msg
      * @return string
      */
-    protected function getLoggedErrorMessage(string $msg): string
+    public function getLoggedErrorMessage(string $msg): string
     {
         $this->getLogger()->error($msg);
         return $msg;
@@ -156,13 +157,16 @@ abstract class AbstractObjectService implements ContainerAwareInterface
 
     /**
      * @param AbstractObjectRequest $objectRequest
-     * @param null                  $id
+     * @param string                $type
      * @return array
      */
-    protected function getLoggedNotFoundResponse(AbstractObjectRequest $objectRequest, $id = null): array
-    {
-        $data = $this->getNotFoundResponse($objectRequest, $id);
+    protected function getLoggedNotFoundResponse(
+        AbstractObjectRequest $objectRequest,
+        $type = 'product'
+    ): array {
+        $data = $this->getNotFoundResponse($objectRequest, $objectRequest->id);
         $this->getLogger()->error($data['msg']);
+        Simple::log(sprintf('connector/%s-integration', $type), $data['msg']);
         return $data;
     }
 
