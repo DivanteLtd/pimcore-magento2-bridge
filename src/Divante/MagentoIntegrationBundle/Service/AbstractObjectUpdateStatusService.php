@@ -82,7 +82,14 @@ abstract class AbstractObjectUpdateStatusService extends AbstractObjectService
         $configuration = $this->getConfigurationForObject($object, $request);
         $isinObjectTree = ($configuration->getConnectionType($object) == static::OBJECT_TYPE);
         if (!($object->getClassId() == $this->getObjectClass($configuration)) || !$isinObjectTree) {
-            throw new \Exception('No configuration was found for this object.');
+            throw new \Exception(
+                sprintf(
+                    '[ERROR] Missing configuration for object: %d, instanceUrl:%s, store view: %d.',
+                    $request->id,
+                    $request->instaceUrl,
+                    $request->storeViewId
+                )
+            );
         }
         $this->removeListeners();
         $object->setProperty(IntegrationHelper::SYNC_PROPERTY_NAME, 'text', $request->status);
