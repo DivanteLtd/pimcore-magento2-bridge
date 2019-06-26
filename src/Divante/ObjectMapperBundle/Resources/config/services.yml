@@ -9,10 +9,11 @@ services:
         # if you need to do this, you can override this setting on individual services
         public: false
 
-    Divante\ObjectMapperBundle\Service\MapperService:
+    Divante\ObjectMapperBundle\Service\MapperServiceInterface:
       public: true
 
-    Divante\ObjectMapperBundle\Mapper\MapperContext:
+    Divante\ObjectMapperBundle\Mapper\MapperContextInterface:
+      class: Divante\ObjectMapperBundle\Mapper\MapperContext
 
     Divante\ObjectMapperBundle\Mapper\Strategy\MapBoolValue:
       tags:
