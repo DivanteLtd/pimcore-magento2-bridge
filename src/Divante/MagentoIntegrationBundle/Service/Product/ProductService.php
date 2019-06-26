@@ -12,7 +12,6 @@ use Divante\MagentoIntegrationBundle\Event\Model\IntegratedMappedObjectEvent;
 use Divante\MagentoIntegrationBundle\Event\Model\IntegratedObjectEvent;
 use Divante\MagentoIntegrationBundle\Event\Type;
 use Divante\MagentoIntegrationBundle\Helper\IntegrationHelper;
-use Divante\MagentoIntegrationBundle\Interfaces\MapperInterface;
 use Divante\MagentoIntegrationBundle\Model\Request\AbstractObjectRequest;
 use Divante\MagentoIntegrationBundle\Model\Request\GetObject;
 use Divante\MagentoIntegrationBundle\Model\Webservice\Data\DataObject\Concrete\Out;
