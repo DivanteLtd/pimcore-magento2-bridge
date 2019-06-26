@@ -8,11 +8,10 @@
 
 namespace Divante\ObjectMapperBundle\Mapper\Strategy;
 
-use Divante\ObjectMapperBundle\Mapper\Strategy\AbstractMapStrategy;
+use Divante\ObjectMapperBundle\Mapper\MapperContextInterface;
 use Pimcore\Model\DataObject\Objectbrick;
 use Pimcore\Model\Webservice\Data\DataObject\Element;
 use Divante\ObjectMapperBundle\Helper\MapperHelper;
-use Divante\ObjectMapperBundle\Mapper\MapperContext;
 use Symfony\Component\Translation\TranslatorInterface;
 
 /**
@@ -23,15 +22,15 @@ class MapObjectBricks extends AbstractMapStrategy
 {
     const TYPE = MapperHelper::OBJECT_BRICKS_TYPE;
     const ALLOWED_TYPES_ARRAY = MapperHelper::OBJECT_BRICKS_TYPES;
-    /** @var MapperContext */
+    /** @var MapperContextInterface */
     protected $mapperContext;
 
     /**
      * MapLocalizedValue constructor.
-     * @param MapperContext       $mapperContext
-     * @param TranslatorInterface $translator
+     * @param MapperContextInterface $mapperContext
+     * @param TranslatorInterface    $translator
      */
-    public function __construct(MapperContext $mapperContext, TranslatorInterface $translator)
+    public function __construct(MapperContextInterface $mapperContext, TranslatorInterface $translator)
     {
         $this->mapperContext = $mapperContext;
         parent::__construct($translator);

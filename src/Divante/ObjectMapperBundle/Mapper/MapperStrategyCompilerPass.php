@@ -24,7 +24,7 @@ class MapperStrategyCompilerPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container): void
     {
-        $contextDefinition  = $container->findDefinition(MapperContext::class);
+        $contextDefinition  = $container->findDefinition(MapperContextInterface::class);
         $strategyServiceIds = array_keys(
             $container->findTaggedServiceIds('object_mapper.mapStrategy')
         );

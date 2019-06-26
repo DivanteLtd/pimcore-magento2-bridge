@@ -13,7 +13,6 @@ use Pimcore\Model\DataObject\ClassDefinition;
 use Pimcore\Model\Webservice\Data\DataObject\Element;
 
 use Divante\ObjectMapperBundle\Helper\MapperHelper;
-use Divante\ObjectMapperBundle\Mapper\MapperContext;
 use Symfony\Component\Translation\TranslatorInterface;
 
 /**
@@ -24,7 +23,7 @@ class MapStructuredValue extends AbstractMapStrategy
 {
     const ALLOWED_TYPES_ARRAY = MapperHelper::STRUCTURED_TYPES;
 
-    /** @var MapperContext */
+    /** @var MapperContextInterface */
     protected $mapperContext;
 
     /**
