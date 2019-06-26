@@ -41,7 +41,7 @@ class RequestDTOResolver implements ArgumentValueResolverInterface
      */
     public function supports(Request $request, ArgumentMetadata $argument)
     {
-        if (!$argument->getType()) {
+        if (!$argument->getType() || !class_exists($argument->getType())) {
             return false;
         }
         $reflection = new \ReflectionClass($argument->getType());
