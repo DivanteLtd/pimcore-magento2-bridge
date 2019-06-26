@@ -11,6 +11,7 @@ use Divante\MagentoIntegrationBundle\EventListener\AssetListener;
 use Divante\MagentoIntegrationBundle\Helper\IntegrationHelper;
 use Divante\MagentoIntegrationBundle\Model\Request\UpdateStatus;
 use Divante\MagentoIntegrationBundle\Service\AbstractObjectService;
+use Pimcore\Log\Simple;
 use Pimcore\Model\Asset;
 
 /**
@@ -20,38 +21,21 @@ use Pimcore\Model\Asset;
 class AssetStatusService extends AbstractObjectService
 {
     /**
+     * @param Asset        $asset
      * @param UpdateStatus $request
-     * @return mixed
+     * @throws \Exception
      */
-    public function handleRequest(UpdateStatus $request)
+    public function updateStatus(Asset $asset, UpdateStatus $request)
     {
-        try {
-            $asset = $this->loadAsset($request->id);
-            $this->checkObjectPermission($asset);
-            $this->removeListeners();
-            $asset->setProperty(IntegrationHelper::SYNC_PROPERTY_NAME, 'text', $request->status);
-            $this->logSyncStatus($asset, $request);
-            $asset->save();
-        } catch (\Exception $exception) {
-            return $this->getLoggedErrorMessage($exception->getMessage());
-        }
-        return $this->getOkResponse();
+        $this->removeListeners();
+        $asset->setProperty(IntegrationHelper::SYNC_PROPERTY_NAME, 'text', $request->status);
+        $this->logSyncStatus($asset, $request);
+        $asset->save();
     }
 
     /**
-     * @param int $id
-     * @return Asset
-     * @throws \Exception
+     * @return void
      */
-    protected function loadAsset(int $id): Asset
-    {
-        $asset = Asset::getById($id);
-        if (!$asset instanceof Asset) {
-            throw new \Exception(sprintf('Requested asset with id %d does not exists.', $id));
-        }
-        return $asset;
-    }
-
     protected function removeListeners(): void
     {
         $integrationListeners = $this->container->get(AssetListener::class);
