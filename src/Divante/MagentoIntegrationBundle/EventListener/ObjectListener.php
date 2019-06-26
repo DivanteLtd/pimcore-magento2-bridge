@@ -10,9 +10,11 @@ namespace Divante\MagentoIntegrationBundle\EventListener;
 
 use Divante\MagentoIntegrationBundle\Event\IntegratedObjectEventFactory;
 use Divante\MagentoIntegrationBundle\Helper\IntegrationHelper;
+use Divante\MagentoIntegrationBundle\Model\DataObject\IntegrationConfiguration;
 use Divante\MagentoIntegrationBundle\Service\IntegrationConfigurationService;
 
 use Pimcore\Event\Model\DataObjectEvent;
+use Pimcore\Log\Simple;
 use Pimcore\Model\DataObject;
 use Pimcore\Model\DataObject\AbstractObject;
 use Pimcore\Model\Element\ValidationException;
@@ -95,19 +97,28 @@ class ObjectListener
             || !$object->isPublished()) {
             return;
         }
-        try {
+
             $configurationListing = $this->integrationService->getConfigurations($object);
+            /** @var IntegrationConfiguration $configuration */
             foreach ($configurationListing as $configuration) {
-                $eventObject = $this->eventObjectFactory->createEvent(
-                    $object,
-                    $configuration,
-                    IntegratedObjectEventFactory::UPDATE_EVENT_TYPE
-                );
-                $this->eventDispatcher->dispatch(IntegrationHelper::INTEGRATED_OBJECT_UPADTE_EVENT_NAME, $eventObject);
+                try {
+                    $eventObject = $this->eventObjectFactory->createEvent(
+                        $object,
+                        $configuration,
+                        IntegratedObjectEventFactory::UPDATE_EVENT_TYPE
+                    );
+                    $this->eventDispatcher->dispatch(IntegrationHelper::INTEGRATED_OBJECT_UPADTE_EVENT_NAME, $eventObject);
+                } catch (\Exception $exception) {
+                    if ($configuration->getConnectionType($object) == IntegrationHelper::IS_PRODUCT) {
+                        $type = 'product';
+                    } else {
+                        $type = 'category';
+                    }
+                    Simple::log(sprintf('magento2-connector/%s-integration', $type), $exception->getMessage());
+                    throw new ValidationException('Could not send this object into remote service');
+                }
             }
-        } catch (\Exception $exception) {
-            throw new ValidationException('Could not send this object into remote service');
-        }
+
     }
 
     /**

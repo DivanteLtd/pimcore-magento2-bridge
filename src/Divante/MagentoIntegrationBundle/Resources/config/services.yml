@@ -20,8 +20,7 @@ services:
     Divante\MagentoIntegrationBundle\Service\IntegrationConfigurationService:
       public: true
 
-    magento2_integration.magento_integrated_object_service:
-      class: Divante\MagentoIntegrationBundle\Service\IntegratedObjectService
+    Divante\MagentoIntegrationBundle\Service\IntegratedObjectService:
       public: true
 
     Divante\MagentoIntegrationBundle\Model\Webservice\Service:
@@ -67,9 +66,11 @@ services:
     Divante\MagentoIntegrationBundle\Event\DeleteEventObjectFactory:
         public: true
 
-    Divante\MagentoIntegrationBundle\Provider\MagentoRestOutputProvider:
-      public: true
-
+    Divante\MagentoIntegrationBundle\Provider\RestOutputProviderInterface:
+        class: Divante\MagentoIntegrationBundle\Provider\MagentoRestOutputProvider
+        public: true
+        arguments:
+          - "@file_locator" 
     magento2_integration.storeprovider:
       class: Divante\MagentoIntegrationBundle\Provider\MagentoStore
       public: true
@@ -78,3 +79,5 @@ services:
       public: true
     Divante\MagentoIntegrationBundle\Provider\MagentoStore:
       public: true
+
+    Divante\MagentoIntegrationBundle\Event\IntegratedObjectEventFactory: ~

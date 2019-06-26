@@ -8,14 +8,13 @@
 
 namespace Divante\MagentoIntegrationBundle\Service;
 
-use Divante\MagentoIntegrationBundle\Helper\IntegrationHelper;
 use Divante\MagentoIntegrationBundle\Model\Configuration\EndpointConfig;
 use Divante\MagentoIntegrationBundle\Model\DataObject\IntegrationConfiguration;
 use Divante\MagentoIntegrationBundle\Provider\RestOutputProviderInterface;
-use Divante\NotificationsBundle\Model\Notification;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
 use Pimcore\Log\ApplicationLogger;
+use Pimcore\Log\Simple;
 use Pimcore\Model\Asset;
 use Pimcore\Model\DataObject\Concrete;
 use Pimcore\Model\Element\AbstractElement;
@@ -181,11 +180,15 @@ class RestClient
             $promise = $this->client->sendAsync($this->getDeleteRequest($object->getId(), $config))
                 ->then(function ($response) use ($object) {
                     if ($response->getStatusCode() > 204) {
+                        Simple::log('magento2-connector/rest-client',
+                            "Could not send data to remote service. Response: " . $response->getBody()
+                        );
                         $this->logError("Could not send data to remote service.", $object);
                     }
                 });
             $promise->wait();
         } catch (Throwable $throwable) {
+            Simple::log('magento2-connector/rest-client', $throwable->getMessage());
             $this->logError("Could not send data to remote service.", $object, $throwable);
         }
     }
@@ -204,11 +207,15 @@ class RestClient
             $promise = $this->client->sendAsync($this->getPutRequest($encodedData, $this->provider->getAssetConfig()))
                 ->then(function ($response) use ($asset) {
                     if ($response->getStatusCode() > 204) {
+                        Simple::log('magento2-connector/rest-client',
+                            "Could not send data to remote service. Response: " . $response->getBody()
+                        );
                         $this->logError("Could not send data to remote service.", $asset);
                     }
                 });
             $promise->wait();
         } catch (Throwable $throwable) {
+            Simple::log('magento2-connector/rest-client', $throwable->getMessage());
             $this->logError("Could not send data to remote service.", $asset, $throwable);
         }
     }
@@ -228,12 +235,20 @@ class RestClient
             $promise = $this->client->sendAsync($this->getPutRequest($encodedData, $config))
                 ->then(function ($response) use ($object) {
                     if ($response->getStatusCode() > 204) {
-                        $this->logError("Could not send data to remote service.", $object);
+                        Simple::log('magento2-connector/rest-client',
+                            "[ERROR] Could not send data to remote service. Response: " . $response->getBody()
+                        );
+                        $this->logError("[ERROR] Could not send data to remote service.", $object);
+                    } else {
+                        Simple::log('magento2-connector/rest-client',
+                            "[DEBUG]: " . $response->getBody()
+                        );
                     }
                 });
             $promise->wait();
         } catch (Throwable $throwable) {
-            $this->logError("Could not send data to remote service.", $object, $throwable);
+            Simple::log('magento2-connector/rest-client', $throwable->getMessage());
+            $this->logError("[ERROR] Could not send data to remote service.", $object, $throwable);
         }
     }
 
@@ -244,19 +259,7 @@ class RestClient
   */
     protected function logError($msg, AbstractElement $object = null, \Throwable $exception = null): void
     {
-        $user         = \Pimcore\Tool\Admin::getCurrentUser();
-        $notification = new Notification();
-        $notification->setTitle('Error');
-        $notification->setType(Notification::TYPE_ERROR);
         $msg = $object !== null ? $msg . " Object: " . $object->getId() : $msg;
-        $notification->setMessage($msg);
-        if ($user) {
-            $notification->setUser($user->getId());
-        }
-        if ($object) {
-            $notification->setLinkedElement($object);
-        };
-        $notification->save();
         if (!$exception == null) {
             $msg = $msg . " " . $exception->getMessage();
         }
@@ -278,10 +281,18 @@ class RestClient
                             "Could not get stores list from "
                             . $this->getUrl($this->provider->getStoreViewsEndpointUrl())
                         );
+                        Simple::log('magento2-connector/rest-client',
+                            "Could not get stores list from "
+                            . $this->getUrl($this->provider->getStoreViewsEndpointUrl())
+                        );
                     }
                     return json_decode($response->getBody()->getContents()) ?? [];
                 }, function () {
                     $this->logError(
+                        "Could not get stores list from "
+                        . $this->getUrl($this->provider->getStoreViewsEndpointUrl())
+                    );
+                    Simple::log('magento2-connector/rest-client',
                         "Could not get stores list from "
                         . $this->getUrl($this->provider->getStoreViewsEndpointUrl())
                     );
@@ -291,6 +302,10 @@ class RestClient
             return is_array($value) ? $value : [];
         } catch (Throwable $throwable) {
             $this->logError(
+                "Could not get stores list from "
+                . $this->getUrl($this->provider->getStoreViewsEndpointUrl())
+            );
+            Simple::log('magento2-connector/rest-client',
                 "Could not get stores list from "
                 . $this->getUrl($this->provider->getStoreViewsEndpointUrl())
             );
