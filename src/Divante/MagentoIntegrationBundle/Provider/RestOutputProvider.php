@@ -9,7 +9,7 @@
 namespace Divante\MagentoIntegrationBundle\Provider;
 
 use Divante\MagentoIntegrationBundle\Model\Configuration\EndpointConfig;
-use Symfony\Component\Config\FileLocator;
+use Symfony\Component\Config\FileLocatorInterface;
 use Symfony\Component\Yaml\Yaml;
 
 /**
@@ -25,14 +25,14 @@ abstract class RestOutputProvider implements RestOutputProviderInterface
      */
     protected $config;
 
-    /** @var FileLocator */
+    /** @var FileLocatorInterface */
     protected $fileLocator;
 
     /**
      * MagentoRestOutputProvider constructor.
-     * @param FileLocator $fileLocator
+     * @param FileLocatorInterface $fileLocator
      */
-    public function __construct(FileLocator $fileLocator)
+    public function __construct(FileLocatorInterface $fileLocator)
     {
         $this->fileLocator = $fileLocator;
         $this->parseConfig();

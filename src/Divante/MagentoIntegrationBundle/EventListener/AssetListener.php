@@ -15,7 +15,7 @@ use Divante\MagentoIntegrationBundle\Service\IntegrationConfigurationService;
 use Pimcore\Event\Model\AssetEvent;
 use Pimcore\Model\Asset;
 use Pimcore\Model\DataObject\IntegrationConfiguration;
-use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Class AssetListener
@@ -32,20 +32,20 @@ class AssetListener
     /** @var IntegratedObjectEventFactory  */
     protected $eventFactory;
 
-    /** @var EventDispatcher */
+    /** @var EventDispatcherInterface */
     protected $eventDispatcher;
     /**
      * ObjectListener constructor.
      * @param IntegrationConfigurationService $integrationService
      * @param IntegratedObjectService         $objectService
      * @param IntegratedObjectEventFactory    $eventFactory
-     * @param EventDispatcher                 $eventDispatcher
+     * @param EventDispatcherInterface        $eventDispatcher
      */
     public function __construct(
         IntegrationConfigurationService $integrationService,
         IntegratedObjectService $objectService,
         IntegratedObjectEventFactory $eventFactory,
-        EventDispatcher              $eventDispatcher
+        EventDispatcherInterface $eventDispatcher
     ) {
         $this->integrationService = $integrationService;
         $this->objectService      = $objectService;
