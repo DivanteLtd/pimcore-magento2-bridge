@@ -31,7 +31,14 @@ class IntegrationConfigurationService
     ): IntegrationConfiguration {
         $configurations = $this->getConfigurations($object, $instanceUrl, $storeView);
         if (count($configurations) == 0) {
-            throw new \Exception('No configuration was found for this object.');
+            throw new \Exception(
+                sprintf(
+                    '[ERROR] Missing configuration for object: %d, instanceUrl:%s, store view: %d.',
+                    $object->getId(),
+                    $instanceUrl,
+                    $storeView
+                )
+            );
         }
         return reset($configurations);
     }
