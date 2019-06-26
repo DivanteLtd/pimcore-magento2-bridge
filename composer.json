@@ -20,9 +20,9 @@
   "require": {
     "php": ">=7.1",
     "ext-json": "*",
-    "pimcore/core-version": "^5.2.0",
+    "pimcore/pimcore": "^5.2.0 | ^6.0.0",
     "divanteltd/pimcoredevkit": "^0.7.4",
-    "coreshop/resource-bundle": "^2.0",
+    "coreshop/resource-bundle": "dev-master",
     "divante-ltd/pimcore-magento2-bridge": "dev-master"
   },
   "autoload": {
