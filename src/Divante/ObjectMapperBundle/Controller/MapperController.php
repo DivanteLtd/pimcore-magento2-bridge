@@ -7,6 +7,7 @@
  */
 namespace Divante\ObjectMapperBundle\Controller;
 
+use Divante\MagentoIntegrationBundle\Interfaces\MapperInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -15,7 +16,6 @@ use Pimcore\Bundle\AdminBundle\Controller\AdminController;
 use Pimcore\Model\DataObject;
 use Divante\MagentoIntegrationBundle\Model\Mapping\FromColumn;
 use Divante\MagentoIntegrationBundle\Model\Mapping\ToColumn;
-use Divante\ObjectMapperBundle\Service\MapperService;
 
 /**
  * Class MapperController
@@ -23,16 +23,16 @@ use Divante\ObjectMapperBundle\Service\MapperService;
  */
 class MapperController extends AdminController
 {
-    /** @var MapperService */
+    /** @var MapperInterface */
     protected $mapperService;
 
     /**
-     * @return MapperService|object
+     * @return MapperInterface|object
      */
-    public function getMapperService(): MapperService
+    public function getMapperService(): MapperInterface
     {
-        if (!$this->mapperService instanceof MapperService) {
-            $this->mapperService = $this->container->get(MapperService::class);
+        if (!$this->mapperService instanceof MapperInterface) {
+            $this->mapperService = $this->container->get(MapperInterface::class);
         }
         return $this->mapperService;
     }
