@@ -31,6 +31,7 @@
       "Divante\\ObjectMapperBundle\\": "/src"
     }
   },
+  "minimum-stability": "dev",
   "extra": {
     "pimcore": {
       "bundles": [
