@@ -24,7 +24,7 @@ The second part of this module (Magento 2 - Pimcore Integration Module) is avail
 This plugin allows Pimcore to send all data about products and categories to remote eCommerce systems.
 
 ## <a name="compatibility"></a>Compatibility	
-This module is compatible with Pimcore 5.2 and above.
+This module is compatible with Pimcore >= 5.2 and Pimcore 6.0.
 
 ## <a name="requirements"></a>Requirements
 Before getting started, please install: [DivanteLtd/pimcore-devkit](https://github.com/DivanteLtd/pimcore-devkit)
