@@ -40,10 +40,10 @@ abstract class AbstractObjectService implements ContainerAwareInterface
     use ContainerAwareTrait;
 
     /** @var ApplicationLogger  */
-    private $logger;
+    protected $logger;
 
     /** @var TokenStorageUserResolver  */
-    private $userResolver;
+    protected $userResolver;
 
     /** @var IntegrationConfigurationService  */
     protected $integrationService;
