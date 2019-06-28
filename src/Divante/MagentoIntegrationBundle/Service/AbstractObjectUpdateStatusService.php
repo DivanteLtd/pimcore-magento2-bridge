@@ -40,7 +40,7 @@ abstract class AbstractObjectUpdateStatusService extends AbstractObjectService
         if (!$updateStatus instanceof UpdateStatus) {
             return $this->getNotFoundResponse($updateStatus);
         }
-        $this->getLogger()->error(
+        $this->logger->error(
             sprintf(
                 'Could not update status for object with id: %d. Status: %s. Message: %s',
                 $updateStatus->id,

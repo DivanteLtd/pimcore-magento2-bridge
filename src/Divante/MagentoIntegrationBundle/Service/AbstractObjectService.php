@@ -58,15 +58,18 @@ abstract class AbstractObjectService implements ContainerAwareInterface
      * @param MapperInterface          $mapper
      * @param ContainerInterface       $container
      * @param EventDispatcherInterface $eventDispatcher
+     * @param ApplicationLogger              $logger
      */
     public function __construct(
         MapperInterface $mapper,
         ContainerInterface $container,
-        EventDispatcherInterface $eventDispatcher
+        EventDispatcherInterface $eventDispatcher,
+        ApplicationLogger $logger
     ) {
         $this->mapper = $mapper;
         $this->container = $container;
         $this->eventDispatcher = $eventDispatcher;
+        $this->logger = $logger;
         DataObject\AbstractObject::setGetInheritedValues(true);
     }
 
@@ -76,17 +79,6 @@ abstract class AbstractObjectService implements ContainerAwareInterface
     protected function getMapper(): MapperInterface
     {
         return $this->mapper;
-    }
-
-    /**
-     * @return ApplicationLogger
-     */
-    protected function getLogger(): ApplicationLogger
-    {
-        if (!$this->logger instanceof ApplicationLogger) {
-            $this->logger = $this->container->get(ApplicationLogger::class);
-        }
-        return $this->logger;
     }
 
     /**
@@ -151,7 +143,7 @@ abstract class AbstractObjectService implements ContainerAwareInterface
      */
     public function getLoggedErrorMessage(string $msg): string
     {
-        $this->getLogger()->error($msg);
+        $this->logger->error($msg);
         return $msg;
     }
 
@@ -165,7 +157,7 @@ abstract class AbstractObjectService implements ContainerAwareInterface
         $type = 'product'
     ): array {
         $data = $this->getNotFoundResponse($objectRequest, $objectRequest->id);
-        $this->getLogger()->error($data['msg']);
+        $this->logger->error($data['msg']);
         Simple::log(sprintf('connector/%s-integration', $type), $data['msg']);
         return $data;
     }
@@ -179,7 +171,7 @@ abstract class AbstractObjectService implements ContainerAwareInterface
     {
         $isAllowed = $element->isAllowed('view');
         if (!$isAllowed) {
-            $this->getLogger()->error(
+            $this->logger->error(
                 'User {user} attempted to access {permission} on {elementType} {elementId},'
                 . 'but has no permission to do so',
                 [
@@ -299,7 +291,7 @@ abstract class AbstractObjectService implements ContainerAwareInterface
     {
         switch ($updateObject->status) {
             case (IntegrationHelper::SYNC_STATUS_ERROR):
-                $this->getLogger()->warning(
+                $this->logger->warning(
                     'Error while syncing object: {id} with instance: {instance} for store view: {storeViewId}. '
                     . 'Message: {message}',
                     [

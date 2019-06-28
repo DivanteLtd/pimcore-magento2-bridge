@@ -9,7 +9,7 @@ services:
         # if you need to do this, you can override this setting on individual services
         public: false
 
-    Divante\ObjectMapperBundle\Service\MapperServiceInterface:
+    Divante\ObjectMapperBundle\Service\MapperService:
       public: true
 
     Divante\ObjectMapperBundle\Mapper\MapperContextInterface:

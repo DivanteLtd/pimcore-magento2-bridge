@@ -16,6 +16,7 @@ use Pimcore\Bundle\AdminBundle\Controller\AdminController;
 use Pimcore\Model\DataObject;
 use Divante\MagentoIntegrationBundle\Model\Mapping\FromColumn;
 use Divante\MagentoIntegrationBundle\Model\Mapping\ToColumn;
+use Divante\ObjectMapperBundle\Service\MapperService;
 
 /**
  * Class MapperController
@@ -32,7 +33,7 @@ class MapperController extends AdminController
     public function getMapperService(): MapperInterface
     {
         if (!$this->mapperService instanceof MapperInterface) {
-            $this->mapperService = $this->container->get(MapperInterface::class);
+            $this->mapperService = $this->container->get(MapperService::class);
         }
         return $this->mapperService;
     }
@@ -85,6 +86,7 @@ class MapperController extends AdminController
                 $emptyValue->fieldtype = 'input';
             }
         } catch (\Exception $exception) {
+            die(var_dump($exception));
         }
         return $returnValue;
     }
