@@ -73,6 +73,7 @@ class Installer extends MigrationInstaller
         );
 
         Cache::enable();
+        mkdir(PIMCORE_LOG_DIRECTORY . '/magento2-connector', 0740);
     }
 
     /**
