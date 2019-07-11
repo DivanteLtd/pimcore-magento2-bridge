@@ -1,5 +1,5 @@
 {
-  "name": "divante-ltd/pimcore-magento2-bridge",
+  "name": "bpwbeck/pimcore-magento2-bridge",
   "type": "pimcore-bundle",
   "license": "GPL-3.0-or-later",
   "description": "Integration module allows to integrate Pimcore platform with Magento 2",
