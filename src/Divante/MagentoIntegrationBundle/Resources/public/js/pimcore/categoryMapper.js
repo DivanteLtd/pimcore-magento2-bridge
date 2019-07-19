@@ -1,6 +1,6 @@
 pimcore.registerNS("pimcore.plugin.MagentoIntegrationBundle.CategoryMapper");
 
-pimcore.plugin.MagentoIntegrationBundle.CategoryMapper = Class.create(coreshop.resource.item, {
+pimcore.plugin.MagentoIntegrationBundle.CategoryMapper = Class.create(pimcore.plugin.MagentoIntegrationBundle.item, {
     initialize: function (object) {
         this.object = object;
 },
@@ -99,7 +99,7 @@ reloadMapper: function (object) {
                             defaults: {},
                             items: [
                                 {
-                                    text: t('importdefinitions_toColumn'),
+                                    text: t('toColumn'),
                                     dataIndex: 'toColumn',
                                     flex: 1,
                                     renderer: function (val, metadata) {
@@ -115,7 +115,7 @@ reloadMapper: function (object) {
                                     }
                             },
                                 {
-                                    text: t('importdefinitions_fromColumn'),
+                                    text: t('fromColumn'),
                                     dataIndex: 'fromColumn',
                                     flex: 1,
                                     renderer: function (val) {
