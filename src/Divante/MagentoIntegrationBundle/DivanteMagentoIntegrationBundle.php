@@ -57,12 +57,13 @@ class DivanteMagentoIntegrationBundle extends AbstractPimcoreBundle
     {
         return [
             '/bundles/divantemagentointegration/js/pimcore/startup.js',
+            '/bundles/divantemagentointegration/js/pimcore/item.js',
             '/bundles/divantemagentointegration/js/pimcore/productMapper.js',
             '/bundles/divantemagentointegration/js/pimcore/categoryMapper.js',
             '/bundles/divantemagentointegration/js/pimcore/uploadStatus.js',
             '/bundles/divantemagentointegration/js/pimcore/configurableAttributeSelectWindow.js',
             '/bundles/divantemagentointegration/js/pimcore/AnyPropertyGetter.js',
-            '/bundles/divantemagentointegration/js/pimcore/properties.js'
+            '/bundles/divantemagentointegration/js/pimcore/properties.js',
         ];
     }
 

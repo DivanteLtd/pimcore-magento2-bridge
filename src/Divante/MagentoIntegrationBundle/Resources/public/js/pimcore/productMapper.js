@@ -1,13 +1,12 @@
 pimcore.registerNS("pimcore.plugin.MagentoIntegrationBundle.ProductMapper");
-
-pimcore.plugin.MagentoIntegrationBundle.ProductMapper = Class.create(coreshop.resource.item, {
-    initialize: function (object) {
+pimcore.plugin.MagentoIntegrationBundle.ProductMapper = Class.create(pimcore.plugin.MagentoIntegrationBundle.item, {
+        initialize: function (object) {
+            this.object = object;
+    },
+    reloadMapper: function (object) {
         this.object = object;
-},
-reloadMapper: function (object) {
-    this.object = object;
-    this.reloadColumnMapping();
-},
+        this.reloadColumnMapping();
+    },
 
     getLayout: function () {
         if (!this.mappingSettings) {
@@ -96,7 +95,7 @@ reloadMapper: function (object) {
                             defaults: {},
                             items: [
                                 {
-                                    text: t('importdefinitions_toColumn'),
+                                    text: t('toColumn'),
                                     dataIndex: 'toColumn',
                                     flex: 1,
                                     renderer: function (val, metadata) {
@@ -116,7 +115,7 @@ reloadMapper: function (object) {
                                     }
                             },
                                 {
-                                    text: t('importdefinitions_fromColumn'),
+                                    text: t('fromColumn'),
                                     dataIndex: 'fromColumn',
                                     flex: 1,
                                     renderer: function (val) {

@@ -1,4 +1,4 @@
-# <a name="integration-module"></a>Pimcore 5 Module Magento 2 Integration
+# <a name="integration-module"></a>Pimcore 5 & 6 Module Magento 2 Integration
 
 This module is a part (1/2) of the Pimcore - Magento connector. 
 It allows for the integration of your Pimcore platform with the Magento 2 e-commerce platform, including synchronization of **products**, **categories** and **assets**.
@@ -7,7 +7,7 @@ The second part of this module (Magento 2 - Pimcore Integration Module) is avail
 
 **Table of Contents**
 
-- [Pimcore 5 Module Magento 2 Integration](#integration-module)
+- [Pimcore 5 & 6 Module Magento 2 Integration](#integration-module)
 	- [Description](#description)
 	- [Compatibility](#compatibility)
 	- [Requirements](#requirements)
@@ -28,8 +28,6 @@ This module is compatible with Pimcore >= 5.2 and Pimcore 6.0.
 
 ## <a name="requirements"></a>Requirements
 Before getting started, please install: [DivanteLtd/pimcore-devkit](https://github.com/DivanteLtd/pimcore-devkit)
-[DivanteLtd/pimcore5-notifications](https://github.com/DivanteLtd/pimcore5-notifications)
-[coreshop/resource-bundle](https://github.com/coreshop/ResourceBundle)
 
 ## <a name="installing"></a>Installing/Getting started	
 - Open your Pimcore
