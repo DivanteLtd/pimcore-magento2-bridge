@@ -21,6 +21,7 @@ initialize: function () {
     postOpenObject: function (object, type) {
         if (this.isConfiguration(object)) {
             var key = 'mapper_product_' + object.id;
+            console.log(pimcore.plugin.MagentoIntegrationBundle.ProductMapper);
             var value = new pimcore.plugin.MagentoIntegrationBundle.ProductMapper(object);
             pimcore.globalmanager.add(key, value);
             var tabs = Ext.getCmp('object_' + object.id);

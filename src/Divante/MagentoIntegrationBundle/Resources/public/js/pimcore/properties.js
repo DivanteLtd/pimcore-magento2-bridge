@@ -6,7 +6,7 @@ pimcore.element.properties = Class.create(pimcore.element.properties, {
         var actionColumn = columns[columns.length - 2];
         actionColumn.items = [{
             tooltip: t('open'),
-            icon: "/pimcore/static6/img/flat-color-icons/open_file.svg",
+            icon: "/bundles/pimcoreadmin/img/flat-color-icons/settings.svg",
             handler: function (grid, rowIndex) {
                 var record = grid.getStore().getAt(rowIndex).data;
                 if (record.name == 'configurable_attributes') {
