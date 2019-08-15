@@ -43,7 +43,7 @@ class MapBooleanKey extends AbstractMapKeyStrategy
             'label' => $this->getLabel($field->getTitle(), $language)
         ];
         foreach ($names as $name) {
-            $obj->{$name} = $parsedData;
+            $obj->{$attributeName} = $parsedData;
         }
     }
 }
