@@ -65,22 +65,9 @@ class MapClassificationStoreValue extends AbstractMapStrategy
                 $value = null;
 
                 foreach ($group['keys']['default'] as $attribute) {
-                $defaultValue = null;-                foreach ($group['keys']['default'] as $attribute) {
-                if(key_exists($language,$group['keys'])){
-                    foreach ( $group['keys'][$language] as $attribute) {
-                        if ($attribute['name'] == $attributeDefinition->getName()) {
-                            $value = $attribute['value'];
-                            break;
-                        }
-                    }
-                }
-                // search default value if requested language is not present
-                if(is_null($value )){
-                    foreach ($group['keys']['default'] as $attribute) {
-                        if ($attribute['name'] == $attributeDefinition->getName()) {
-                            $value = $attribute['value'];
-                            break;
-                        }
+                    if ($attribute['name'] == $attributeDefinition->getName()) {
+                        $value = $attribute['value'];
+                        break;
                     }
                 }
                 $attribute = [
