@@ -84,4 +84,7 @@ services:
     Divante\MagentoIntegrationBundle\Provider\MagentoStore:
       public: true
 
+    Divante\MagentoIntegrationBundle\Provider\ActiveLanguages:
+        public: true
+
     Divante\MagentoIntegrationBundle\Event\IntegratedObjectEventFactory: ~
