@@ -8,6 +8,7 @@
 
 namespace Divante\MagentoIntegrationBundle;
 
+use Divante\MagentoIntegrationBundle\Mapper\MapperStrategyCompilerPass;
 use Divante\MagentoIntegrationBundle\Migrations\Installer;
 use Pimcore\Extension\Bundle\AbstractPimcoreBundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -23,7 +24,8 @@ class DivanteMagentoIntegrationBundle extends AbstractPimcoreBundle
      */
     public function build(ContainerBuilder $container)
     {
-        parent::build($container);
+       parent::build($container);
+       $container->addCompilerPass(new MapperStrategyCompilerPass());
     }
 
     /**

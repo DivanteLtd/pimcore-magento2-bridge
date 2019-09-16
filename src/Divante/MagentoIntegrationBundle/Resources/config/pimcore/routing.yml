@@ -1,8 +1,8 @@
+magento_integration_object_mapper:
+    resource: "@DivanteMagentoIntegrationBundle/Controller/"
+    type:     annotation
+
 magento_integration_api_rest:
     resource: "@DivanteMagentoIntegrationBundle/Controller/Rest/"
     type:     annotation
     prefix:   /webservice/rest
-
-magento_integration_object_mapper:
-    resource: "@DivanteMagentoIntegrationBundle/Controller/"
-    type:     annotation
