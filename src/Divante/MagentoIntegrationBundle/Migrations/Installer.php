@@ -78,6 +78,7 @@ class Installer extends MigrationInstaller
         if (!file_exists(PIMCORE_LOG_DIRECTORY . '/magento2-connector')) {
             mkdir(PIMCORE_LOG_DIRECTORY . '/magento2-connector', 0740);
         }
+        $this->createSampleObject();
     }
 
     /**
@@ -103,5 +104,15 @@ class Installer extends MigrationInstaller
         $filename =
             '@DivanteMagentoIntegrationBundle/Resources/install/classes/class_IntegrationConfiguration_export.json';
         return $this->fileLocator->locate($filename);
+    }
+
+    protected function createSampleObject()
+    {
+        $object = new DataObject\IntegrationConfiguration();
+        $object->setParent(DataObject\Service::createFolderByPath('/integrations'));
+        $object->setPublished(false);
+        $object->setOmitMandatoryCheck(true);
+        $object->setKey('magento-configuration');
+        $object->save();
     }
 }
