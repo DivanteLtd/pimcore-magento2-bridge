@@ -28,7 +28,12 @@ class ActiveLanguages implements SelectOptionsProviderInterface
      */
     public function getOptions($context, $fieldDefinition): array
     {
-        return Tool::getValidLanguages();
+        return array_map(
+            function ($language) {
+                return ['key' => $language, 'value' => $language];
+            },
+            Tool::getValidLanguages()
+        );
     }
 
     /**
