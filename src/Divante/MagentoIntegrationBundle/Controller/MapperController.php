@@ -87,8 +87,6 @@ class MapperController extends AdminController
                 $emptyValue->fieldtype = 'input';
             }
         } catch (\Exception $exception) {
-            throw new ValidationException('Could not find configuration for given Id.
-             Please clear cache reload Pimcore panel and try again');
         }
         return $returnValue;
     }
