@@ -41,7 +41,7 @@ class DivanteMagentoIntegrationBundle extends AbstractPimcoreBundle
      */
     public function getVersion()
     {
-        return '0.7.0';
+        return '1.2.0';
     }
 
     /**
