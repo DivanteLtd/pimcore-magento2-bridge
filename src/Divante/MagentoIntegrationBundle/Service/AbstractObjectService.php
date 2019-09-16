@@ -9,9 +9,9 @@
 namespace Divante\MagentoIntegrationBundle\Service;
 
 use Divante\MagentoIntegrationBundle\Helper\IntegrationHelper;
-use Divante\MagentoIntegrationBundle\Interfaces\MapperInterface;
 use Divante\MagentoIntegrationBundle\Model\DataObject\IntegrationConfiguration;
 use Divante\MagentoIntegrationBundle\Model\Request\AbstractObjectRequest;
+use Divante\MagentoIntegrationBundle\Service\MapperService;
 use Divante\MagentoIntegrationBundle\Model\Request\UpdateStatus;
 use Pimcore\Bundle\AdminBundle\Security\User\TokenStorageUserResolver;
 use Pimcore\Log\ApplicationLogger;
@@ -47,7 +47,7 @@ abstract class AbstractObjectService implements ContainerAwareInterface
 
     /** @var IntegrationConfigurationService  */
     protected $integrationService;
-    /** @var MapperInterface  */
+    /** @var MapperService  */
     protected $mapper;
 
     /** @var EventDispatcher */
@@ -55,13 +55,13 @@ abstract class AbstractObjectService implements ContainerAwareInterface
 
     /**
      * ProductService constructor.
-     * @param MapperInterface          $mapper
+     * @param MapperService          $mapper
      * @param ContainerInterface       $container
      * @param EventDispatcherInterface $eventDispatcher
      * @param ApplicationLogger              $logger
      */
     public function __construct(
-        MapperInterface $mapper,
+        MapperService $mapper,
         ContainerInterface $container,
         EventDispatcherInterface $eventDispatcher,
         ApplicationLogger $logger
@@ -74,9 +74,9 @@ abstract class AbstractObjectService implements ContainerAwareInterface
     }
 
     /**
-     * @return MapperInterface
+     * @return MapperService
      */
-    protected function getMapper(): MapperInterface
+    protected function getMapper(): MapperService
     {
         return $this->mapper;
     }

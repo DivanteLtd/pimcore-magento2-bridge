@@ -81,21 +81,40 @@ class IntegrationConfigurationListener
      */
     protected function validateMappingCorrectness(IntegrationConfiguration $object)
     {
-        $mandatoryFields = IntegrationHelper::INTEGRATION_CONFIGURATION_MANDATORY_FIELDS;
-        $mapping = $object->getProductMapping();
-        $missingFields = [];
-        foreach ($mapping as $field) {
-            if (($key = array_search($field[1], $mandatoryFields)) !== false) {
-                unset($mandatoryFields[$key]);
+        $mandatoryFieldsProduct  = IntegrationHelper::INTEGRATION_CONFIGURATION_MANDATORY_FIELDS_PRODUCT;
+        $mandatoryFieldsCategory = IntegrationHelper::INTEGRATION_CONFIGURATION_MANDATORY_FIELDS_CATEGORY;
+        $productMapping          = $object->getProductMapping();
+        $missingFieldsProduct    = [];
+        foreach ($productMapping as $field) {
+            if (($key = array_search($field[1], $mandatoryFieldsProduct)) !== false) {
+                unset($mandatoryFieldsProduct[$key]);
                 if ($field[0] == '') {
-                    $missingFields[] = $field[1];
+                    $missingFieldsProduct[] = $field[1];
                 }
             }
         }
-        $incorrectFields =  array_unique(array_merge($missingFields, $mandatoryFields));
-        if (count($incorrectFields) > 0) {
+        $categoryMapping       = $object->getCategoryMapping();
+        $missingFieldsCategory = [];
+        foreach ($categoryMapping as $field) {
+            if (($key = array_search($field[1], $mandatoryFieldsCategory)) !== false) {
+                unset($mandatoryFieldsCategory[$key]);
+                if ($field[0] == '') {
+                    $missingFieldsCategory[] = $field[1];
+                }
+            }
+        }
+        $incorrectFieldsProduct  = array_unique(array_merge($missingFieldsProduct, $mandatoryFieldsProduct));
+        $incorrectFieldsCategory = array_unique(array_merge($missingFieldsCategory, $mandatoryFieldsCategory));
+        $errorMsg                = '';
+        if (count($incorrectFieldsProduct) > 0) {
+            $errorMsg .= '<br/> product mapping: ' . implode(', ', $incorrectFieldsProduct);
+        }
+        if (count($incorrectFieldsCategory) > 0) {
+            $errorMsg .= "<br/> category mapping: " . implode(', ', $incorrectFieldsCategory);
+        }
+        if ($errorMsg) {
             throw new ValidationException(
-                "You must fill all mandatory mapping fields. Missing: " . implode(', ', $incorrectFields)
+                "You must fill all mandatory mapping fields. Missing fields " . $errorMsg
             );
         }
     }

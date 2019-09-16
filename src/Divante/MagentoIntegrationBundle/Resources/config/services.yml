@@ -2,12 +2,16 @@ imports:
 - { resource: listeners.yml }
 - { resource: requestServices.yml }
 - { resource: operators.yml }
+- { resource: mapper.yml }
 
 services:
     _defaults:
         autowire: true
         autoconfigure: true
         public: false
+
+    Divante\MagentoIntegrationBundle\Service\MapperService:
+        public: true
 
     Divante\MagentoIntegrationBundle\Service\RestClient:
       public: true
