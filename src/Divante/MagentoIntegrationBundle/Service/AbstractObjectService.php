@@ -313,7 +313,7 @@ abstract class AbstractObjectService implements ContainerAwareInterface
                     $object,
                     $updateObject,
                     'notice',
-                    'Product has been synchronized with Magento.'
+                    'Object has been synchronized with Magento.'
                 );
                 break;
             case (IntegrationHelper::SYNC_STATUS_DELETE):
@@ -321,9 +321,16 @@ abstract class AbstractObjectService implements ContainerAwareInterface
                     $object,
                     $updateObject,
                     'notice',
-                    'Product has been removed from Magento.'
+                    'Object has been removed from Magento.'
                 );
                 break;
+            case (IntegrationHelper::SYNC_STATUS_SENT):
+                $this->addNote(
+                    $object,
+                    $updateObject,
+                    'notice',
+                    'Object has been added to queue.'
+                );
         }
     }
 
