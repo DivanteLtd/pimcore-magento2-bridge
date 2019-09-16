@@ -109,7 +109,7 @@ class Installer extends MigrationInstaller
     protected function createSampleObject()
     {
         $object = new DataObject\IntegrationConfiguration();
-        $object->setParent(DataObject\Service::createFolderByPath('/integrations'));
+        $object->setParent(DataObject\Service::createFolderByPath('/integration-configuration'));
         $object->setPublished(false);
         $object->setOmitMandatoryCheck(true);
         $object->setKey('magento-configuration');
