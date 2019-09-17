@@ -10,7 +10,6 @@ The second part of this module (Magento 2 - Pimcore Integration Module) is avail
 - [Pimcore 5 & 6 Module Magento 2 Integration](#integration-module)
 	- [Description](#description)
 	- [Compatibility](#compatibility)
-	- [Requirements](#requirements)
 	- [Installing/Getting started](#installing)
 	- [Usage/Setting up](#usage)
 	- [Features](#features)
@@ -26,13 +25,10 @@ This plugin allows Pimcore to send all data about products and categories to rem
 ## <a name="compatibility"></a>Compatibility	
 This module is compatible with Pimcore >= 5.2 and Pimcore 6.0.
 
-## <a name="requirements"></a>Requirements
-Before getting started, please install: [DivanteLtd/pimcore-devkit](https://github.com/DivanteLtd/pimcore-devkit)
-
 ## <a name="installing"></a>Installing/Getting started	
 - Open your Pimcore
 - Install Pimcore 5 Module Magento 2 Integration via composer ```composer require divante-ltd/pimcore-magento2-bridge:dev```
-- Enable bundles by running  ```bin/console pimcore:bundle:enable DivanteObjectMapperBundle```, ```bin/console pimcore:bundle:enable DivanteMagentoIntegrationBundle```
+- Enable bundle by running  ```bin/console pimcore:bundle:enable DivanteMagentoIntegrationBundle```
 - Clear cache by running ```bin/console cache:clear --no-warmup```
 - Install Bundle by running ```bin/console pimcore:bundle:install DivanteMagentoIntegrationBundle```
 - Reload Pimcore

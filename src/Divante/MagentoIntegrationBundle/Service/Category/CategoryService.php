@@ -12,8 +12,8 @@ use Divante\MagentoIntegrationBundle\Event\Model\IntegratedMappedObjectEvent;
 use Divante\MagentoIntegrationBundle\Event\Model\IntegratedObjectEvent;
 use Divante\MagentoIntegrationBundle\Event\Type;
 use Divante\MagentoIntegrationBundle\Helper\IntegrationHelper;
-use Divante\MagentoIntegrationBundle\Interfaces\MapperInterface;
 use Divante\MagentoIntegrationBundle\Model\Request\GetObject;
+use Divante\MagentoIntegrationBundle\Service\MapperService;
 use Divante\MagentoIntegrationBundle\Service\AbstractObjectService;
 use Pimcore\Log\Simple;
 use Pimcore\Model\DataObject\Concrete;
@@ -92,7 +92,7 @@ class CategoryService extends AbstractObjectService
         $rootPath     = $categoryRoot->getPath() . $categoryRoot->getKey();
         $out->path    = str_replace($rootPath, '', $object->getPath());
 
-        /** @var MapperInterface $mapper */
+        /** @var MapperService $mapper */
         $mapper = $this->getMapper();
         $mapper->loadSelectFieldData($out, $object);
         $mappedObject = $mapper->map($out, $configuration, IntegrationHelper::OBJECT_TYPE_CATEGORY);

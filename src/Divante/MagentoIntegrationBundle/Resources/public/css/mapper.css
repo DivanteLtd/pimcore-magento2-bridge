@@ -8,3 +8,6 @@
 .mapper-required-field {
     color: #ff0000;
 }
+.pimcore_class_IntegrationConfiguration .x-grid-group-hd-not-collapsible {
+    display: none;
+}

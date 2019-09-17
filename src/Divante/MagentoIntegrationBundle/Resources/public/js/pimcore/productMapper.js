@@ -44,6 +44,7 @@ pimcore.plugin.MagentoIntegrationBundle.ProductMapper = Class.create(pimcore.plu
                             'identifier',
                             'label'
                         ],
+                        collapsible: false,
                         data: config.fromColumns
                     });
 
@@ -87,35 +88,15 @@ pimcore.plugin.MagentoIntegrationBundle.ProductMapper = Class.create(pimcore.plu
                         plugins: [cellEditingPlugin],
                         features: [{
                             ftype: 'grouping',
-
-                            groupHeaderTpl: '{name}'
+                            groupHeaderTpl: '{name}',
+                            collapsible: false
                         }],
                         object: this.object,
                         columns: {
                             defaults: {},
                             items: [
                                 {
-                                    text: t('toColumn'),
-                                    dataIndex: 'toColumn',
-                                    flex: 1,
-                                    renderer: function (val, metadata) {
-                                        var rec = toColumnStore.findRecord('identifier', val, 0, false, false, true);
-
-                                        if (rec) {
-                                            if (rec.data.config['required']) {
-                                                metadata.tdCls = 'pimcore_icon_inputQuantityValue td-icon mapper-required-field';
-                                            } else {
-                                                metadata.tdCls = 'pimcore_icon_' + rec.data.fieldtype + ' td-icon';
-                                            }
-
-                                            return rec.data.label;
-                                        }
-
-                                        return val;
-                                    }
-                            },
-                                {
-                                    text: t('fromColumn'),
+                                    text: t('Pimcore fields'),
                                     dataIndex: 'fromColumn',
                                     flex: 1,
                                     renderer: function (val) {
@@ -163,10 +144,27 @@ pimcore.plugin.MagentoIntegrationBundle.ProductMapper = Class.create(pimcore.plu
                                             }
                                         }
                                     }
-                            }
+                                },
+                                {
+                                    text: t('Magento fields'),
+                                    dataIndex: 'toColumn',
+                                    flex: 1,
+                                    renderer: function (val, metadata) {
+                                        var rec = toColumnStore.findRecord('identifier', val, 0, false, false, true);
+                                        if (rec) {
+                                            if (rec.data.config['required']) {
+                                                metadata.tdCls = 'pimcore_icon_inputQuantityValue td-icon mapper-required-field';
+                                            } else {
+                                                metadata.tdCls = 'pimcore_icon_' + rec.data.fieldtype + ' td-icon';
+                                            }
+
+                                            return rec.data.label;
+                                        }
+                                        return val;
+                                    }
+                                },
                             ]
                         }
-
                     });
                     this.mappingSettings.add(grid);
 

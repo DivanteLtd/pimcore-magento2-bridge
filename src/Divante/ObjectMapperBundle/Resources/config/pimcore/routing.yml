@@ -1,4 +1,0 @@
-magento_integration_object_mapper:
-    resource: "@DivanteObjectMapperBundle/Controller/"
-    type:     annotation
-    prefix:   /admin/object-mapper
