@@ -21,12 +21,10 @@
     "php": ">=7.1",
     "ext-json": "*",
     "pimcore/pimcore": "^5.2.0 | ^6.0.0",
-    "divanteltd/pimcoredevkit": "^0.7"
   },
   "autoload": {
     "psr-4": {
       "Divante\\MagentoIntegrationBundle\\": "/src",
-      "Divante\\ObjectMapperBundle\\": "/src"
     }
   },
   "minimum-stability": "dev",
@@ -34,7 +32,6 @@
     "pimcore": {
       "bundles": [
         "Divante\\MagentoIntegrationBundle\\DivanteMagentoIntegrationBundle",
-        "Divante\\ObjectMapperBundle\\DivanteObjectMapperBundle"
       ]
     }
   }

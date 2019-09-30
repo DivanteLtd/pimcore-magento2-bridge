@@ -1,0 +1,110 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    Divante\MagentoIntegrationBundle\Service\MapperService: ~
+    Divante\MagentoIntegrationBundle\Mapper\MapperContext: ~
+
+    Divante\MagentoIntegrationBundle\Controller\:
+        resource: '../../Controller'
+        public: true
+        tags: ['controller.service_arguments']
+
+    Divante\MagentoIntegrationBundle\Mapper\Strategy\MapBoolValue:
+        tags:
+            - {name: object_mapper.mapStrategy}
+
+    Divante\MagentoIntegrationBundle\Mapper\Strategy\MapDateValue:
+        tags:
+            - {name: object_mapper.mapStrategy}
+
+    Divante\MagentoIntegrationBundle\Mapper\Strategy\MapStructuredValue:
+        tags:
+            - {name: object_mapper.mapStrategy}
+
+    Divante\MagentoIntegrationBundle\Mapper\Strategy\MapMultiObjectValue:
+        tags:
+            - {name: object_mapper.mapStrategy}
+
+    Divante\MagentoIntegrationBundle\Mapper\Strategy\MapObjectValue:
+        tags:
+            - {name: object_mapper.mapStrategy}
+
+    Divante\MagentoIntegrationBundle\Mapper\Strategy\MapQuantityValue:
+        tags:
+            - {name: object_mapper.mapStrategy}
+
+    Divante\MagentoIntegrationBundle\Mapper\Strategy\MapSelectValue:
+        tags:
+            - {name: object_mapper.mapStrategy}
+
+    Divante\MagentoIntegrationBundle\Mapper\Strategy\MapTextareaValue:
+        tags:
+            - {name: object_mapper.mapStrategy}
+    Divante\MagentoIntegrationBundle\Mapper\Strategy\MapWysiwygValue:
+        tags:
+            - {name: object_mapper.mapStrategy}
+    Divante\MagentoIntegrationBundle\Mapper\Strategy\MapTextValue:
+        tags:
+            - {name: object_mapper.mapStrategy}
+
+    Divante\MagentoIntegrationBundle\Mapper\Strategy\MapUserValue:
+        tags:
+            - {name: object_mapper.mapStrategy}
+
+    Divante\MagentoIntegrationBundle\Mapper\Strategy\MapMultiSelectValue:
+        tags:
+            - {name: object_mapper.mapStrategy}
+
+    Divante\MagentoIntegrationBundle\Mapper\Strategy\MapBlockValue:
+        tags:
+            - {name: object_mapper.mapStrategy}
+
+    Divante\MagentoIntegrationBundle\Mapper\Strategy\MapObjectBricks:
+        tags:
+            - {name: object_mapper.mapStrategy}
+
+    Divante\MagentoIntegrationBundle\Mapper\Strategy\MapClassificationStoreValue:
+        tags:
+            - {name: object_mapper.mapStrategy}
+
+    Divante\MagentoIntegrationBundle\Mapper\Strategy\ClassificationStore\MapBooleanKey:
+        tags:
+            - {name: object_mapper_classificationstore.mapStrategy}
+
+    Divante\MagentoIntegrationBundle\Mapper\Strategy\ClassificationStore\MapCheckboxKey:
+        tags:
+            - {name: object_mapper_classificationstore.mapStrategy}
+
+    Divante\MagentoIntegrationBundle\Mapper\Strategy\ClassificationStore\MapQuantityValueKey:
+        tags:
+            - {name: object_mapper_classificationstore.mapStrategy}
+
+    Divante\MagentoIntegrationBundle\Mapper\Strategy\ClassificationStore\MapSelectKey:
+        tags:
+            - {name: object_mapper_classificationstore.mapStrategy}
+
+    Divante\MagentoIntegrationBundle\Mapper\Strategy\ClassificationStore\MapTextKey:
+        tags:
+            - {name: object_mapper_classificationstore.mapStrategy}
+
+    Divante\MagentoIntegrationBundle\Mapper\Strategy\ClassificationStore\MapCountrySelectKey:
+        tags:
+            - {name: object_mapper_classificationstore.mapStrategy}
+
+    Divante\MagentoIntegrationBundle\Mapper\Strategy\ClassificationStore\MapLanguageSelectKey:
+        tags:
+            - {name: object_mapper_classificationstore.mapStrategy}
+
+    Divante\MagentoIntegrationBundle\Mapper\Strategy\ClassificationStore\MapDateKey:
+        tags:
+            - {name: object_mapper_classificationstore.mapStrategy}
+
+    Divante\MagentoIntegrationBundle\Mapper\Strategy\ClassificationStore\MapTextAreaKey:
+        tags:
+            - {name: object_mapper_classificationstore.mapStrategy}
+    Divante\MagentoIntegrationBundle\Mapper\Strategy\ClassificationStore\MapWysiwygKey:
+        tags:
+            - {name: object_mapper_classificationstore.mapStrategy}

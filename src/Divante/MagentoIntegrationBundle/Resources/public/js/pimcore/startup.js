@@ -67,7 +67,7 @@ initialize: function () {
         }
     },
     isConfiguration: function (object) {
-        return 'integrationConfiguration' === object.data.general.o_className;
+        return 'IntegrationConfiguration' === object.data.general.o_className;
     },
 
     isSynchronized: function (object) {

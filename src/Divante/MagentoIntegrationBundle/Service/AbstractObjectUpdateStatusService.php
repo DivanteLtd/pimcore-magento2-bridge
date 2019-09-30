@@ -92,6 +92,9 @@ abstract class AbstractObjectUpdateStatusService extends AbstractObjectService
             );
         }
         $this->removeListeners();
+        if (strpos($request->message, 'successfully added to queue')) {
+            $request->status = IntegrationHelper::SYNC_STATUS_SENT;
+        }
         $object->setProperty(IntegrationHelper::SYNC_PROPERTY_NAME, 'text', $request->status);
         $object->setOmitMandatoryCheck(true);
         $this->logSyncStatus($object, $request);
