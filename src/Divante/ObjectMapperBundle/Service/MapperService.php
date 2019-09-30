@@ -14,7 +14,6 @@ use Pimcore\Cache\Core\Exception\InvalidArgumentException;
 use Pimcore\Model\DataObject;
 use Pimcore\Model\DataObject\Concrete;
 use Pimcore\Model\Webservice\Data\DataObject\Element;
-
 use Divante\MagentoIntegrationBundle\Interfaces\MapperInterface;
 
 use Divante\ObjectMapperBundle\Helper\MapperHelper;
@@ -201,12 +200,13 @@ class MapperService implements MapperInterface
      *
      * @return array
      */
-    private function getAllFieldDataChilds($field){
+    private function getAllFieldDataChilds($field)
+    {
         $dataChilds = [];
-        foreach ($field->childs as $field){
-            if($field instanceof \Pimcore\Model\DataObject\ClassDefinition\Layout && $field->getChildren()){
+        foreach ($field->childs as $field) {
+            if ($field instanceof DataObject\ClassDefinition\Layout && $field->getChildren()) {
                 $dataChilds = array_merge($dataChilds, $this->getAllFieldDataChilds($field));
-            }else{
+            } else {
                 $dataChilds[] = $field;
             }
         }
