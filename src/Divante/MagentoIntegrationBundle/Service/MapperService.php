@@ -18,7 +18,6 @@ use Pimcore\Model\DataObject;
 use Pimcore\Model\DataObject\Concrete;
 use Pimcore\Model\Webservice\Data\DataObject\Element;
 
-
 /**
  * Class MapperService
  * @package Divante\MagentoIntegrationBundle\Service
