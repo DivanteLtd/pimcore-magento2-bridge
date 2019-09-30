@@ -16,7 +16,7 @@ class MapperHelper
 {
     const OBJECT_TYPE_PRODUCT = 'product';
     const OBJECT_TYPE_CATEGORY = 'category';
-    const TEXT_TYPES = ['input', 'numeric', 'country', 'language'];
+    const TEXT_TYPES = ['input', 'numeric', 'country', 'language', 'calculatedValue'];
     const TEXT_AREA_TYPES = ['textarea'];
     const WYSIWYG_TYPES   = ['wysiwyg'];
     const DATE_TYPES = ['date', 'datetime', 'time'];
