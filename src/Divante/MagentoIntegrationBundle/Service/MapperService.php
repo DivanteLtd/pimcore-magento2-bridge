@@ -17,7 +17,6 @@ use Pimcore\Cache\Core\Exception\InvalidArgumentException;
 use Pimcore\Model\DataObject;
 use Pimcore\Model\DataObject\Concrete;
 use Pimcore\Model\Webservice\Data\DataObject\Element;
-use Divante\MagentoIntegrationBundle\Interfaces\MapperInterface;
 
 
 /**
