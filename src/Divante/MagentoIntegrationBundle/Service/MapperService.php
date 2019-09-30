@@ -194,6 +194,24 @@ class MapperService
     }
 
     /**
+     * @param $field
+     *
+     * @return array
+     */
+    private function getAllFieldDataChilds($field)
+    {
+        $dataChilds = [];
+        foreach ($field->childs as $field) {
+            if ($field instanceof DataObject\ClassDefinition\Layout && $field->getChildren()) {
+                $dataChilds = array_merge($dataChilds, $this->getAllFieldDataChilds($field));
+            } else {
+                $dataChilds[] = $field;
+            }
+        }
+        return $dataChilds;
+    }
+
+    /**
      * @param string   $elementName
      * @param Concrete $object
      * @return null
@@ -203,7 +221,8 @@ class MapperService
         $localizedFieldsArray = $object->getClass()->getFieldDefinition('localizedfields')->getReferencedFields();
         $localizedFieldsArray[] = $object->getClass()->getFieldDefinition('localizedfields');
         foreach ($localizedFieldsArray as $localizedFields) {
-            foreach ($localizedFields->childs as $field) {
+            $dataFields = $this->getAllFieldDataChilds($localizedFields);
+            foreach ($dataFields as $field) {
                 if ($field->name == $elementName) {
                     return $field->getOptions();
                 }

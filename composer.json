@@ -20,18 +20,18 @@
   "require": {
     "php": ">=7.1",
     "ext-json": "*",
-    "pimcore/pimcore": "^5.2.0 | ^6.0.0",
+    "pimcore/pimcore": "^5.2.0 | ^6.0.0"
   },
   "autoload": {
     "psr-4": {
-      "Divante\\MagentoIntegrationBundle\\": "/src",
+      "Divante\\MagentoIntegrationBundle\\": "/src"
     }
   },
   "minimum-stability": "dev",
   "extra": {
     "pimcore": {
       "bundles": [
-        "Divante\\MagentoIntegrationBundle\\DivanteMagentoIntegrationBundle",
+        "Divante\\MagentoIntegrationBundle\\DivanteMagentoIntegrationBundle"
       ]
     }
   }
