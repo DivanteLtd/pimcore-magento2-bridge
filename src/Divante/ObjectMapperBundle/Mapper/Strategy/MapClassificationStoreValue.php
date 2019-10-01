@@ -65,7 +65,7 @@ class MapClassificationStoreValue extends AbstractMapStrategy
                 $value = null;
 
                 foreach ($group['keys']['default'] as $attribute) {
-                $defaultValue = null;-                foreach ($group['keys']['default'] as $attribute) {
+                $defaultValue = null;                foreach ($group['keys']['default'] as $attribute) {
                 if(key_exists($language,$group['keys'])){
                     foreach ( $group['keys'][$language] as $attribute) {
                         if ($attribute['name'] == $attributeDefinition->getName()) {
