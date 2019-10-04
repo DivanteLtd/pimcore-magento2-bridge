@@ -20,7 +20,7 @@
   "require": {
     "php": ">=7.1",
     "ext-json": "*",
-    "pimcore/pimcore": "^5.2.0 | ^6.0.0"
+    "pimcore/pimcore": "^5.4.0 | ^6.0.0"
   },
   "autoload": {
     "psr-4": {

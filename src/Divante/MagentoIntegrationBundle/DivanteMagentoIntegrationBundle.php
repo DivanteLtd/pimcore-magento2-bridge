@@ -11,6 +11,7 @@ namespace Divante\MagentoIntegrationBundle;
 use Divante\MagentoIntegrationBundle\Mapper\MapperStrategyCompilerPass;
 use Divante\MagentoIntegrationBundle\Migrations\Installer;
 use Pimcore\Extension\Bundle\AbstractPimcoreBundle;
+use Pimcore\Extension\Bundle\Traits\PackageVersionTrait;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
@@ -19,6 +20,8 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
  */
 class DivanteMagentoIntegrationBundle extends AbstractPimcoreBundle
 {
+    use PackageVersionTrait;    
+
     /**
      * @param ContainerBuilder $container
      */
@@ -31,17 +34,17 @@ class DivanteMagentoIntegrationBundle extends AbstractPimcoreBundle
     /**
      * @inheritdoc
      */
-    public function getNiceName()
+    protected function getComposerPackageName()
     {
-        return "Divante Pimcore 5 Magento 2 integration";
+        return 'divante-ltd/pimcore-magento2-bridge';
     }
 
     /**
      * @inheritdoc
      */
-    public function getVersion()
+    public function getNiceName()
     {
-        return '1.2.0';
+        return "Divante Pimcore 5 Magento 2 integration";
     }
 
     /**
