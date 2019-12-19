@@ -218,13 +218,16 @@ class MapperService
      */
     protected function getOptionsForSelect(string $elementName, Concrete $object)
     {
-        $localizedFieldsArray = $object->getClass()->getFieldDefinition('localizedfields')->getReferencedFields();
-        $localizedFieldsArray[] = $object->getClass()->getFieldDefinition('localizedfields');
-        foreach ($localizedFieldsArray as $localizedFields) {
-            $dataFields = $this->getAllFieldDataChilds($localizedFields);
-            foreach ($dataFields as $field) {
-                if ($field->name == $elementName) {
-                    return $field->getOptions();
+        $localizedFields = $object->getClass()->getFieldDefinition('localizedfields');
+        if ($localizedFields) {
+            $localizedFieldsArray   = $localizedFields->getReferencedFields();
+            $localizedFieldsArray[] = $localizedFields;
+            foreach ($localizedFieldsArray as $localizedFields) {
+                $dataFields = $this->getAllFieldDataChilds($localizedFields);
+                foreach ($dataFields as $field) {
+                    if ($field->name == $elementName) {
+                        return $field->getOptions();
+                    }
                 }
             }
         }
