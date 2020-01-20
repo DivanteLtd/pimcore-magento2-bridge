@@ -1,9 +1,9 @@
 <?php
 /**
- * @category    bosch-stuttgart
- * @date        18/01/2020
+ * @category    pimcore5-module-magento2-integration
+ * @date        20/01/2020
  * @author      Michał Bolka <mbolka@divante.co>
- * @copyright   Copyright (c) 2020 Divante Ltd. (https://divante.co)
+ * @copyright   Copyright (c) 2020 DIVANTE (https://divante.co)
  */
 
 namespace Divante\MagentoIntegrationBundle\Domain\Mapper;
