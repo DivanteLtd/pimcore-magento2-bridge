@@ -8,7 +8,7 @@
 
 namespace Divante\MagentoIntegrationBundle\Model\DataObject;
 
-use Divante\MagentoIntegrationBundle\Helper\IntegrationHelper;
+use Divante\MagentoIntegrationBundle\Domain\Helper\IntegrationHelper;
 use Pimcore\Model\Asset;
 use Pimcore\Model\DataObject\Concrete;
 
@@ -92,10 +92,10 @@ abstract class IntegrationConfiguration extends Concrete implements IntegrationC
      * @param $object
      * @return int
      */
-    public function getConnectionType($object): int
+    public function getRelationType($object): int
     {
         if ($object instanceof Asset) {
-            return IntegrationHelper::IS_ASSET;
+            return IntegrationHelper::RELATION_TYPE_ASSET;
         }
         if (!$object instanceof Concrete) {
             return -1;
@@ -104,13 +104,13 @@ abstract class IntegrationConfiguration extends Concrete implements IntegrationC
             strpos($object->getPath(), $this->getProductRoot()->getFullPath()) === 0
             && $object->getClassId() == $this->getProductClass()
         ) {
-            return IntegrationHelper::IS_PRODUCT;
+            return IntegrationHelper::RELATION_TYPE_PRODUCT;
         }
         if ($this->getCategoryRoot() &&
             strpos($object->getPath(), $this->getCategoryRoot()->getFullPath()) === 0
             && $object->getClassId() == $this->getCategoryClass()
         ) {
-            return IntegrationHelper::IS_CATEGORY;
+            return IntegrationHelper::RELATION_TYPE_CATEGORY;
         }
         return -1;
     }
@@ -122,7 +122,7 @@ abstract class IntegrationConfiguration extends Concrete implements IntegrationC
      */
     public function areParentsPublished(Concrete $object): bool
     {
-        if ($this->getConnectionType($object) != IntegrationHelper::IS_CATEGORY) {
+        if ($this->getRelationType($object) != IntegrationHelper::OBJECT_TYPE_CATEGORY) {
             return true;
         }
         /** @var Concrete $parent */

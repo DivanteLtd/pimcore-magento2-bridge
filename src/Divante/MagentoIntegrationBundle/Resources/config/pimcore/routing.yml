@@ -1,8 +1,29 @@
-magento_integration_object_mapper:
-    resource: "@DivanteMagentoIntegrationBundle/Controller/"
+magento_integration_object_mapper.product:
+    resource: "@DivanteMagentoIntegrationBundle/Action/Mapper/GetProductMapperColumnsAction.php"
+    type: annotation
+    prefix: /admin
+magento_integration_object_mapper.category:
+    resource: "@DivanteMagentoIntegrationBundle/Action/Mapper/GetCategoryMapperColumnsAction.php"
+    type: annotation
+    prefix: /admin
+
+magento_integration_api_rest.update.asset:
+    resource: "@DivanteMagentoIntegrationBundle/Action/Rest/Asset/UpdateAssetStatusAction.php"
     type:     annotation
 
-magento_integration_api_rest:
-    resource: "@DivanteMagentoIntegrationBundle/Controller/Rest/"
+magento_integration_api_rest.update.category:
+    resource: "@DivanteMagentoIntegrationBundle/Action/Rest/Category/UpdateCategoryStatusAction.php"
     type:     annotation
-    prefix:   /webservice/rest
+
+magento_integration_api_rest.update.product:
+    resource: "@DivanteMagentoIntegrationBundle/Action/Rest/Product/UpdateProductStatusAction.php"
+    type:     annotation
+
+
+magento_integration_api_rest.get.category:
+    resource: "@DivanteMagentoIntegrationBundle/Action/Rest/Category/GetCategoryAction.php"
+    type:     annotation
+
+magento_integration_api_rest.get.product:
+    resource: "@DivanteMagentoIntegrationBundle/Action/Rest/Product/GetProductAction.php"
+    type:     annotation

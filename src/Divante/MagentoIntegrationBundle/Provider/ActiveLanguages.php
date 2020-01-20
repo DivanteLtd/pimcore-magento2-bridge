@@ -10,7 +10,6 @@ namespace Divante\MagentoIntegrationBundle\Provider;
 
 use Pimcore\Model\DataObject\ClassDefinition\Data;
 use Pimcore\Model\DataObject\ClassDefinition\DynamicOptionsProvider\SelectOptionsProviderInterface;
-use Pimcore\Model\DataObject\Classificationstore\StoreConfig;
 use Pimcore\Tool;
 
 /**

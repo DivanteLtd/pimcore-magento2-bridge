@@ -34,5 +34,8 @@
         "Divante\\MagentoIntegrationBundle\\DivanteMagentoIntegrationBundle"
       ]
     }
+  },
+  "require-dev": {
+    "divante-ltd/pimcore-magento2-bridge": "dev-master"
   }
 }

@@ -1,9 +1,9 @@
 <?php
 /**
- * @category    magento2-pimcore5-bridge
- * @date        01/10/2018
+ * @category    pimcore5-module-magento2-integration
+ * @date        20/01/2020
  * @author      Michał Bolka <mbolka@divante.co>
- * @copyright   Copyright (c) 2018 DIVANTE (https://divante.co)
+ * @copyright   Copyright (c) 2020 Divante Ltd. (https://divante.co)
  */
 namespace Divante\MagentoIntegrationBundle\Model\Configuration;
 

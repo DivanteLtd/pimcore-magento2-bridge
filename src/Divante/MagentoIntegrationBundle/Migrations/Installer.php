@@ -8,7 +8,7 @@
 
 namespace Divante\MagentoIntegrationBundle\Migrations;
 
-use Divante\MagentoIntegrationBundle\Helper\IntegrationHelper;
+use Divante\MagentoIntegrationBundle\Domain\Helper\IntegrationHelper;
 use Doctrine\DBAL\Migrations\Version;
 use Doctrine\DBAL\Schema\Schema;
 use Pimcore\Cache;
@@ -17,7 +17,6 @@ use Pimcore\Extension\Bundle\Installer\MigrationInstaller;
 use Pimcore\Migrations\MigrationManager;
 use Pimcore\Model\Property\Predefined;
 use Pimcore\Model\DataObject;
-use PimcoreDevkitBundle\Service\InstallerService;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 use Symfony\Component\HttpKernel\Config\FileLocator;
 use Symfony\Component\Process\Process;

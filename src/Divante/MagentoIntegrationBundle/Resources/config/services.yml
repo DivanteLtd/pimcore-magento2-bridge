@@ -1,6 +1,4 @@
 imports:
-- { resource: listeners.yml }
-- { resource: requestServices.yml }
 - { resource: operators.yml }
 - { resource: mapper.yml }
 
@@ -9,82 +7,110 @@ services:
         autowire: true
         autoconfigure: true
         public: false
+    _instanceof:
+        Divante\MagentoIntegrationBundle\Domain\Common\IntegratedElementServiceInterface:
+            tags: [magento_integration.remote_element.service]
 
-    Divante\MagentoIntegrationBundle\Service\MapperService:
+# Action
+    Divante\MagentoIntegrationBundle\Action\Rest\:
+        resource: '../../Action/Rest'
+        public: true
+        tags: ['controller.service_arguments']
+
+    # Domain
+    Divante\MagentoIntegrationBundle\Domain\ElementDeleteService:
+        arguments:
+            - !tagged_iterator magento_integration.remote_element.service
+    Divante\MagentoIntegrationBundle\Domain\RemoteElementService:
+        arguments:
+            - !tagged_iterator magento_integration.remote_element.service
+
+### Asset
+    Divante\MagentoIntegrationBundle\Domain\Asset\EventListener\AssetListener:
+        tags:
+            - { name: kernel.event_listener, event: pimcore.asset.postUpdate, method: onPostAssetUpdate, priority: 50 }
+
+    Divante\MagentoIntegrationBundle\Domain\Asset\AssetStatusService: ~
+    Divante\MagentoIntegrationBundle\Domain\Asset\IntegratedAssetService:
+        calls:
+            - [setContainer, ["@service_container"]]
+
+### Category
+    Divante\MagentoIntegrationBundle\Domain\Category\CategoryStatusService: ~
+    Divante\MagentoIntegrationBundle\Domain\Category\CategoryValidator: ~
+    Divante\MagentoIntegrationBundle\Domain\Category\IntegratedCategoryService:
+        calls:
+            - [setContainer, ["@service_container"]]
+    Divante\MagentoIntegrationBundle\Domain\Category\MappedCategoryService: ~
+
+### Common
+    Divante\MagentoIntegrationBundle\Domain\Common\StatusService: ~
+
+### DataObject
+    Divante\MagentoIntegrationBundle\Domain\DataObject\DataObjectEventListener:
+        tags:
+            - { name: kernel.event_listener, event: pimcore.dataobject.preAdd,     method: onPreUpdate,  priority: 50 }
+            - { name: kernel.event_listener, event: pimcore.dataobject.preUpdate,  method: onPreUpdate,  priority: 50 }
+            - { name: kernel.event_listener, event: pimcore.dataobject.postAdd,    method: onPostUpdate, priority: 50 }
+            - { name: kernel.event_listener, event: pimcore.dataobject.postUpdate, method: onPostUpdate, priority: 50 }
+            - { name: kernel.event_listener, event: pimcore.dataobject.postDelete, method: onPostDelete, priority: 50 }
         public: true
 
-    Divante\MagentoIntegrationBundle\Service\RestClient:
-      public: true
+### IntegrationConfiguration
+    Divante\MagentoIntegrationBundle\Domain\IntegrationConfiguration\IntegrationConfigurationListener:
+        tags:
+            - { name: kernel.event_listener, event: pimcore.dataobject.preUpdate,  method: onPreUpdate,  priority: 50 }
+            - { name: kernel.event_listener, event: pimcore.dataobject.preAdd,     method: onPreUpdate,  priority: 50 }
 
-    Divante\MagentoIntegrationBundle\Service\RestClientBuilder:
-      public: true
-    Divante\MagentoIntegrationBundle\Provider\ClassList:
-      public: true
+    Divante\MagentoIntegrationBundle\Domain\IntegrationConfiguration\IntegrationConfigurationRepository: ~
+    Divante\MagentoIntegrationBundle\Domain\IntegrationConfiguration\IntegrationConfigurationService: ~
+    Divante\MagentoIntegrationBundle\Domain\IntegrationConfiguration\IntegrationConfigurationValidator: ~
 
-    Divante\MagentoIntegrationBundle\Service\IntegrationConfigurationService:
-      public: true
+### Product
+    Divante\MagentoIntegrationBundle\Domain\Product\IntegratedProductService:
+        calls:
+            - [setContainer, ["@service_container"]]
+    Divante\MagentoIntegrationBundle\Domain\Product\MappedProductService: ~
+    Divante\MagentoIntegrationBundle\Domain\Product\ProductStatusService: ~
+    Divante\MagentoIntegrationBundle\Domain\Product\ProductValidatorService: ~
 
-    Divante\MagentoIntegrationBundle\Service\IntegratedObjectService:
-      public: true
+# Installer
+    Divante\MagentoIntegrationBundle\Migrations\Installer:
+        public: true
+        arguments:
+            $bundle: "@=service('kernel').getBundle('DivanteMagentoIntegrationBundle')"
 
-    Divante\MagentoIntegrationBundle\Model\Webservice\Service:
-      public: true
 
+# Providers
+    Divante\MagentoIntegrationBundle\Provider\:
+        resource: '../../Provider'
+        public: true
 
-    Divante\MagentoIntegrationBundle\Service\Product\ProductStatusService:
-      public: true
-      calls:
-        - [setContainer, ["@service_container"]]
+    Divante\MagentoIntegrationBundle\Provider\MagentoRestOutputProvider:
+        arguments:
+            - "@file_locator"
 
-    Divante\MagentoIntegrationBundle\Service\Product\ProductService:
-      public: true
-      calls:
-        - [setContainer, ["@service_container"]]
+    magento2_integration.storeprovider:
+        class: Divante\MagentoIntegrationBundle\Provider\MagentoStore
+        public: true
 
-    Divante\MagentoIntegrationBundle\Service\Category\CategoryService:
-      public: true
-      calls:
-        - [setContainer, ["@service_container"]]
-
-    Divante\MagentoIntegrationBundle\Service\Category\CategoryStatusService:
-      public: true
-      calls:
-        - [setContainer, ["@service_container"]]
-
+# Resolver
     Divante\MagentoIntegrationBundle\Resolver\RequestDTOResolver:
         arguments:
             - '@validator'
         tags:
             - { name: controller.request_value_resolver, priority: 50 }
 
-    Divante\MagentoIntegrationBundle\Controller\:
-        resource: '../../Controller'
-        public: true
-        tags: ['controller.service_arguments']
+# Responder
+    Divante\MagentoIntegrationBundle\Responder\JsonResponder: ~
+    Divante\MagentoIntegrationBundle\Responder\MappedObjectJsonResponder: ~
 
-    Divante\MagentoIntegrationBundle\Migrations\Installer:
-        public: true
-        arguments:
-          $bundle: "@=service('kernel').getBundle('DivanteMagentoIntegrationBundle')"
-
-    Divante\MagentoIntegrationBundle\Event\DeleteEventObjectFactory:
-        public: true
-
-    Divante\MagentoIntegrationBundle\Provider\RestOutputProviderInterface:
-        class: Divante\MagentoIntegrationBundle\Provider\MagentoRestOutputProvider
-        public: true
-        arguments:
-          - "@file_locator" 
-    magento2_integration.storeprovider:
-      class: Divante\MagentoIntegrationBundle\Provider\MagentoStore
+# Rest
+    Divante\MagentoIntegrationBundle\Rest\RestClient:
       public: true
 
-    Divante\MagentoIntegrationBundle\Provider\ClassificationStore:
-      public: true
-    Divante\MagentoIntegrationBundle\Provider\MagentoStore:
+    Divante\MagentoIntegrationBundle\Rest\RestClientBuilder:
       public: true
 
-    Divante\MagentoIntegrationBundle\Provider\ActiveLanguages:
-        public: true
-
-    Divante\MagentoIntegrationBundle\Event\IntegratedObjectEventFactory: ~
+# Security
+    Divante\MagentoIntegrationBundle\Security\ElementPermissionChecker: ~

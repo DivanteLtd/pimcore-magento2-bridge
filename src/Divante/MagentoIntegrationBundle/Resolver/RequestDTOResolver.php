@@ -1,14 +1,14 @@
 <?php
 /**
- * @category    magento2-pimcore5-bridge
- * @date        20/08/2018
+ * @category    pimcore5-module-magento2-integration
+ * @date        20/01/2020
  * @author      Michał Bolka <mbolka@divante.co>
- * @copyright   Copyright (c) 2018 DIVANTE (https://divante.co)
+ * @copyright   Copyright (c) 2020 Divante Ltd. (https://divante.co)
  */
 
 namespace Divante\MagentoIntegrationBundle\Resolver;
 
-use Divante\MagentoIntegrationBundle\Model\Request\AbstractObjectRequest;
+use Divante\MagentoIntegrationBundle\Domain\Common\Reqest\GetElement;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
 use Symfony\Component\HttpKernel\Controller\ArgumentValueResolverInterface;
@@ -47,7 +47,7 @@ class RequestDTOResolver implements ArgumentValueResolverInterface
         $reflection = new \ReflectionClass($argument->getType());
         return
             $reflection->getParentClass()
-            && $reflection->getParentClass()->getName() == AbstractObjectRequest::class;
+            && $reflection->getParentClass()->getName() == GetElement::class;
     }
 
     /**
