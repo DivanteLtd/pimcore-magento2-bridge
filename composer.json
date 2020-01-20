@@ -3,17 +3,18 @@
   "type": "pimcore-bundle",
   "license": "GPL-3.0-or-later",
   "description": "Integration module allows to integrate Pimcore platform with Magento 2",
+  "version": "2.0",
   "keywords": [
     "pimcore",
     "pimcore-plugin",
     "Magento2-integration"
   ],
-  "homepage": "https://divante.co",
+  "homepage": "https://divante.com",
   "authors": [
     {
       "name": "Michał Bolka",
-      "email": "mbolka@divante.pl",
-      "homepage": "https://divante.co",
+      "email": "mbolka@divante.com",
+      "homepage": "https://divante.com",
       "role": "Developer"
     }
   ],
@@ -27,15 +28,11 @@
       "Divante\\MagentoIntegrationBundle\\": "/src"
     }
   },
-  "minimum-stability": "dev",
   "extra": {
     "pimcore": {
       "bundles": [
         "Divante\\MagentoIntegrationBundle\\DivanteMagentoIntegrationBundle"
       ]
     }
-  },
-  "require-dev": {
-    "divante-ltd/pimcore-magento2-bridge": "dev-master"
   }
 }
