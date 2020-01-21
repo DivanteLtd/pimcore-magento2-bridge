@@ -14,8 +14,8 @@ namespace Divante\MagentoIntegrationBundle\Domain\Helper;
  */
 class MapperEventTypes
 {
-    const PRE_PRODUCT_MAP   = 'magento_integration.pre_product_map';
-    const POST_PRODUCT_MAP  = 'magento_integration.post_product_map';
-    const PRE_CATEGORY_MAP  = 'magento_integration.pre_category_map';
+    const PRE_PRODUCT_MAP = 'magento_integration.pre_product_map';
+    const POST_PRODUCT_MAP = 'magento_integration.post_product_map';
+    const PRE_CATEGORY_MAP = 'magento_integration.pre_category_map';
     const POST_CATEGORY_MAP = 'magento_integration.post_category_map';
 }

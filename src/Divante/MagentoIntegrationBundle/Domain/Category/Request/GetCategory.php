@@ -5,6 +5,7 @@
  * @author      Michał Bolka <mbolka@divante.co>
  * @copyright   Copyright (c) 2020 Divante Ltd. (https://divante.co)
  */
+
 namespace Divante\MagentoIntegrationBundle\Domain\Category\Request;
 
 use Divante\MagentoIntegrationBundle\Domain\Common\Reqest\GetElement;

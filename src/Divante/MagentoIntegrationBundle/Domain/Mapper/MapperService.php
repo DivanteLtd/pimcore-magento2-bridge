@@ -9,7 +9,7 @@
 namespace Divante\MagentoIntegrationBundle\Domain\Mapper;
 
 use Divante\MagentoIntegrationBundle\Domain\Helper\IntegrationHelper;
-use Divante\MagentoIntegrationBundle\Domain\Mapper\Helper\MapperHelper;
+use Divante\MagentoIntegrationBundle\Domain\Helper\MapperHelper;
 use Divante\MagentoIntegrationBundle\Model\DataObject\IntegrationConfiguration;
 use Divante\MagentoIntegrationBundle\Model\Mapping\FromColumn;
 use Pimcore\Cache\Core\Exception\InvalidArgumentException;
@@ -25,14 +25,12 @@ class MapperService
 
     /** @var MapperContext */
     private $mapperContext;
-    /**
-     * @var EventDispatcherInterface
-     */
+    /** @var EventDispatcherInterface */
     private $eventDispatcher;
 
     public function __construct(MapperContext $context, EventDispatcherInterface $eventDispatcher)
     {
-        $this->mapperContext = $context;
+        $this->mapperContext   = $context;
         $this->eventDispatcher = $eventDispatcher;
     }
 
@@ -43,7 +41,6 @@ class MapperService
      */
     public function getOutObject(DataObject\Concrete $object)
     {
-
         // load all data (eg. lazy loaded fields like multihref, object, ...)
         DataObject\Service::loadAllObjectFields($object);
         $apiObject = Mapper::map($object, '\\Pimcore\\Model\\Webservice\\Data\\DataObject\\Concrete\\Out', 'out');
@@ -76,12 +73,12 @@ class MapperService
                 $object->{$key} = $value;
             } else {
                 $elements = new \stdClass();
-                $value = array_filter($value, function ($elem) use ($objectClass, $configuration) {
+                $value    = array_filter($value, function ($elem) use ($objectClass, $configuration) {
                     return $this->canAttributeBeProcessed($elem, $objectClass, $configuration);
                 });
                 /** @var Element $element */
                 foreach ($value as $element) {
-                    $label = $objectClass->getFieldDefinition($element->name)->getTitle();
+                    $label          = $objectClass->getFieldDefinition($element->name)->getTitle();
                     $element->label = $label ? $label : $element->name;
                     $this->mapperContext->map(
                         $element,
@@ -96,15 +93,6 @@ class MapperService
         }
         $this->removeUnusedAttributes($object);
         return $object;
-    }
-
-    /**
-     * @param \stdClass $object
-     */
-    protected function removeUnusedAttributes(\stdClass &$object)
-    {
-        unset($object->notes);
-        unset($object->childs);
     }
 
     /**
@@ -124,6 +112,15 @@ class MapperService
             $definition->getFieldDefinition($element->name)->storeId
             != $configuration->getDefaultClassificationStore()
         );
+    }
+
+    /**
+     * @param \stdClass $object
+     */
+    protected function removeUnusedAttributes(\stdClass &$object)
+    {
+        unset($object->notes);
+        unset($object->childs);
     }
 
     /**
@@ -167,7 +164,6 @@ class MapperService
         return $result;
     }
 
-
     /**
      * @param DataObject\ClassDefinition\Data $field
      * @return FromColumn
@@ -203,51 +199,6 @@ class MapperService
     public function loadSelectFieldData(&$out, Concrete $object): void
     {
         $this->loadKeys($out->elements, $object);
-    }
-
-    /**
-     * @param $field
-     *
-     * @return array
-     */
-    private function getAllFieldDataChilds($field)
-    {
-        $dataChilds = [];
-        foreach ($field->childs as $field) {
-            if ($field instanceof DataObject\ClassDefinition\Layout && $field->getChildren()) {
-                $dataChilds = array_merge($dataChilds, $this->getAllFieldDataChilds($field));
-            } else {
-                $dataChilds[] = $field;
-            }
-        }
-        return $dataChilds;
-    }
-
-    /**
-     * @param string   $elementName
-     * @param Concrete $object
-     * @return null
-     */
-    protected function getOptionsForSelect(string $elementName, Concrete $object)
-    {
-        $localizedFields = $object->getClass()->getFieldDefinition('localizedfields');
-        if ($localizedFields) {
-            $localizedFieldsArray   = $localizedFields->getReferencedFields();
-            $localizedFieldsArray[] = $localizedFields;
-            foreach ($localizedFieldsArray as $localizedFields) {
-                $dataFields = $this->getAllFieldDataChilds($localizedFields);
-                foreach ($dataFields as $field) {
-                    if ($field->name == $elementName) {
-                        return $field->getOptions();
-                    }
-                }
-            }
-        }
-        $fielDefinition = $object->getClass()->getFieldDefinition($elementName);
-        if ($fielDefinition instanceof DataObject\ClassDefinition\Data) {
-            return $fielDefinition->getOptions();
-        }
-        return null;
     }
 
     /**
@@ -293,6 +244,51 @@ class MapperService
     }
 
     /**
+     * @param string   $elementName
+     * @param Concrete $object
+     * @return null
+     */
+    protected function getOptionsForSelect(string $elementName, Concrete $object)
+    {
+        $localizedFields = $object->getClass()->getFieldDefinition('localizedfields');
+        if ($localizedFields) {
+            $localizedFieldsArray   = $localizedFields->getReferencedFields();
+            $localizedFieldsArray[] = $localizedFields;
+            foreach ($localizedFieldsArray as $localizedFields) {
+                $dataFields = $this->getAllFieldDataChilds($localizedFields);
+                foreach ($dataFields as $field) {
+                    if ($field->name == $elementName) {
+                        return $field->getOptions();
+                    }
+                }
+            }
+        }
+        $fielDefinition = $object->getClass()->getFieldDefinition($elementName);
+        if ($fielDefinition instanceof DataObject\ClassDefinition\Data) {
+            return $fielDefinition->getOptions();
+        }
+        return null;
+    }
+
+    /**
+     * @param $field
+     *
+     * @return array
+     */
+    private function getAllFieldDataChilds($field)
+    {
+        $dataChilds = [];
+        foreach ($field->childs as $field) {
+            if ($field instanceof DataObject\ClassDefinition\Layout && $field->getChildren()) {
+                $dataChilds = array_merge($dataChilds, $this->getAllFieldDataChilds($field));
+            } else {
+                $dataChilds[] = $field;
+            }
+        }
+        return $dataChilds;
+    }
+
+    /**
      * @param Element $brick
      * @throws \Exception
      */
@@ -307,7 +303,7 @@ class MapperService
             $definition = $brickDefinition->getFieldDefinition($singleField->name);
             if ($definition instanceof DataObject\ClassDefinition\Data\Multiselect) {
                 $options = $definition->getOptions();
-                $values = [];
+                $values  = [];
                 foreach ($singleField->value as $value) {
                     $values = array_filter($options, function ($elem) use ($value) {
                         return $elem['value'] == $value;
@@ -344,14 +340,14 @@ class MapperService
             return;
         }
         $configurableAttributesArray = explode(',', $configurableAttributes);
-        $modifiedAttributesArray = [];
+        $modifiedAttributesArray     = [];
         foreach ($configurableAttributesArray as $attribute) {
             $attribute = str_replace('-', '_', strtolower($attribute));
             if ($object->elements->{$attribute}) {
                 $element = $object->elements->{$attribute};
                 unset($object->elements->{$attribute});
-                $object->elements->{$attribute  . '_conf'} = $element;
-                $modifiedAttributesArray[] = $attribute  . '_conf';
+                $object->elements->{$attribute . '_conf'} = $element;
+                $modifiedAttributesArray[]                = $attribute . '_conf';
             }
         }
         $modifiedAttributes = implode(',', $modifiedAttributesArray);

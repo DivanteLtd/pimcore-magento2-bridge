@@ -17,9 +17,7 @@ use Pimcore\Model\Element\AbstractElement;
  */
 class PostMappingObjectEvent extends IntegratedObjectEvent
 {
-    /**
-     * @var \stdClass
-     */
+    /** @var \stdClass */
     private $mappedObj;
 
     /**

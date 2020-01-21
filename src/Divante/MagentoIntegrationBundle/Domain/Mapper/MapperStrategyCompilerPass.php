@@ -8,7 +8,6 @@
 
 namespace Divante\MagentoIntegrationBundle\Domain\Mapper;
 
-use Divante\MagentoIntegrationBundle\Domain\Mapper\Strategy\MapClassificationStoreValue;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;

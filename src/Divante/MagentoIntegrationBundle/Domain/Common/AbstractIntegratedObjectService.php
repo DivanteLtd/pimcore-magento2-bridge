@@ -8,9 +8,10 @@
 
 namespace Divante\MagentoIntegrationBundle\Domain\Common;
 
+use Divante\MagentoIntegrationBundle\Domain\DataObject\DataObjectEventListener;
 use Divante\MagentoIntegrationBundle\Domain\Helper\ObjectStatusHelper;
 use Divante\MagentoIntegrationBundle\Model\DataObject\IntegrationConfiguration;
-use Divante\MagentoIntegrationBundle\Domain\DataObject\DataObjectEventListener;
+use Divante\MagentoIntegrationBundle\Rest\RestClientBuilder;
 use Pimcore\Model\DataObject\Concrete;
 use Pimcore\Model\Element\AbstractElement;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
@@ -25,30 +26,33 @@ abstract class AbstractIntegratedObjectService implements IntegratedElementServi
 {
     use ContainerAwareTrait;
 
+    /** @var RestClientBuilder */
+    protected $builder;
+
     /** @var StatusService */
     protected $statusService;
 
     /**
      * AbstractIntegratedObjectService constructor.
-     * @param StatusService $statusService
+     * @param StatusService     $statusService
+     * @param RestClientBuilder $builder
      */
-    public function __construct(StatusService $statusService)
+    public function __construct(StatusService $statusService, RestClientBuilder $builder)
     {
         $this->statusService = $statusService;
+        $this->builder   = $builder;
     }
 
-    /**
-     * @param AbstractElement $object
-     *
-     * @return bool
-     */
-    protected function isOnlyIndexChanged(AbstractElement $object): bool
+    public function setSendStatus(AbstractElement $element, IntegrationConfiguration $configuration): void
     {
-        $originObject = Concrete::getById($object->getId(), true);
-        return
-            $originObject instanceof Concrete
-            && $originObject->getIndex() !== $object->getIndex()
-            && $originObject->getFullPath() === $object->getFullPath();
+        $this->removeIntegratorListeners(DataObjectEventListener::class);
+        $this->statusService->setStatusProperty(
+            $element,
+            $configuration->getKey(),
+            ObjectStatusHelper::SYNC_STATUS_SENT
+        );
+        $element->save();
+        $this->restoreIntegratorListeners();
     }
 
     /**
@@ -70,9 +74,10 @@ abstract class AbstractIntegratedObjectService implements IntegratedElementServi
     protected function restoreIntegratorListeners(): void
     {
         $listeners = $this->container->get('event_dispatcher')->getListeners('pimcore.dataobject.preUpdate');
-        $exists = false;
+        $exists    = false;
         foreach ($listeners as $listener) {
-            if ($listener instanceof WrappedListener && strpos($listener->getPretty(), DataObjectEventListener::class) >= 0) {
+            if ($listener instanceof WrappedListener && strpos($listener->getPretty(),
+                    DataObjectEventListener::class) >= 0) {
                 $exists = true;
             }
         }
@@ -89,18 +94,6 @@ abstract class AbstractIntegratedObjectService implements IntegratedElementServi
         }
     }
 
-    public function setSendStatus(AbstractElement $element, IntegrationConfiguration $configuration): void
-    {
-        $this->removeIntegratorListeners(DataObjectEventListener::class);
-        $this->statusService->setStatusProperty(
-            $element,
-            $configuration->getKey(),
-            ObjectStatusHelper::SYNC_STATUS_SENT
-        );
-        $element->save();
-        $this->restoreIntegratorListeners();
-    }
-
     public function setDeleteStatus(AbstractElement $element, IntegrationConfiguration $configuration): void
     {
         $this->removeIntegratorListeners(DataObjectEventListener::class);
@@ -111,5 +104,19 @@ abstract class AbstractIntegratedObjectService implements IntegratedElementServi
         );
         $element->save();
         $this->restoreIntegratorListeners();
+    }
+
+    /**
+     * @param AbstractElement $object
+     *
+     * @return bool
+     */
+    protected function isOnlyIndexChanged(AbstractElement $object): bool
+    {
+        $originObject = Concrete::getById($object->getId(), true);
+        return
+            $originObject instanceof Concrete
+            && $originObject->getIndex() !== $object->getIndex()
+            && $originObject->getFullPath() === $object->getFullPath();
     }
 }

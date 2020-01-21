@@ -8,8 +8,8 @@
 
 namespace Divante\MagentoIntegrationBundle\Domain\Mapper;
 
-use Pimcore\Model\Webservice\Data\DataObject\Element;
 use Divante\MagentoIntegrationBundle\Domain\Mapper\Strategy\MapStrategyInterface;
+use Pimcore\Model\Webservice\Data\DataObject\Element;
 
 /**
  * Class MapperContext
@@ -29,11 +29,11 @@ class MapperContext
     }
 
     /**
-     * @param Element    $field
-     * @param \stdClass  $obj
-     * @param array      $arrayMapping
-     * @param mixed      $language
-     * @param string     $className
+     * @param Element   $field
+     * @param \stdClass $obj
+     * @param array     $arrayMapping
+     * @param mixed     $language
+     * @param string    $className
      */
     public function map(Element $field, \stdClass &$obj, array $arrayMapping, $language, $className): void
     {

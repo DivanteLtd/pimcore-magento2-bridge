@@ -5,6 +5,7 @@
  * @author      Michał Bolka <mbolka@divante.co>
  * @copyright   Copyright (c) 2020 DIVANTE (https://divante.co)
  */
+
 namespace Divante\MagentoIntegrationBundle\Domain\IntegrationConfiguration;
 
 use Pimcore\Model\DataObject\AbstractObject;
@@ -51,10 +52,10 @@ class IntegrationConfigurationRepository
         int $storeView
     ): array {
         if (!$instanceUrl) {
-            $condition = "(productClass = :class OR categoryClass = :class)";
+            $condition     = "(productClass = :class OR categoryClass = :class)";
             $conditionData = ['class' => $object->getClassId()];
         } else {
-            $condition = "instanceUrl = :instance AND magentoStore = :storeView AND " .
+            $condition     = "instanceUrl = :instance AND magentoStore = :storeView AND " .
                 "(productClass = :class OR categoryClass = :class)";
             $conditionData = [
                 'instance'  => $instanceUrl,

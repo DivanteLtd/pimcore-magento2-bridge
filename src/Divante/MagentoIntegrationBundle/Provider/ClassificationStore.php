@@ -20,7 +20,7 @@ class ClassificationStore implements SelectOptionsProviderInterface
 {
     /**
      * @param array $context
-     * @param Data $fieldDefinition
+     * @param Data  $fieldDefinition
      *
      * @return array
      * @throws \Exception
@@ -32,14 +32,14 @@ class ClassificationStore implements SelectOptionsProviderInterface
         $data = [];
         /** @var StoreConfig $store */
         foreach ($stores->getList() as $store) {
-            $data[] =  ["key" => $store->getName(), "value" => $store->getId()];
+            $data[] = ["key" => $store->getName(), "value" => $store->getId()];
         }
         return $data;
     }
 
     /**
      * @param array $context
-     * @param Data $fieldDefinition
+     * @param Data  $fieldDefinition
      *
      * @return bool
      */
@@ -50,7 +50,7 @@ class ClassificationStore implements SelectOptionsProviderInterface
 
     /**
      * @param array $context
-     * @param Data $fieldDefinition
+     * @param Data  $fieldDefinition
      *
      * @return mixed
      */

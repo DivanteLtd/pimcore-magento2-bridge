@@ -5,6 +5,7 @@
  * @author      Michał Bolka <mbolka@divante.co>
  * @copyright   Copyright (c) 2020 DIVANTE (https://divante.co)
  */
+
 namespace Divante\MagentoIntegrationBundle\Domain\Common\Reqest;
 
 use Divante\MagentoIntegrationBundle\Domain\Common\Request\AbstractRequest;
@@ -43,8 +44,8 @@ class UpdateStatus extends AbstractRequest
     public function __construct(Request $request)
     {
         parent::__construct($request);
-        $this->id =  $request->get('id') !== null ? (int) $request->get('id') : null;
-        $this->status = $request->get('status');
+        $this->id      = $request->get('id') !== null ? (int)$request->get('id') : null;
+        $this->status  = $request->get('status');
         $this->message = $request->get('message');
     }
 }

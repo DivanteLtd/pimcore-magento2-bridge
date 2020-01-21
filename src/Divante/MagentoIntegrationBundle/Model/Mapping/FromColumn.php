@@ -5,6 +5,7 @@
  * @author      Michał Bolka <mbolka@divante.co>
  * @copyright   Copyright (c) 2018 DIVANTE (https://divante.co)
  */
+
 namespace Divante\MagentoIntegrationBundle\Model\Mapping;
 
 /**
@@ -13,14 +14,10 @@ namespace Divante\MagentoIntegrationBundle\Model\Mapping;
  */
 class FromColumn
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     public $label;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     public $identifier;
 
     /**
@@ -65,7 +62,7 @@ class FromColumn
                 continue;
             }
 
-            $setter = 'set'.ucfirst($key);
+            $setter = 'set' . ucfirst($key);
 
             if (method_exists($this, $setter)) {
                 $this->$setter($value);

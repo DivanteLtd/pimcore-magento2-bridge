@@ -40,6 +40,7 @@ abstract class IntegrationConfiguration extends Concrete implements IntegrationC
     {
         return $this->clientSecret;
     }
+
     /**
      * @return mixed
      */
@@ -89,6 +90,27 @@ abstract class IntegrationConfiguration extends Concrete implements IntegrationC
     }
 
     /**
+     * Returns false only when object is category and at least one of its parents is not published.
+     * @param Concrete $object
+     * @return bool
+     */
+    public function areParentsPublished(Concrete $object): bool
+    {
+        if ($this->getRelationType($object) != IntegrationHelper::OBJECT_TYPE_CATEGORY) {
+            return true;
+        }
+        /** @var Concrete $parent */
+        $parent = $object->getParent();
+        while ($parent->getId() != $this->getCategoryRoot()->getId()) {
+            if (!$parent->isPublished()) {
+                return false;
+            }
+            $parent = $parent->getParent();
+        }
+        return true;
+    }
+
+    /**
      * @param $object
      * @return int
      */
@@ -113,27 +135,6 @@ abstract class IntegrationConfiguration extends Concrete implements IntegrationC
             return IntegrationHelper::RELATION_TYPE_CATEGORY;
         }
         return -1;
-    }
-
-    /**
-     * Returns false only when object is category and at least one of its parents is not published.
-     * @param Concrete $object
-     * @return bool
-     */
-    public function areParentsPublished(Concrete $object): bool
-    {
-        if ($this->getRelationType($object) != IntegrationHelper::OBJECT_TYPE_CATEGORY) {
-            return true;
-        }
-        /** @var Concrete $parent */
-        $parent = $object->getParent();
-        while ($parent->getId() != $this->getCategoryRoot()->getId()) {
-            if (!$parent->isPublished()) {
-                return false;
-            }
-            $parent = $parent->getParent();
-        }
-        return true;
     }
 
     /**

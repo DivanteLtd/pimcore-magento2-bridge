@@ -5,6 +5,7 @@
  * @author      Michał Bolka <mbolka@divante.co>
  * @copyright   Copyright (c) 2018 DIVANTE (https://divante.co)
  */
+
 namespace Divante\MagentoIntegrationBundle\Model\Mapping;
 
 /**
@@ -13,44 +14,28 @@ namespace Divante\MagentoIntegrationBundle\Model\Mapping;
  */
 class ToColumn extends FromColumn
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     public $type = "";
 
-    /**
-     * @var string
-     */
+    /** @var string */
     public $fieldtype = "";
 
-    /**
-     * @var array
-     */
+    /** @var array */
     public $config = [];
 
-    /**
-     * @var string
-     */
+    /** @var string */
     public $setter = "";
 
-    /**
-     * @var array
-     */
+    /** @var array */
     public $setterConfig = [];
 
-    /**
-     * @var string
-     */
+    /** @var string */
     public $interpreter = "";
 
-    /**
-     * @var array
-     */
+    /** @var array */
     public $interpreterConfig = [];
 
-    /**
-     * @var string
-     */
+    /** @var string */
     public $group = "";
 
     /**

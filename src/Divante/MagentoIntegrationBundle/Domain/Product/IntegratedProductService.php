@@ -7,12 +7,13 @@
  */
 
 namespace Divante\MagentoIntegrationBundle\Domain\Product;
+
 use Divante\MagentoIntegrationBundle\Domain\Common\AbstractIntegratedObjectService;
-use Divante\MagentoIntegrationBundle\Domain\Helper\IntegrationHelper;
 use Divante\MagentoIntegrationBundle\Domain\Common\StatusService;
+use Divante\MagentoIntegrationBundle\Domain\DataObject\DataObjectEventListener;
+use Divante\MagentoIntegrationBundle\Domain\Helper\IntegrationHelper;
 use Divante\MagentoIntegrationBundle\Model\DataObject\IntegrationConfiguration;
 use Divante\MagentoIntegrationBundle\Rest\RestClientBuilder;
-use Divante\MagentoIntegrationBundle\Domain\DataObject\DataObjectEventListener;
 use Pimcore\Model\Element\AbstractElement;
 use Pimcore\Model\Element\ValidationException;
 
@@ -22,13 +23,7 @@ use Pimcore\Model\Element\ValidationException;
  */
 class IntegratedProductService extends AbstractIntegratedObjectService
 {
-    /**
-     * @var RestClientBuilder
-     */
-    private $builder;
-    /**
-     * @var ProductValidatorService
-     */
+    /** @var ProductValidatorService */
     private $validator;
 
     /**
@@ -37,29 +32,45 @@ class IntegratedProductService extends AbstractIntegratedObjectService
      * @param RestClientBuilder       $builder
      * @param ProductValidatorService $validator
      */
-    public function __construct(StatusService $statusService, RestClientBuilder $builder, ProductValidatorService $validator)
-    {
-        parent::__construct($statusService);
-        $this->builder = $builder;
+    public function __construct(
+        StatusService $statusService,
+        RestClientBuilder $builder,
+        ProductValidatorService $validator
+    ) {
+        parent::__construct($statusService, $builder);
         $this->validator = $validator;
     }
 
+    /**
+     * @param AbstractElement          $element
+     * @param IntegrationConfiguration $configuration
+     */
     public function send(AbstractElement $element, IntegrationConfiguration $configuration): void
     {
         $this->builder->getClient($configuration)->sendProduct($element);
     }
+
+    /**
+     * @param AbstractElement          $element
+     * @param IntegrationConfiguration $configuration
+     */
     public function delete(AbstractElement $element, IntegrationConfiguration $configuration): void
     {
         $this->builder->getClient($configuration)->deleteProduct($element);
     }
 
+    /**
+     * @param AbstractElement          $element
+     * @param IntegrationConfiguration $configuration
+     * @return bool
+     */
     public function supports(AbstractElement $element, IntegrationConfiguration $configuration): bool
     {
         return $configuration->getRelationType($element) == IntegrationHelper::RELATION_TYPE_PRODUCT;
     }
 
     /**
-     * @param AbstractElement                 $element
+     * @param AbstractElement          $element
      * @param IntegrationConfiguration $configuration
      * @throws ValidationException
      */

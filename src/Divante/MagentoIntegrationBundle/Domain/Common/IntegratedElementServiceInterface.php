@@ -17,10 +17,40 @@ use Pimcore\Model\Element\AbstractElement;
  */
 interface IntegratedElementServiceInterface
 {
+    /**
+     * @param AbstractElement          $element
+     * @param IntegrationConfiguration $configuration
+     * @return bool
+     */
     public function supports(AbstractElement $element, IntegrationConfiguration $configuration): bool;
+
+    /**
+     * @param AbstractElement          $element
+     * @param IntegrationConfiguration $configuration
+     */
     public function send(AbstractElement $element, IntegrationConfiguration $configuration): void;
+
+    /**
+     * @param AbstractElement          $element
+     * @param IntegrationConfiguration $configuration
+     */
     public function delete(AbstractElement $element, IntegrationConfiguration $configuration): void;
+
+    /**
+     * @param AbstractElement          $element
+     * @param IntegrationConfiguration $configuration
+     */
     public function validate(AbstractElement $element, IntegrationConfiguration $configuration): void;
+
+    /**
+     * @param AbstractElement          $element
+     * @param IntegrationConfiguration $configuration
+     */
     public function setSendStatus(AbstractElement $element, IntegrationConfiguration $configuration): void;
+
+    /**
+     * @param AbstractElement          $element
+     * @param IntegrationConfiguration $configuration
+     */
     public function setDeleteStatus(AbstractElement $element, IntegrationConfiguration $configuration): void;
 }

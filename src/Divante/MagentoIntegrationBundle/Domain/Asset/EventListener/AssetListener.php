@@ -9,9 +9,9 @@
 namespace Divante\MagentoIntegrationBundle\Domain\Asset\EventListener;
 
 use Divante\MagentoIntegrationBundle\Domain\Asset\IntegratedAssetService;
+use Divante\MagentoIntegrationBundle\Model\DataObject\IntegrationConfiguration;
 use Pimcore\Event\Model\AssetEvent;
 use Pimcore\Model\Asset;
-use Pimcore\Model\DataObject\IntegrationConfiguration;
 
 /**
  * Class AssetListener
@@ -19,19 +19,16 @@ use Pimcore\Model\DataObject\IntegrationConfiguration;
  */
 class AssetListener
 {
-    /**
-     * @var IntegratedAssetService
-     */
+    /** @var IntegratedAssetService */
     private $assetService;
 
     /**
      * ObjectListener constructor.
-     * @param IntegratedAssetService  $assetService
+     * @param IntegratedAssetService $assetService
      */
-    public function __construct(
-        IntegratedAssetService $assetService
-    ) {
-        $this->assetService       = $assetService;
+    public function __construct(IntegratedAssetService $assetService)
+    {
+        $this->assetService = $assetService;
     }
 
     /**

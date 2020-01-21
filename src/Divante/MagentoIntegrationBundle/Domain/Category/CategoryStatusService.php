@@ -5,18 +5,19 @@
  * @author      Michał Bolka <mbolka@divante.co>
  * @copyright   Copyright (c) 2020 DIVANTE (https://divante.co)
  */
+
 namespace Divante\MagentoIntegrationBundle\Domain\Category;
 
 use Divante\MagentoIntegrationBundle\Domain\Category\Request\UpdateStatus;
-use Divante\MagentoIntegrationBundle\Domain\Common\StatusService;
 use Divante\MagentoIntegrationBundle\Domain\Common\Exception\ElementNotFoundException;
+use Divante\MagentoIntegrationBundle\Domain\Common\StatusService;
+use Divante\MagentoIntegrationBundle\Domain\DataObject\DataObjectEventListener;
 use Divante\MagentoIntegrationBundle\Domain\Helper\IntegrationHelper;
 use Divante\MagentoIntegrationBundle\Domain\Helper\MagentoMessageHelper;
 use Divante\MagentoIntegrationBundle\Domain\Helper\ObjectStatusHelper;
 use Divante\MagentoIntegrationBundle\Domain\IntegrationConfiguration\IntegrationConfigurationService;
 use Divante\MagentoIntegrationBundle\Model\DataObject\IntegrationConfiguration;
 use Divante\MagentoIntegrationBundle\Security\ElementPermissionChecker;
-use Divante\MagentoIntegrationBundle\Domain\DataObject\DataObjectEventListener;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
@@ -41,7 +42,7 @@ class CategoryStatusService extends StatusService
      * @param UpdateStatus $updateStatusCommand
      * @throws \Exception
      */
-    public function updateStatus(UpdateStatus $updateStatusCommand)
+    public function updateStatus(UpdateStatus $updateStatusCommand): void
     {
         $object = $this->getObjectById($updateStatusCommand->id);
         $this->permissionChecker->checkElementPermission($object, 'get');
@@ -67,7 +68,7 @@ class CategoryStatusService extends StatusService
         if (strpos($updateStatusCommand->message, MagentoMessageHelper::MAGENTO_SUCCESS_ADDED)) {
             $updateStatusCommand->status = ObjectStatusHelper::SYNC_STATUS_SENT;
         }
-        $this->setStatusProperty($object,$configuration->getKey(), $updateStatusCommand->status);
+        $this->setStatusProperty($object, $configuration->getKey(), $updateStatusCommand->status);
         $object->setOmitMandatoryCheck(true);
         $object->save();
         $this->eventDispatcher->dispatch(

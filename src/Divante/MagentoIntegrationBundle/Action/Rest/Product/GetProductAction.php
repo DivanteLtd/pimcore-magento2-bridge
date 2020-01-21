@@ -5,11 +5,13 @@
  * @author      Michał Bolka <mbolka@divante.co>
  * @copyright   Copyright (c) 2020 Divante Ltd. (https://divante.co)
  */
+
 namespace Divante\MagentoIntegrationBundle\Action\Rest\Product;
 
 use Divante\MagentoIntegrationBundle\Domain\Product\MappedProductService;
 use Divante\MagentoIntegrationBundle\Domain\Product\Request\GetProduct;
 use Divante\MagentoIntegrationBundle\Responder\MappedObjectJsonResponder;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -32,15 +34,15 @@ class GetProductAction
      */
     public function __construct(MappedProductService $domain, MappedObjectJsonResponder $responder)
     {
-        $this->domain = $domain;
+        $this->domain    = $domain;
         $this->responder = $responder;
     }
 
     /**
      * @param GetProduct $query
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @return JsonResponse
      */
-    public function __invoke(GetProduct $query)
+    public function __invoke(GetProduct $query): JsonResponse
     {
         return $this->responder->createResponse($this->domain->getProducts($query));
     }

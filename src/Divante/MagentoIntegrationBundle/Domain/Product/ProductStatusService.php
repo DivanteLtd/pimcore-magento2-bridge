@@ -5,18 +5,19 @@
  * @author      Michał Bolka <mbolka@divante.co>
  * @copyright   Copyright (c) 2020 DIVANTE (https://divante.co)
  */
+
 namespace Divante\MagentoIntegrationBundle\Domain\Product;
 
-use Divante\MagentoIntegrationBundle\Domain\Product\Request\UpdateStatus;
-use Divante\MagentoIntegrationBundle\Domain\Common\StatusService;
 use Divante\MagentoIntegrationBundle\Domain\Common\Exception\ElementNotFoundException;
+use Divante\MagentoIntegrationBundle\Domain\Common\StatusService;
+use Divante\MagentoIntegrationBundle\Domain\DataObject\DataObjectEventListener;
 use Divante\MagentoIntegrationBundle\Domain\Helper\IntegrationHelper;
 use Divante\MagentoIntegrationBundle\Domain\Helper\MagentoMessageHelper;
 use Divante\MagentoIntegrationBundle\Domain\Helper\ObjectStatusHelper;
 use Divante\MagentoIntegrationBundle\Domain\IntegrationConfiguration\IntegrationConfigurationService;
+use Divante\MagentoIntegrationBundle\Domain\Product\Request\UpdateStatus;
 use Divante\MagentoIntegrationBundle\Model\DataObject\IntegrationConfiguration;
 use Divante\MagentoIntegrationBundle\Security\ElementPermissionChecker;
-use Divante\MagentoIntegrationBundle\Domain\DataObject\DataObjectEventListener;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
@@ -28,6 +29,12 @@ class ProductStatusService extends StatusService
     /** @var IntegrationConfigurationService */
     private $configService;
 
+    /**
+     * ProductStatusService constructor.
+     * @param ElementPermissionChecker        $permissionChecker
+     * @param EventDispatcherInterface        $eventDispatcher
+     * @param IntegrationConfigurationService $configService
+     */
     public function __construct(
         ElementPermissionChecker $permissionChecker,
         EventDispatcherInterface $eventDispatcher,

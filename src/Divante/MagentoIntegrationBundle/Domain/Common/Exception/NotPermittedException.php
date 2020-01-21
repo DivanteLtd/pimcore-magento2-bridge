@@ -5,6 +5,7 @@
  * @author      Michał Bolka <mbolka@divante.co>
  * @copyright   Copyright (c) 2020 DIVANTE (https://divante.co)
  */
+
 namespace Divante\MagentoIntegrationBundle\Domain\Common\Exception;
 
 /**

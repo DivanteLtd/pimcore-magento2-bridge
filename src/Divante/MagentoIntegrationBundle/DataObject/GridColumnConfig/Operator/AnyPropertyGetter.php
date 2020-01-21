@@ -5,6 +5,7 @@
  * @author      Michał Bolka <mbolka@divante.co>
  * @copyright   Copyright (c) 2020 Divante Ltd. (https://divante.co)
  */
+
 namespace Divante\MagentoIntegrationBundle\DataObject\GridColumnConfig\Operator;
 
 use Pimcore\DataObject\GridColumnConfig\Operator\AbstractOperator;
@@ -35,9 +36,9 @@ class AnyPropertyGetter extends AbstractOperator
      */
     public function getLabeledValue($element)
     {
-        $result = new \stdClass();
+        $result        = new \stdClass();
         $result->label = $this->label;
-        $properties = $element->getProperties();
+        $properties    = $element->getProperties();
         if (array_key_exists($this->getPropertyName(), $properties)) {
             $result->value = $properties[$this->getPropertyName()]->getData();
         }

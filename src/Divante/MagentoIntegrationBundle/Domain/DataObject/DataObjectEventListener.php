@@ -8,10 +8,10 @@
 
 namespace Divante\MagentoIntegrationBundle\Domain\DataObject;
 
-use Divante\MagentoIntegrationBundle\Domain\IntegrationConfiguration\IntegrationConfigurationService;
-use Divante\MagentoIntegrationBundle\Model\DataObject\IntegrationConfiguration;
 use Divante\MagentoIntegrationBundle\Domain\ElementDeleteService;
+use Divante\MagentoIntegrationBundle\Domain\IntegrationConfiguration\IntegrationConfigurationService;
 use Divante\MagentoIntegrationBundle\Domain\RemoteElementService;
+use Divante\MagentoIntegrationBundle\Model\DataObject\IntegrationConfiguration;
 use Pimcore\Event\Model\DataObjectEvent;
 use Pimcore\Model\DataObject\AbstractObject;
 use Pimcore\Model\DataObject\Concrete;
@@ -25,13 +25,9 @@ class DataObjectEventListener
 {
     /** @var IntegrationConfigurationService */
     protected $integrationService;
-    /**
-     * @var RemoteElementService
-     */
+    /** @var RemoteElementService */
     private $remoteElementService;
-    /**
-     * @var ElementDeleteService
-     */
+    /** @var ElementDeleteService */
     private $deleteService;
 
     /**

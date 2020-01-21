@@ -5,12 +5,13 @@
  * @author      Michał Bolka <mbolka@divante.co>
  * @copyright   Copyright (c) 2020 DIVANTE (https://divante.co)
  */
+
 namespace Divante\MagentoIntegrationBundle\Domain\Asset;
 
 use Divante\MagentoIntegrationBundle\Domain\Asset\EventListener\AssetListener;
 use Divante\MagentoIntegrationBundle\Domain\Asset\Request\UpdateStatus;
-use Divante\MagentoIntegrationBundle\Domain\Common\StatusService;
 use Divante\MagentoIntegrationBundle\Domain\Common\Exception\ElementNotFoundException;
+use Divante\MagentoIntegrationBundle\Domain\Common\StatusService;
 use Divante\MagentoIntegrationBundle\Domain\Helper\ObjectStatusHelper;
 use Pimcore\Model\Asset;
 

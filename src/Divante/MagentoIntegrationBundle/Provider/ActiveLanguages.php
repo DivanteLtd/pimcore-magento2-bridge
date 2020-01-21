@@ -20,7 +20,7 @@ class ActiveLanguages implements SelectOptionsProviderInterface
 {
     /**
      * @param array $context
-     * @param Data $fieldDefinition
+     * @param Data  $fieldDefinition
      *
      * @return array
      * @throws \Exception
@@ -37,7 +37,7 @@ class ActiveLanguages implements SelectOptionsProviderInterface
 
     /**
      * @param array $context
-     * @param Data $fieldDefinition
+     * @param Data  $fieldDefinition
      *
      * @return bool
      */
@@ -48,7 +48,7 @@ class ActiveLanguages implements SelectOptionsProviderInterface
 
     /**
      * @param array $context
-     * @param Data $fieldDefinition
+     * @param Data  $fieldDefinition
      *
      * @return mixed
      */

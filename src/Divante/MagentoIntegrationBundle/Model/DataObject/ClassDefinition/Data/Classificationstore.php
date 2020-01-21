@@ -5,11 +5,12 @@
  * @author      Michał Bolka <mbolka@divante.co>
  * @copyright   Copyright (c) 2020 Divante Ltd. (https://divante.co)
  */
+
 namespace Divante\MagentoIntegrationBundle\Model\DataObject\ClassDefinition\Data;
 
 use Pimcore\Model\DataObject;
-use Pimcore\Tool;
 use Pimcore\Model\DataObject\ClassDefinition\Data\Classificationstore as ClassificationstoreParent;
+use Pimcore\Tool;
 
 /**
  * Class Classificationstore
@@ -49,16 +50,16 @@ class Classificationstore extends ClassificationstoreParent
             }
             array_unshift($validLanguages, 'default');
 
-            $result = [];
+            $result       = [];
             $activeGroups = [];
-            $items = $data->getActiveGroups();
+            $items        = $data->getActiveGroups();
             if (is_array($items)) {
                 foreach ($items as $groupId => $groupData) {
                     $groupDef = DataObject\Classificationstore\GroupConfig::getById($groupId);
                     if (!is_null($groupDef)) {
                         $activeGroups[] = [
-                            'id' => $groupId,
-                            'name' => $groupDef->getName(). ' - ' . $groupDef->getDescription(),
+                            'id'      => $groupId,
+                            'name'    => $groupDef->getName() . ' - ' . $groupDef->getDescription(),
                             'enabled' => $groupData
                         ];
                     }
@@ -66,29 +67,30 @@ class Classificationstore extends ClassificationstoreParent
             }
 
             $result['activeGroups'] = $activeGroups;
-            $items = $data->getItems();
+            $items                  = $data->getItems();
 
             foreach ($items as $groupId => $groupData) {
                 $groupResult = [];
 
                 foreach ($groupData as $keyId => $keyData) {
                     $keyConfig = DataObject\Classificationstore\DefinitionCache::get($keyId);
-                    $fd = DataObject\Classificationstore\Service::getFieldDefinitionFromKeyConfig($keyConfig);
-                    $context = [
+                    $fd        = DataObject\Classificationstore\Service::getFieldDefinitionFromKeyConfig($keyConfig);
+                    $context   = [
                         'containerType' => 'classificationstore',
-                        'fieldname' => $this->getName(),
-                        'groupId' => $groupId,
-                        'keyId' => $keyId
+                        'fieldname'     => $this->getName(),
+                        'groupId'       => $groupId,
+                        'keyId'         => $keyId
                     ];
 
                     foreach ($validLanguages as $language) {
-                        $value = $fd->getForWebserviceExport($object, ['context' => $context, 'language' => $language]);
+                        $value                    = $fd->getForWebserviceExport($object,
+                            ['context' => $context, 'language' => $language]);
                         $groupResult[$language][] = [
-                            'id' => $keyId,
-                            'name' => $keyConfig->getName(),
+                            'id'          => $keyId,
+                            'name'        => $keyConfig->getName(),
                             'description' => $keyConfig->getDescription(),
-                            'value' => $value,
-                            'label' => $keyConfig->getTitle()
+                            'value'       => $value,
+                            'label'       => $keyConfig->getTitle()
                         ];
                     }
                 }
@@ -96,8 +98,8 @@ class Classificationstore extends ClassificationstoreParent
                 $groupDef = DataObject\Classificationstore\GroupConfig::getById($groupId);
                 if (!is_null($groupDef) && $groupResult) {
                     $groupResult = [
-                        'id' => $groupId,
-                        'name' => $groupDef->getName(). ' - ' . $groupDef->getDescription(),
+                        'id'   => $groupId,
+                        'name' => $groupDef->getName() . ' - ' . $groupDef->getDescription(),
                         'keys' => $groupResult
                     ];
                 }

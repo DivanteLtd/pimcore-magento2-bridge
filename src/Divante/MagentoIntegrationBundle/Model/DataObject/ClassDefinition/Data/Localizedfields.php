@@ -5,6 +5,7 @@
  * @author      Michał Bolka <mbolka@divante.co>
  * @copyright   Copyright (c) 2020 Divante Ltd. (https://divante.co)
  */
+
 namespace Divante\MagentoIntegrationBundle\Model\DataObject\ClassDefinition\Data;
 
 use Pimcore\Model;
@@ -18,7 +19,7 @@ use Pimcore\Tool;
  */
 class Localizedfields
 {
-    /** @var LocalizedfieldsParent  */
+    /** @var LocalizedfieldsParent */
     protected $field;
 
     /**
@@ -36,8 +37,8 @@ class Localizedfields
      */
     public function getForWebserviceExport($object, $params = [])
     {
-        $wsData = [];
-        $user   = Tool\Admin::getCurrentUser();
+        $wsData           = [];
+        $user             = Tool\Admin::getCurrentUser();
         $languagesAllowed = null;
         if ($user && !$user->isAdmin()) {
             $languagesAllowed = DataObject\Service::getLanguagePermissions($object, $user, 'lView');
@@ -64,7 +65,7 @@ class Localizedfields
 
                 $params['locale'] = $language;
 
-                $el = new Model\Webservice\Data\DataObject\Element();
+                $el        = new Model\Webservice\Data\DataObject\Element();
                 $el->name  = $fd->getName();
                 $el->type  = $fd->getFieldType();
                 $el->label = $fd->getTitle();
@@ -73,7 +74,7 @@ class Localizedfields
                     continue;
                 }
                 $el->language = $language;
-                $wsData[] = $el;
+                $wsData[]     = $el;
             }
         }
 

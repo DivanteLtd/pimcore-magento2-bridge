@@ -8,11 +8,10 @@
 
 namespace Divante\MagentoIntegrationBundle\Provider;
 
+use Divante\MagentoIntegrationBundle\Model\DataObject\IntegrationConfiguration;
 use Divante\MagentoIntegrationBundle\Rest\RestClientBuilder;
 use Pimcore\Model\DataObject\ClassDefinition\Data;
 use Pimcore\Model\DataObject\ClassDefinition\DynamicOptionsProvider\SelectOptionsProviderInterface;
-use Pimcore\Model\DataObject\IntegrationConfiguration;
-
 use Divante\MagentoIntegrationBundle\Rest\RestClient;
 use Psr\Container\NotFoundExceptionInterface;
 

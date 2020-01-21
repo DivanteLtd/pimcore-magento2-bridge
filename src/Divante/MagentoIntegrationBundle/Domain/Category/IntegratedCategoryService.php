@@ -5,14 +5,15 @@
  * @author      Michał Bolka <mbolka@divante.co>
  * @copyright   Copyright (c) 2020 DIVANTE (https://divante.co)
  */
+
 namespace Divante\MagentoIntegrationBundle\Domain\Category;
 
 use Divante\MagentoIntegrationBundle\Domain\Common\AbstractIntegratedObjectService;
-use Divante\MagentoIntegrationBundle\Domain\Helper\IntegrationHelper;
 use Divante\MagentoIntegrationBundle\Domain\Common\StatusService;
+use Divante\MagentoIntegrationBundle\Domain\DataObject\DataObjectEventListener;
+use Divante\MagentoIntegrationBundle\Domain\Helper\IntegrationHelper;
 use Divante\MagentoIntegrationBundle\Model\DataObject\IntegrationConfiguration;
 use Divante\MagentoIntegrationBundle\Rest\RestClientBuilder;
-use Divante\MagentoIntegrationBundle\Domain\DataObject\DataObjectEventListener;
 use Pimcore\Model\Element\AbstractElement;
 use Pimcore\Model\Element\ValidationException;
 
@@ -22,13 +23,7 @@ use Pimcore\Model\Element\ValidationException;
  */
 class IntegratedCategoryService extends AbstractIntegratedObjectService
 {
-    /**
-     * @var RestClientBuilder
-     */
-    private $builder;
-    /**
-     * @var CategoryValidator
-     */
+    /** @var CategoryValidator */
     private $validator;
 
     /**
@@ -39,20 +34,33 @@ class IntegratedCategoryService extends AbstractIntegratedObjectService
      */
     public function __construct(StatusService $statusService, RestClientBuilder $builder, CategoryValidator $validator)
     {
-        parent::__construct($statusService);
-        $this->builder = $builder;
+        parent::__construct($statusService, $builder);
         $this->validator = $validator;
     }
 
+    /**
+     * @param AbstractElement          $element
+     * @param IntegrationConfiguration $configuration
+     */
     public function send(AbstractElement $element, IntegrationConfiguration $configuration): void
     {
         $this->builder->getClient($configuration)->sendCategory($element);
     }
+
+    /**
+     * @param AbstractElement          $element
+     * @param IntegrationConfiguration $configuration
+     */
     public function delete(AbstractElement $element, IntegrationConfiguration $configuration): void
     {
         $this->builder->getClient($configuration)->deleteCategory($element);
     }
 
+    /**
+     * @param AbstractElement          $element
+     * @param IntegrationConfiguration $configuration
+     * @return bool
+     */
     public function supports(AbstractElement $element, IntegrationConfiguration $configuration): bool
     {
         return $configuration->getRelationType($element) == IntegrationHelper::RELATION_TYPE_CATEGORY;

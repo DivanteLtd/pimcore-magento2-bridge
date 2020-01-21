@@ -15,8 +15,8 @@ use Pimcore\Cache;
 use Pimcore\Db\Connection;
 use Pimcore\Extension\Bundle\Installer\MigrationInstaller;
 use Pimcore\Migrations\MigrationManager;
-use Pimcore\Model\Property\Predefined;
 use Pimcore\Model\DataObject;
+use Pimcore\Model\Property\Predefined;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 use Symfony\Component\HttpKernel\Config\FileLocator;
 use Symfony\Component\Process\Process;
@@ -29,8 +29,9 @@ class Installer extends MigrationInstaller
 {
     const CONFIGURATION_CLASS_NAME = 'IntegrationConfiguration';
 
-    /** @var FileLocator  */
+    /** @var FileLocator */
     protected $fileLocator;
+
     /**
      * @param BundleInterface  $bundle
      * @param Connection       $connection
@@ -55,21 +56,21 @@ class Installer extends MigrationInstaller
     {
         if (!Predefined::getByKey(IntegrationHelper::PRODUCT_TYPE_CONFIGURABLE_ATTRIBUTE) instanceof Predefined) {
             $propertyData = [
-                'name' => 'Configurable Attributes',
-                'key' => IntegrationHelper::PRODUCT_TYPE_CONFIGURABLE_ATTRIBUTE,
-                'ctype' => 'object',
-                'type' => 'text',
+                'name'        => 'Configurable Attributes',
+                'key'         => IntegrationHelper::PRODUCT_TYPE_CONFIGURABLE_ATTRIBUTE,
+                'ctype'       => 'object',
+                'type'        => 'text',
                 'inheritable' => true
             ];
-            $property = Predefined::create();
+            $property     = Predefined::create();
             $property->setValues($propertyData);
             $property->save();
         }
 
         Cache::disable();
         $classDefinition = $this->locateClassDefinitionFile();
-        $command = ['bin/console', 'pimcore:definition:import:class', $classDefinition];
-        $process = new Process($command, PIMCORE_PROJECT_ROOT);
+        $command         = ['bin/console', 'pimcore:definition:import:class', $classDefinition];
+        $process         = new Process($command, PIMCORE_PROJECT_ROOT);
         $process->setTimeout(0);
         $process->run();
         $this->outputWriter->write($process->getOutput());
@@ -78,21 +79,6 @@ class Installer extends MigrationInstaller
             mkdir(PIMCORE_LOG_DIRECTORY . '/magento2-connector', 0740);
         }
         $this->createSampleObject();
-    }
-
-    /**
-     * @param Schema  $schema
-     * @param Version $version
-     */
-    public function migrateUninstall(Schema $schema, Version $version): void
-    {
-        Cache::disable();
-        $class = DataObject\ClassDefinition::getByName(static::CONFIGURATION_CLASS_NAME);
-        if ($class) {
-            $class->delete();
-        }
-        Cache::enable();
-        rmdir(PIMCORE_LOG_DIRECTORY . '/magento2-connector');
     }
 
     /**
@@ -113,5 +99,20 @@ class Installer extends MigrationInstaller
         $object->setOmitMandatoryCheck(true);
         $object->setKey('magento-configuration');
         $object->save();
+    }
+
+    /**
+     * @param Schema  $schema
+     * @param Version $version
+     */
+    public function migrateUninstall(Schema $schema, Version $version): void
+    {
+        Cache::disable();
+        $class = DataObject\ClassDefinition::getByName(static::CONFIGURATION_CLASS_NAME);
+        if ($class) {
+            $class->delete();
+        }
+        Cache::enable();
+        rmdir(PIMCORE_LOG_DIRECTORY . '/magento2-connector');
     }
 }

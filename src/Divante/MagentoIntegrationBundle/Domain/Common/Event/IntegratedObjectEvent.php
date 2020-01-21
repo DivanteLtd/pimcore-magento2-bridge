@@ -5,6 +5,7 @@
  * @author      Michał Bolka <mbolka@divante.co>
  * @copyright   Copyright (c) 2020 Divante Ltd. (https://divante.co)
  */
+
 namespace Divante\MagentoIntegrationBundle\Domain\Event;
 
 use Divante\MagentoIntegrationBundle\Model\DataObject\IntegrationConfiguration;
@@ -17,6 +18,11 @@ use Symfony\Component\EventDispatcher\Event;
  */
 class IntegratedObjectEvent extends Event
 {
+    /** @var AbstractElement */
+    protected $object;
+    /** @var IntegrationConfiguration */
+    protected $configuration;
+
     /**
      * AbstractObjectDeleteEvent constructor.
      * @param AbstractElement          $object
@@ -27,13 +33,6 @@ class IntegratedObjectEvent extends Event
         $this->setObject($object);
         $this->setConfiguration($configuration);
     }
-
-
-    /** @var AbstractElement */
-    protected $object;
-
-    /** @var IntegrationConfiguration */
-    protected $configuration;
 
     /**
      * @return IntegrationConfiguration
@@ -50,6 +49,7 @@ class IntegratedObjectEvent extends Event
     {
         $this->configuration = $configuration;
     }
+
     /**
      * @return AbstractElement
      */

@@ -5,10 +5,10 @@
  * @author      Michał Bolka <mbolka@divante.co>
  * @copyright   Copyright (c) 2020 Divante Ltd. (https://divante.co)
  */
+
 namespace Divante\MagentoIntegrationBundle\Domain\Asset;
 
 use Divante\MagentoIntegrationBundle\Domain\Common\AbstractIntegratedObjectService;
-use Divante\MagentoIntegrationBundle\Domain\Helper\IntegrationHelper;
 use Divante\MagentoIntegrationBundle\Domain\Common\StatusService;
 use Divante\MagentoIntegrationBundle\Domain\Helper\ObjectStatusHelper;
 use Divante\MagentoIntegrationBundle\Domain\IntegrationConfiguration\IntegrationConfigurationService;
@@ -17,6 +17,7 @@ use Divante\MagentoIntegrationBundle\Rest\RestClientBuilder;
 use Pimcore\Model\Asset;
 use Pimcore\Model\DataObject;
 use Pimcore\Model\Element\AbstractElement;
+use Pimcore\Model\Listing\AbstractListing;
 
 /**
  * Class IntegratedAssetService
@@ -24,23 +25,19 @@ use Pimcore\Model\Element\AbstractElement;
  */
 class IntegratedAssetService extends AbstractIntegratedObjectService
 {
-    /**
-     * @var RestClientBuilder
-     */
-    private $builder;
-    /**
-     * @var IntegrationConfigurationService
-     */
+    /** @var IntegrationConfigurationService */
     private $configService;
 
     /**
      * IntegratedCategoryService constructor.
      * @param RestClientBuilder $builder
      */
-    public function __construct(StatusService $statusService, RestClientBuilder $builder, IntegrationConfigurationService $configurationService)
-    {
-        parent::__construct($statusService);
-        $this->builder       = $builder;
+    public function __construct(
+        StatusService $statusService,
+        RestClientBuilder $builder,
+        IntegrationConfigurationService $configurationService
+    ) {
+        parent::__construct($statusService, $builder);
         $this->configService = $configurationService;
     }
 
@@ -114,9 +111,9 @@ class IntegratedAssetService extends AbstractIntegratedObjectService
 
     /**
      * @param AbstractElement $element
-     * @return |AbstractListing
+     * @return AbstractListing|null
      */
-    protected function getDependentElementsListing(AbstractElement $element)
+    protected function getDependentElementsListing(AbstractElement $element): ?AbstractListing
     {
         $listing = new DataObject\Listing();
         $ids     = array_map(

@@ -33,6 +33,24 @@ class IntegrationConfigurationService
     }
 
     /**
+     * @param Concrete $originObject
+     * @param Concrete $object
+     * @return array
+     */
+    public function getConfigurationsListDifference(Concrete $originObject, Concrete $object)
+    {
+        $originObjectIntegrations = $this->getConfigurations($originObject);
+        $objectIntegrations       = $this->getConfigurations($object);
+        return array_udiff(
+            $originObjectIntegrations,
+            $objectIntegrations,
+            function ($integration1, $integration2) {
+                return $integration1->getId() - $integration2->getId();
+            }
+        );
+    }
+
+    /**
      * @param DataObject\AbstractObject $object
      * @param string                    $relationType
      * @param string|null               $instanceUrl
@@ -69,24 +87,6 @@ class IntegrationConfigurationService
             }
         }
         return $relatedConfigurations;
-    }
-
-    /**
-     * @param Concrete $originObject
-     * @param Concrete $object
-     * @return array
-     */
-    public function getConfigurationsListDifference(Concrete $originObject, Concrete $object)
-    {
-        $originObjectIntegrations = $this->getConfigurations($originObject);
-        $objectIntegrations       = $this->getConfigurations($object);
-        return array_udiff(
-            $originObjectIntegrations,
-            $objectIntegrations,
-            function ($integration1, $integration2) {
-                return $integration1->getId() - $integration2->getId();
-            }
-        );
     }
 
     /**

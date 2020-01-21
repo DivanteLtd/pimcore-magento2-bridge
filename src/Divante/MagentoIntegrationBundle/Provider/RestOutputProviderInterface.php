@@ -16,9 +16,14 @@ use Divante\MagentoIntegrationBundle\Model\Configuration\EndpointConfig;
  */
 interface RestOutputProviderInterface
 {
+
     public function parseConfig(): void;
+
     public function getAssetConfig(): EndpointConfig;
+
     public function getProductConfig(): EndpointConfig;
+
     public function getCategoryConfig(): EndpointConfig;
+
     public function getStoreViewsEndpointUrl(): string;
 }

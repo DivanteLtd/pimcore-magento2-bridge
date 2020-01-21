@@ -5,11 +5,13 @@
  * @author      Michał Bolka <mbolka@divante.co>
  * @copyright   Copyright (c) 2020 Divante Ltd. (https://divante.co)
  */
+
 namespace Divante\MagentoIntegrationBundle\Action\Rest\Asset;
 
 use Divante\MagentoIntegrationBundle\Domain\Asset\AssetStatusService;
 use Divante\MagentoIntegrationBundle\Domain\Asset\Request\UpdateStatus;
 use Divante\MagentoIntegrationBundle\Responder\JsonResponder;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -20,7 +22,7 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class UpdateAssetStatusAction
 {
-    /** @var AssetStatusService  */
+    /** @var AssetStatusService */
     private $domain;
     /** @var JsonResponder */
     private $responder;
@@ -32,7 +34,7 @@ class UpdateAssetStatusAction
      */
     public function __construct(AssetStatusService $domain, JsonResponder $jsonResponder)
     {
-        $this->domain = $domain;
+        $this->domain    = $domain;
         $this->responder = $jsonResponder;
     }
 
@@ -41,7 +43,7 @@ class UpdateAssetStatusAction
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      * @throws \Exception
      */
-    public function __invoke(UpdateStatus $input)
+    public function __invoke(UpdateStatus $input): JsonResponse
     {
         $this->domain->updateStatus($input);
         return $this->responder->createResponse([]);

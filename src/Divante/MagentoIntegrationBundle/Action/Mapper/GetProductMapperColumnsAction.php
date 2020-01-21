@@ -5,10 +5,12 @@
  * @author      Michał Bolka <mbolka@divante.co>
  * @copyright   Copyright (c) 2020 Divante Ltd. (https://divante.co)
  */
+
 namespace Divante\MagentoIntegrationBundle\Action\Mapper;
 
 use Divante\MagentoIntegrationBundle\Domain\Mapper\MapperColumnsService;
 use Divante\MagentoIntegrationBundle\Responder\JsonResponder;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -29,15 +31,15 @@ class GetProductMapperColumnsAction
      */
     public function __construct(MapperColumnsService $domain, JsonResponder $jsonResponder)
     {
-        $this->domain = $domain;
+        $this->domain    = $domain;
         $this->responder = $jsonResponder;
     }
 
     /**
      * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @return JsonResponse
      */
-    public function __invoke(Request $request)
+    public function __invoke(Request $request): JsonResponse
     {
         return $this->responder->createResponse(
             $this->domain->getColumnsForClass($request->get('configurationId'), 'product')

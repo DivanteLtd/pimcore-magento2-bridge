@@ -31,15 +31,6 @@ class DivanteMagentoIntegrationBundle extends AbstractPimcoreBundle
         $container->addCompilerPass(new MapperStrategyCompilerPass());
     }
 
-
-    /**
-     * @inheritdoc
-     */
-    protected function getComposerPackageName()
-    {
-        return 'divante-ltd/pimcore5-module-magento2-integration';
-    }
-
     /**
      * @inheritdoc
      */
@@ -89,5 +80,13 @@ class DivanteMagentoIntegrationBundle extends AbstractPimcoreBundle
     public function getInstaller()
     {
         return $this->container->get(Installer::class);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function getComposerPackageName()
+    {
+        return 'divante-ltd/pimcore5-module-magento2-integration';
     }
 }

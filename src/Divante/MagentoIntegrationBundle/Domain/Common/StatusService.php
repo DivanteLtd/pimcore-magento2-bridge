@@ -5,10 +5,10 @@
  * @author      Michał Bolka <mbolka@divante.co>
  * @copyright   Copyright (c) 2020 DIVANTE (https://divante.co)
  */
+
 namespace Divante\MagentoIntegrationBundle\Domain\Common;
 
 use Divante\MagentoIntegrationBundle\Domain\Common\Exception\ElementNotFoundException;
-use Divante\MagentoIntegrationBundle\Domain\Helper\IntegrationHelper;
 use Divante\MagentoIntegrationBundle\Domain\Helper\ObjectStatusHelper;
 use Divante\MagentoIntegrationBundle\Security\ElementPermissionChecker;
 use Pimcore\Model\DataObject\Concrete;
@@ -25,7 +25,7 @@ class StatusService implements ContainerAwareInterface
 {
     use ContainerAwareTrait;
 
-    /** @var EventDispatcherInterface  */
+    /** @var EventDispatcherInterface */
     protected $eventDispatcher;
     /**
      * @var ElementPermissionChecker
@@ -34,7 +34,7 @@ class StatusService implements ContainerAwareInterface
 
     public function __construct(ElementPermissionChecker $permissionChecker, EventDispatcherInterface $eventDispatcher)
     {
-        $this->eventDispatcher = $eventDispatcher;
+        $this->eventDispatcher   = $eventDispatcher;
         $this->permissionChecker = $permissionChecker;
     }
 

@@ -15,7 +15,6 @@ namespace Divante\MagentoIntegrationBundle\Domain\Helper;
 class ObjectStatusHelper
 {
     const SYNC_PROPERTY_NAME = 'synchronize-status';
-
     const SYNC_STATUS_SENT = 'SENT';
     const SYNC_STATUS_OK = 'SUCCESS';
     const SYNC_STATUS_ERROR = 'ERROR';

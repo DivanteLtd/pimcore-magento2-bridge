@@ -5,11 +5,13 @@
  * @author      Michał Bolka <mbolka@divante.co>
  * @copyright   Copyright (c) 2020 Divante Ltd. (https://divante.co)
  */
+
 namespace Divante\MagentoIntegrationBundle\Action\Rest\Product;
 
 use Divante\MagentoIntegrationBundle\Domain\Product\ProductStatusService;
 use Divante\MagentoIntegrationBundle\Domain\Product\Request\UpdateStatus;
 use Divante\MagentoIntegrationBundle\Responder\JsonResponder;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -25,20 +27,20 @@ class UpdateProductStatusAction
     /**
      * UpdateAssetStatusAction constructor.
      * @param ProductStatusService $domain
-     * @param JsonResponder      $jsonResponder
+     * @param JsonResponder        $jsonResponder
      */
     public function __construct(ProductStatusService $domain, JsonResponder $jsonResponder)
     {
-        $this->domain = $domain;
+        $this->domain    = $domain;
         $this->responder = $jsonResponder;
     }
 
     /**
      * @param UpdateStatus $input
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @return JsonResponse
      * @throws \Exception
      */
-    public function __invoke(UpdateStatus $input)
+    public function __invoke(UpdateStatus $input): JsonResponse
     {
         $this->domain->updateStatus($input);
         return $this->responder->createResponse([]);

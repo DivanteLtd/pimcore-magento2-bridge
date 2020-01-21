@@ -5,10 +5,11 @@
  * @author      Michał Bolka <mbolka@divante.co>
  * @copyright   Copyright (c) 2020 DIVANTE (https://divante.co)
  */
+
 namespace Divante\MagentoIntegrationBundle\Domain\Common\Request;
 
-use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class AbstractObjectRequest
@@ -36,7 +37,7 @@ abstract class AbstractRequest
      */
     public function __construct(Request $request)
     {
-        $this->instaceUrl = $request->get('instanceUrl');
-        $this->storeViewId = $request->get('storeViewId') !== null ? (int) $request->get('storeViewId') : null;
+        $this->instaceUrl  = $request->get('instanceUrl');
+        $this->storeViewId = $request->get('storeViewId') !== null ? (int)$request->get('storeViewId') : null;
     }
 }

@@ -9,10 +9,10 @@
 namespace Divante\MagentoIntegrationBundle\Domain\Product;
 
 use Divante\MagentoIntegrationBundle\Domain\Common\AbstractMappedObjectService;
-use Divante\MagentoIntegrationBundle\Domain\Helper\IntegrationHelper;
-use Divante\MagentoIntegrationBundle\Domain\Helper\MapperEventTypes;
 use Divante\MagentoIntegrationBundle\Domain\Event\IntegratedObjectEvent;
 use Divante\MagentoIntegrationBundle\Domain\Event\PostMappingObjectEvent;
+use Divante\MagentoIntegrationBundle\Domain\Helper\IntegrationHelper;
+use Divante\MagentoIntegrationBundle\Domain\Helper\MapperEventTypes;
 use Divante\MagentoIntegrationBundle\Domain\Product\Request\GetProduct;
 use Divante\MagentoIntegrationBundle\Model\DataObject\IntegrationConfiguration;
 use Pimcore\Model\DataObject\AbstractObject;
@@ -24,10 +24,14 @@ use Pimcore\Model\DataObject\Concrete;
  */
 class MappedProductService extends AbstractMappedObjectService
 {
-    public function getProducts(GetProduct $query)
+    /**
+     * @param GetProduct $query
+     * @return array
+     */
+    public function getProducts(GetProduct $query): array
     {
         $objectsListing = $this->loadObjects($query->id);
-        $mappedObjects = [];
+        $mappedObjects  = [];
         /** @var array $fetchedIds */
         $missingData = $this->getMissingIds($objectsListing->loadIdList(), $query);
 
@@ -42,11 +46,12 @@ class MappedProductService extends AbstractMappedObjectService
                     $query->storeViewId
                 );
                 if (!$configurations) {
-                    $missingData[$object->getId()] = sprintf('Requested object with id %d does not exist.', $object->getId());
+                    $missingData[$object->getId()] = sprintf('Requested object with id %d does not exist.',
+                        $object->getId());
                 }
 
-                $mappedObject = $this->getMappedObject($object, reset($configurations));
-                $mappedObject->attr_checksum = $this->mapper->getAttributesChecksum($mappedObject);
+                $mappedObject                    = $this->getMappedObject($object, reset($configurations));
+                $mappedObject->attr_checksum     = $this->mapper->getAttributesChecksum($mappedObject);
                 $mappedObjects[$object->getId()] = $mappedObject;
             } catch (\Exception $exception) {
                 return ['success' => false];
@@ -56,8 +61,7 @@ class MappedProductService extends AbstractMappedObjectService
         if (!$mappedObjects) {
             return ['success' => false];
         }
-        $data = ['data' => $mappedObjects, 'missing_objects' => $missingData, 'success' => true];
-        return $data;
+        return ['data' => $mappedObjects, 'missing_objects' => $missingData, 'success' => true];
     }
 
     /**

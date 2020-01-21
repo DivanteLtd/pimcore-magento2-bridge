@@ -18,7 +18,7 @@ class MapperHelper
     const OBJECT_TYPE_CATEGORY = 'category';
     const TEXT_TYPES = ['input', 'numeric', 'country', 'language', 'calculatedValue'];
     const TEXT_AREA_TYPES = ['textarea'];
-    const WYSIWYG_TYPES   = ['wysiwyg'];
+    const WYSIWYG_TYPES = ['wysiwyg'];
     const DATE_TYPES = ['date', 'datetime', 'time'];
     const BOOL_TYPES = ['booleanSelect', 'checkbox'];
     const SELECT_TYPES = ['select'];
@@ -41,10 +41,10 @@ class MapperHelper
         'objectsMetadata',
         'multihrefMetadata'
     ];
-    const OBJECT_BRICKS_TYPE         = 'objectbricks';
-    const CLASSIFICATION_STORE_TYPE  = 'classificationstore';
-    const BLOCK_TYPES                = ['block'];
-    const OBJECT_BRICKS_TYPES        = [self::OBJECT_BRICKS_TYPE];
+    const OBJECT_BRICKS_TYPE = 'objectbricks';
+    const CLASSIFICATION_STORE_TYPE = 'classificationstore';
+    const BLOCK_TYPES = ['block'];
+    const OBJECT_BRICKS_TYPES = [self::OBJECT_BRICKS_TYPE];
     const CLASSIFICATION_STORE_TYPES = [self::CLASSIFICATION_STORE_TYPE];
     const VALUE_KEY_URL_KEY = 'url_key';
 

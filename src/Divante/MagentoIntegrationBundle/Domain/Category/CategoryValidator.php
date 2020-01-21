@@ -5,6 +5,7 @@
  * @author      Michał Bolka <mbolka@divante.co>
  * @copyright   Copyright (c) 2020 Divante Ltd. (https://divante.co)
  */
+
 namespace Divante\MagentoIntegrationBundle\Domain\Category;
 
 use Divante\MagentoIntegrationBundle\Model\DataObject\IntegrationConfiguration;
@@ -25,8 +26,8 @@ class CategoryValidator
      */
     public function validate(AbstractElement $element, IntegrationConfiguration $configuration): void
     {
-        $parent = $element->getParent();
-        $categoryRootId =$configuration->getCategoryRoot()->getId();
+        $parent         = $element->getParent();
+        $categoryRootId = $configuration->getCategoryRoot()->getId();
         while ($parent->getId() != $categoryRootId & $parent->getId() != 1) {
             if ($parent instanceof Concrete && !$parent->isPublished()) {
                 throw new ValidationException("All parent categories must be before publishing children.");

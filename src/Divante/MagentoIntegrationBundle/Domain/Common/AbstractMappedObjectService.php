@@ -5,6 +5,7 @@
  * @author      Michał Bolka <mbolka@divante.co>
  * @copyright   Copyright (c) 2020 DIVANTE (https://divante.co)
  */
+
 namespace Divante\MagentoIntegrationBundle\Domain\Common;
 
 use Divante\MagentoIntegrationBundle\Domain\Common\Reqest\GetElement;
@@ -53,7 +54,10 @@ abstract class AbstractMappedObjectService
         if (!$ids) {
             $listing->setCondition("false");
         } else {
-            $listing->setCondition(sprintf("o_id IN (%s)", implode(', ', array_fill(0, count($ids), '?'))), $ids);
+            $listing->setCondition(
+                sprintf("o_id IN (%s)", implode(', ', array_fill(0, count($ids), '?'))),
+                $ids
+            );
             $listing->setObjectTypes(
                 [DataObject\AbstractObject::OBJECT_TYPE_VARIANT, DataObject\AbstractObject::OBJECT_TYPE_OBJECT]
             );

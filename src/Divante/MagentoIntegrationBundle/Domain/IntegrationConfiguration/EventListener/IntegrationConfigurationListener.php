@@ -8,10 +8,9 @@
 
 namespace Divante\MagentoIntegrationBundle\Domain\IntegrationConfiguration;
 
-use Divante\MagentoIntegrationBundle\Helper\IntegrationHelper;
+use Divante\MagentoIntegrationBundle\Model\DataObject\IntegrationConfiguration;
 use Pimcore\Event\Model\DataObjectEvent;
 use Pimcore\Model\DataObject\AbstractObject;
-use Pimcore\Model\DataObject\IntegrationConfiguration;
 use Pimcore\Model\Element\ValidationException;
 
 /**
@@ -20,9 +19,7 @@ use Pimcore\Model\Element\ValidationException;
  */
 class IntegrationConfigurationListener
 {
-    /**
-     * @var IntegrationConfigurationValidator
-     */
+    /** @var IntegrationConfigurationValidator */
     private $validator;
 
     /**
@@ -48,6 +45,5 @@ class IntegrationConfigurationListener
         $this->validator->validate($object);
         return;
     }
-
 
 }

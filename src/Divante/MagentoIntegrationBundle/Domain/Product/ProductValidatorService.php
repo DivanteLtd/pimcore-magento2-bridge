@@ -25,7 +25,7 @@ class ProductValidatorService
      * Configurable products cannot be published without published variants
      * Configurable product cannot be published without specified configurable attributes
      * All products must have unique url_key
-     * @param AbstractObject            $element
+     * @param AbstractObject           $element
      * @param IntegrationConfiguration $configuration
      * @throws ValidationException
      */

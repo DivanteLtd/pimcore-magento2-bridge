@@ -12,7 +12,6 @@ use Divante\MagentoIntegrationBundle\Model\Configuration\EndpointConfig;
 use Symfony\Component\Config\FileLocatorInterface;
 use Symfony\Component\Yaml\Yaml;
 
-
 /**
  * Class MagentoRestOutputProvider
  * @package Divante\MagentoIntegrationBundle\Provider
@@ -38,6 +37,11 @@ class MagentoRestOutputProvider implements RestOutputProviderInterface
         $this->parseConfig();
     }
 
+    public function parseConfig(): void
+    {
+        $this->config = Yaml::parseFile($this->fileLocator->locate(static::CONFIG_PATH));
+    }
+
     /**
      * @return string
      */
@@ -46,17 +50,25 @@ class MagentoRestOutputProvider implements RestOutputProviderInterface
         return $this->config['getStoreViewsUrl'];
     }
 
-    public function parseConfig(): void
-    {
-        $this->config = Yaml::parseFile($this->fileLocator->locate(static::CONFIG_PATH));
-    }
-
     /**
      * @return EndpointConfig
      */
     public function getAssetConfig(): EndpointConfig
     {
         return $this->getConfig('asset');
+    }
+
+    /**
+     * @param $nodeName
+     * @return EndpointConfig
+     */
+    protected function getConfig($nodeName): EndpointConfig
+    {
+        $config = new EndpointConfig();
+        $config->setDeleteUrlparam($this->config[$nodeName]['deleteUrl']);
+        $config->setPayloadAttribute($this->config[$nodeName]['payloadAttribute']);
+        $config->setSendUrlParam($this->config[$nodeName]['sendUrl']);
+        return $config;
     }
 
     /**
@@ -73,18 +85,5 @@ class MagentoRestOutputProvider implements RestOutputProviderInterface
     public function getCategoryConfig(): EndpointConfig
     {
         return $this->getConfig('category');
-    }
-
-    /**
-     * @param $nodeName
-     * @return EndpointConfig
-     */
-    protected function getConfig($nodeName): EndpointConfig
-    {
-        $config = new EndpointConfig();
-        $config->setDeleteUrlparam($this->config[$nodeName]['deleteUrl']);
-        $config->setPayloadAttribute($this->config[$nodeName]['payloadAttribute']);
-        $config->setSendUrlParam($this->config[$nodeName]['sendUrl']);
-        return $config;
     }
 }

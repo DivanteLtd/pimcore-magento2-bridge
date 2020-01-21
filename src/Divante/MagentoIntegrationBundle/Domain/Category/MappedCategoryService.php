@@ -5,14 +5,15 @@
  * @author      Michał Bolka <mbolka@divante.co>
  * @copyright   Copyright (c) 2020 Divante Ltd. (https://divante.co)
  */
+
 namespace Divante\MagentoIntegrationBundle\Domain\Category;
 
 use Divante\MagentoIntegrationBundle\Domain\Category\Request\GetCategory;
 use Divante\MagentoIntegrationBundle\Domain\Common\AbstractMappedObjectService;
-use Divante\MagentoIntegrationBundle\Domain\Helper\IntegrationHelper;
-use Divante\MagentoIntegrationBundle\Domain\Helper\MapperEventTypes;
 use Divante\MagentoIntegrationBundle\Domain\Event\IntegratedObjectEvent;
 use Divante\MagentoIntegrationBundle\Domain\Event\PostMappingObjectEvent;
+use Divante\MagentoIntegrationBundle\Domain\Helper\IntegrationHelper;
+use Divante\MagentoIntegrationBundle\Domain\Helper\MapperEventTypes;
 use Divante\MagentoIntegrationBundle\Model\DataObject\IntegrationConfiguration;
 use Pimcore\Model\DataObject\Concrete;
 
@@ -39,7 +40,8 @@ class MappedCategoryService extends AbstractMappedObjectService
                     $query->storeViewId
                 );
                 if (!$configurations) {
-                    $missingData[$object->getId()] = sprintf('Requested object with id %d does not exist.', $object->getId());
+                    $missingData[$object->getId()] = sprintf('Requested object with id %d does not exist.',
+                        $object->getId());
                     continue;
                 }
 

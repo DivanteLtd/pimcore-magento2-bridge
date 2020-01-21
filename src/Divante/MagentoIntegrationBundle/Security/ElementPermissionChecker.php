@@ -5,6 +5,7 @@
  * @author      Michał Bolka <mbolka@divante.co>
  * @copyright   Copyright (c) 2020 DIVANTE (https://divante.co)
  */
+
 namespace Divante\MagentoIntegrationBundle\Security;
 
 use Divante\MagentoIntegrationBundle\Domain\Common\Exception\NotPermittedException;
@@ -22,6 +23,7 @@ use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 class ElementPermissionChecker implements ContainerAwareInterface
 {
     use ContainerAwareTrait;
+
     /**
      * @param AbstractElement $element
      * @param string          $type
@@ -31,7 +33,7 @@ class ElementPermissionChecker implements ContainerAwareInterface
     public function checkElementPermission(AbstractElement $element, $type)
     {
         $map = [
-            'get' => 'view',
+            'get'    => 'view',
             'delete' => 'delete',
             'update' => 'publish',
             'create' => 'create'
@@ -46,10 +48,10 @@ class ElementPermissionChecker implements ContainerAwareInterface
             $this->container->get('monolog.logger.security')->error(
                 'User {user} attempted to access {permission} on {elementType} {elementId}, but has no permission to do so',
                 [
-                    'user' => $this->getAdminUser()->getName(),
-                    'permission' => $permission,
+                    'user'        => $this->getAdminUser()->getName(),
+                    'permission'  => $permission,
                     'elementType' => $element->getType(),
-                    'elementId' => $element->getId(),
+                    'elementId'   => $element->getId(),
                 ]
             );
 
