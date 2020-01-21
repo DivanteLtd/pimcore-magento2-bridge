@@ -5,13 +5,15 @@
  * @author      Michał Bolka <mbolka@divante.co>
  * @copyright   Copyright (c) 2020 Divante Ltd. (https://divante.co)
  */
+
 namespace Divante\MagentoIntegrationBundle\Model\Webservice\Data\DataObject\Concrete;
 
+use Divante\MagentoIntegrationBundle\Model\DataObject\ClassDefinition\Data\Classificationstore;
 use Divante\MagentoIntegrationBundle\Model\DataObject\ClassDefinition\Data\Localizedfields;
+use Divante\MagentoIntegrationBundle\Model\DataObject\ClassDefinition\Data\Objectbricks;
 use Pimcore\Model\DataObject\ClassDefinition\Data;
 use Pimcore\Model\Webservice\Data\DataObject\Element;
-use Divante\MagentoIntegrationBundle\Model\DataObject\ClassDefinition\Data\Classificationstore;
-use Divante\MagentoIntegrationBundle\Model\DataObject\ClassDefinition\Data\Objectbricks;
+
 /**
  * Class Out
  * @package Divante\MagentoIntegrationBundle\Model\Webservice\Data\DataObject\Concrete
@@ -28,14 +30,14 @@ class Out extends \Pimcore\Model\Webservice\Data\DataObject\Concrete\Out
 
         $this->className = $object->getClassName();
 
-        $fd = $object->getClass()->getFieldDefinitions();
+        $fd             = $object->getClass()->getFieldDefinitions();
         $this->elements = [];
         foreach ($fd as $field) {
-            $getter = 'get'.ucfirst($field->getName());
+            $getter = 'get' . ucfirst($field->getName());
 
             //only expose fields which have a get method
             if (method_exists($object, $getter)) {
-                $el = new Element();
+                $el        = new Element();
                 $el->name  = $field->getName();
                 $el->type  = $field->getFieldType();
                 $el->label = $field->getTitle();

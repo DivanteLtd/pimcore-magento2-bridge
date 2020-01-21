@@ -47,5 +47,4 @@ class MapperHelper
     const OBJECT_BRICKS_TYPES = [self::OBJECT_BRICKS_TYPE];
     const CLASSIFICATION_STORE_TYPES = [self::CLASSIFICATION_STORE_TYPE];
     const VALUE_KEY_URL_KEY = 'url_key';
-
 }

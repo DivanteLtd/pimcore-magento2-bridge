@@ -47,5 +47,4 @@ interface MapKeyStrategyInterface
      * @return array
      */
     public function mapStringNames(string $fieldName, string $groupName, array $mappingArray): array;
-
 }

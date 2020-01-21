@@ -80,5 +80,4 @@ class ProductStatusService extends StatusService
         $object->save();
         $this->eventDispatcher->dispatch($updateStatusCommand, 'product.status.update');
     }
-
 }

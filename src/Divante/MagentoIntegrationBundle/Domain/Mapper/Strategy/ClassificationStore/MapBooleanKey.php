@@ -5,10 +5,11 @@
  * @author      Michał Bolka <mbolka@divante.co>
  * @copyright   Copyright (c) 2018 DIVANTE (https://divante.co)
  */
+
 namespace Divante\MagentoIntegrationBundle\Domain\Mapper\Strategy\ClassificationStore;
 
 use Pimcore\Model\DataObject\Classificationstore\KeyConfig;
-use Symfony\Component\Translation\TranslatorInterface;
+
 /**
  * Class MapBooleanKey
  * @package Divante\MagentoIntegrationBundle\Domain\Mapper\Strategy\ClassificationStore
@@ -36,7 +37,7 @@ class MapBooleanKey extends AbstractMapKeyStrategy
         array $arrayMapping,
         $language
     ): void {
-        $names = $this->mapStringNames($attribute['name'], $group['name'], $arrayMapping);
+        $names      = $this->mapStringNames($attribute['name'], $group['name'], $arrayMapping);
         $parsedData = [
             'type'  => static::TYPE,
             'value' => $attribute['value'],

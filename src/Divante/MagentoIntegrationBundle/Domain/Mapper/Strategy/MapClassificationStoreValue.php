@@ -77,13 +77,23 @@ class MapClassificationStoreValue extends AbstractMapStrategy
                 ];
                 foreach ($this->strategies as $strategy) {
                     if ($strategy->canProcess($attributeDefinition)) {
-                        $mappedAttrNames = $strategy->mapStringNames($attributeDefinition->getName(), $group['name'], $arrayMapping);
+                        $mappedAttrNames = $strategy->mapStringNames(
+                            $attributeDefinition->getName(),
+                            $group['name'],
+                            $arrayMapping
+                        );
                         foreach ($mappedAttrNames as $mappedAttrName) {
                             if (property_exists($obj, $mappedAttrName) && $obj->{$mappedAttrName}['value'] !== null) {
                                 continue;
                             } else {
-                                $strategy->map($attributeDefinition, $attribute, $group, $obj, $arrayMapping,
-                                    $language);
+                                $strategy->map(
+                                    $attributeDefinition,
+                                    $attribute,
+                                    $group,
+                                    $obj,
+                                    $arrayMapping,
+                                    $language
+                                );
                                 break;
                             }
                         }

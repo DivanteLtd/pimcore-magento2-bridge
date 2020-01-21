@@ -83,8 +83,10 @@ class Classificationstore extends ClassificationstoreParent
                     ];
 
                     foreach ($validLanguages as $language) {
-                        $value                    = $fd->getForWebserviceExport($object,
-                            ['context' => $context, 'language' => $language]);
+                        $value                    = $fd->getForWebserviceExport(
+                            $object,
+                            ['context' => $context, 'language' => $language]
+                        );
                         $groupResult[$language][] = [
                             'id'          => $keyId,
                             'name'        => $keyConfig->getName(),

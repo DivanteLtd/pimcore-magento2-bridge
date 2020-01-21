@@ -52,6 +52,5 @@ class MapSelectValue extends MapTextValue
         }
         $field->value['key'] = $this->translator->trans($field->value['key'], [], null, $language);
         return $field->value !== "" ? $field->value : null;
-
     }
 }

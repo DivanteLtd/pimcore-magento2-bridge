@@ -45,5 +45,4 @@ class IntegrationConfigurationListener
         $this->validator->validate($object);
         return;
     }
-
 }

@@ -40,8 +40,10 @@ class MappedCategoryService extends AbstractMappedObjectService
                     $query->storeViewId
                 );
                 if (!$configurations) {
-                    $missingData[$object->getId()] = sprintf('Requested object with id %d does not exist.',
-                        $object->getId());
+                    $missingData[$object->getId()] = sprintf(
+                        'Requested object with id %d does not exist.',
+                        $object->getId()
+                    );
                     continue;
                 }
 

@@ -46,8 +46,10 @@ class MappedProductService extends AbstractMappedObjectService
                     $query->storeViewId
                 );
                 if (!$configurations) {
-                    $missingData[$object->getId()] = sprintf('Requested object with id %d does not exist.',
-                        $object->getId());
+                    $missingData[$object->getId()] = sprintf(
+                        'Requested object with id %d does not exist.',
+                        $object->getId()
+                    );
                 }
 
                 $mappedObject                    = $this->getMappedObject($object, reset($configurations));
@@ -80,8 +82,7 @@ class MappedProductService extends AbstractMappedObjectService
         $out = $this->mapper->getOutObject($object);
         $this->mapper->loadSelectFieldData($out, $object);
         $mappedObject = $this->mapper->map($out, $configuration, IntegrationHelper::OBJECT_TYPE_PRODUCT);
-        if (
-            $object->hasProperty(IntegrationHelper::PRODUCT_TYPE_CONFIGURABLE_ATTRIBUTE)
+        if ($object->hasProperty(IntegrationHelper::PRODUCT_TYPE_CONFIGURABLE_ATTRIBUTE)
             && !(get_class($object->getParent()) == get_class($object))
         ) {
             $mappedObject->type = IntegrationHelper::PRODUCT_TYPE_CONFIGURABLE;

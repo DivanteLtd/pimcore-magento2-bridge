@@ -84,12 +84,14 @@ class RestClient
             $promise = $this->client->sendAsync($this->getPutRequest($encodedData, $config))
                 ->then(function ($response) use ($object) {
                     if ($response->getStatusCode() > 204) {
-                        Simple::log('magento2-connector/rest-client',
+                        Simple::log(
+                            'magento2-connector/rest-client',
                             "[ERROR] Could not send data to remote service. Response: " . $response->getBody()
                         );
                         $this->logError("[ERROR] Could not send data to remote service.", $object);
                     } else {
-                        Simple::log('magento2-connector/rest-client',
+                        Simple::log(
+                            'magento2-connector/rest-client',
                             "[DEBUG]: " . $response->getBody()
                         );
                     }
@@ -182,7 +184,8 @@ class RestClient
             $promise = $this->client->sendAsync($this->getDeleteRequest($object->getId(), $config))
                 ->then(function ($response) use ($object) {
                     if ($response->getStatusCode() > 204) {
-                        Simple::log('magento2-connector/rest-client',
+                        Simple::log(
+                            'magento2-connector/rest-client',
                             "Could not send data to remote service. Response: " . $response->getBody()
                         );
                         $this->logError("Could not send data to remote service.", $object);
@@ -239,7 +242,8 @@ class RestClient
             $promise = $this->client->sendAsync($this->getPutRequest($encodedData, $this->provider->getAssetConfig()))
                 ->then(function ($response) use ($asset) {
                     if ($response->getStatusCode() > 204) {
-                        Simple::log('magento2-connector/rest-client',
+                        Simple::log(
+                            'magento2-connector/rest-client',
                             "Could not send data to remote service. Response: " . $response->getBody()
                         );
                         $this->logError("Could not send data to remote service.", $asset);
@@ -267,7 +271,8 @@ class RestClient
                             "Could not get stores list from "
                             . $this->getUrl($this->provider->getStoreViewsEndpointUrl())
                         );
-                        Simple::log('magento2-connector/rest-client',
+                        Simple::log(
+                            'magento2-connector/rest-client',
                             "Could not get stores list from "
                             . $this->getUrl($this->provider->getStoreViewsEndpointUrl())
                         );
@@ -278,7 +283,8 @@ class RestClient
                         "Could not get stores list from "
                         . $this->getUrl($this->provider->getStoreViewsEndpointUrl())
                     );
-                    Simple::log('magento2-connector/rest-client',
+                    Simple::log(
+                        'magento2-connector/rest-client',
                         "Could not get stores list from "
                         . $this->getUrl($this->provider->getStoreViewsEndpointUrl())
                     );
@@ -291,7 +297,8 @@ class RestClient
                 "Could not get stores list from "
                 . $this->getUrl($this->provider->getStoreViewsEndpointUrl())
             );
-            Simple::log('magento2-connector/rest-client',
+            Simple::log(
+                'magento2-connector/rest-client',
                 "Could not get stores list from "
                 . $this->getUrl($this->provider->getStoreViewsEndpointUrl())
             );

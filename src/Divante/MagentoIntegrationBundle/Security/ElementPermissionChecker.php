@@ -46,7 +46,8 @@ class ElementPermissionChecker implements ContainerAwareInterface
         $permission = $map[$type];
         if (!$element->isAllowed($permission)) {
             $this->container->get('monolog.logger.security')->error(
-                'User {user} attempted to access {permission} on {elementType} {elementId}, but has no permission to do so',
+                'User {user} attempted to access {permission} on {elementType} {elementId},
+                 but has no permission to do so',
                 [
                     'user'        => $this->getAdminUser()->getName(),
                     'permission'  => $permission,

@@ -76,8 +76,9 @@ abstract class AbstractIntegratedObjectService implements IntegratedElementServi
         $listeners = $this->container->get('event_dispatcher')->getListeners('pimcore.dataobject.preUpdate');
         $exists    = false;
         foreach ($listeners as $listener) {
-            if ($listener instanceof WrappedListener && strpos($listener->getPretty(),
-                    DataObjectEventListener::class) >= 0) {
+            if ($listener instanceof WrappedListener
+                && strpos($listener->getPretty(), DataObjectEventListener::class) >= 0
+            ) {
                 $exists = true;
             }
         }
