@@ -76,6 +76,7 @@ class MapperService
                         $elements,
                         $mappingArray,
                         $configuration->getDefaultLanguage(),
+                        $objectClass,
                         $out->className
                     );
                 }
