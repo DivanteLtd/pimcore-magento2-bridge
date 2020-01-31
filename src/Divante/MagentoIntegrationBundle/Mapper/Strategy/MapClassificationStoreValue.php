@@ -39,15 +39,15 @@ class MapClassificationStoreValue extends AbstractMapStrategy
      * @param \stdClass   $obj
      * @param array       $arrayMapping
      * @param string|null $language
+     * @param             $definition
      * @param string      $className
      * @return void
      */
-    public function map(Element $field, \stdClass &$obj, array $arrayMapping, $language, $className): void
+    public function map(Element $field, \stdClass &$obj, array $arrayMapping, $language, $definition, $className): void
     {
         if (!is_array($field->value['groups'])) {
             return;
         }
-        $definition = ClassDefinition::getByName($className);
         $fieldDefinition = $definition->getFieldDefinition($field->name);
         if ($fieldDefinition instanceof Classificationstore) {
             return;

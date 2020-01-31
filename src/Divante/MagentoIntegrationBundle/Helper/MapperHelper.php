@@ -31,7 +31,7 @@ class MapperHelper
         'manyToManyRelation',
         'manyToManyObjectRelation'
     ];
-    const STRUCTURED_TYPES = ['localizedfields'];
+    const STRUCTURED_TYPES = [self::LOCALIZED_FIELD_TYPE];
     const USER_TYPES = ['user'];
     const IMAGE_TYPES = ['image', 'imageGallery'];
     const MULTI_SELECT_TYPES = [
@@ -43,6 +43,7 @@ class MapperHelper
     ];
     const OBJECT_BRICKS_TYPE         = 'objectbricks';
     const CLASSIFICATION_STORE_TYPE  = 'classificationstore';
+    const LOCALIZED_FIELD_TYPE = 'localizedfields';
     const BLOCK_TYPES                = ['block'];
     const OBJECT_BRICKS_TYPES        = [self::OBJECT_BRICKS_TYPE];
     const CLASSIFICATION_STORE_TYPES = [self::CLASSIFICATION_STORE_TYPE];
