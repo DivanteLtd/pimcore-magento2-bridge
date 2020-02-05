@@ -21,6 +21,7 @@ services:
   Divante\MagentoIntegrationBundle\EventListener\AssetListener:
     tags:
     - { name: kernel.event_listener, event: pimcore.asset.postUpdate, method: onPostAssetUpdate, priority: 50 }
+    public: true
 
 
   Divante\MagentoIntegrationBundle\EventListener\DeleteObjectEventListener:
