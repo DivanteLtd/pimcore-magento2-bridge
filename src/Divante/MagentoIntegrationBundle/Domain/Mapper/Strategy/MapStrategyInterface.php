@@ -21,10 +21,11 @@ interface MapStrategyInterface
      * @param \stdClass $obj
      * @param array     $arrayMapping
      * @param           $language
+     * @param mixed     $definition
      * @param           $className
      * @return mixed
      */
-    public function map(Element $field, \stdClass &$obj, array $arrayMapping, $language, $className);
+    public function map(Element $field, \stdClass &$obj, array $arrayMapping, $language, $definition, $className);
 
     /**
      * @param Element $field

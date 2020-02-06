@@ -42,9 +42,10 @@ class MapObjectBricks extends AbstractMapStrategy
      * @param array       $arrayMapping
      * @param string|null $language
      * @param string      $className
+     * @param mixed       $definition
      * @throws \Exception
      */
-    public function map(Element $field, \stdClass &$obj, array $arrayMapping, $language, $className): void
+    public function map(Element $field, \stdClass &$obj, array $arrayMapping, $language, $definition, $className): void
     {
         /** @var Element $brick */
         foreach ($field->value as $brick) {

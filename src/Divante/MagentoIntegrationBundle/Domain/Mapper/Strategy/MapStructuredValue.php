@@ -8,6 +8,7 @@
 
 namespace Divante\MagentoIntegrationBundle\Domain\Mapper\Strategy;
 
+use Cassandra\Map;
 use Divante\MagentoIntegrationBundle\Domain\Mapper\MapperContext;
 use Pimcore\Model\DataObject\ClassDefinition;
 use Pimcore\Model\Webservice\Data\DataObject\Element;
@@ -42,24 +43,28 @@ class MapStructuredValue extends AbstractMapStrategy
      * @param \stdClass   $obj
      * @param array       $configuration
      * @param string|null $language
+     * @param mixed       $definition
      * @param string      $className
      */
-    public function map(Element $field, \stdClass &$obj, array $configuration, $language, $className): void
+    public function map(Element $field, \stdClass &$obj, array $configuration, $language, $definition, $className): void
     {
-        $classDefinition = ClassDefinition::getByName($className);
-        if (!$field->value || !$classDefinition instanceof ClassDefinition) {
+        if (!$field->value) {
             return;
         }
         /** @var ClassDefinition\Data\Localizedfields $fields */
-        $fields = array_key_exists($field->name, $classDefinition->getFieldDefinitions())
-            ? $classDefinition->getFieldDefinitions()[$field->name]
-            : null;
+        $fields = $definition->getFieldDefinitions()[MapperHelper::LOCALIZED_FIELD_TYPE];
+        $prefix = substr(
+            $field->name,
+            0,
+            strrpos($field->name, sprintf("%s", MapperHelper::LOCALIZED_FIELD_TYPE))
+        );
         /** @var Element $value */
         foreach ($field->value as $value) {
             if (!$value->language || $value->language == $language) {
                 $fieldDefinition = $fields->getFielddefinition($value->name);
                 $value->label = $fieldDefinition ? $fieldDefinition->title : $value->name;
-                $this->mapperContext->map($value, $obj, $configuration, $language, $className);
+                $value->name = $prefix . $value->name;
+                $this->mapperContext->map($value, $obj, $configuration, $language, $definition, $className);
             }
         }
     }

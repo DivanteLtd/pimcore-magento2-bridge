@@ -33,13 +33,14 @@ class MapperContext
      * @param \stdClass $obj
      * @param array     $arrayMapping
      * @param mixed     $language
+     * @param mixed     $definition
      * @param string    $className
      */
-    public function map(Element $field, \stdClass &$obj, array $arrayMapping, $language, $className): void
+    public function map(Element $field, \stdClass &$obj, array $arrayMapping, $language, $definition, $className): void
     {
         foreach ($this->strategies as $strategy) {
             if ($strategy->canProcess($field)) {
-                $strategy->map($field, $obj, $arrayMapping, $language, $className);
+                $strategy->map($field, $obj, $arrayMapping, $language, $definition, $className);
                 return;
             }
         }

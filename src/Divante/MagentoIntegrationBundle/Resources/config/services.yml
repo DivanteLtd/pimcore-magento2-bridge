@@ -29,6 +29,7 @@ services:
     Divante\MagentoIntegrationBundle\Domain\Asset\EventListener\AssetListener:
         tags:
             - { name: kernel.event_listener, event: pimcore.asset.postUpdate, method: onPostAssetUpdate, priority: 50 }
+        public: true
 
     Divante\MagentoIntegrationBundle\Domain\Asset\AssetStatusService: ~
     Divante\MagentoIntegrationBundle\Domain\Asset\IntegratedAssetService:
