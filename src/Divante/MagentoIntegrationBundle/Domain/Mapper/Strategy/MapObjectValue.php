@@ -25,9 +25,10 @@ class MapObjectValue extends AbstractMapStrategy
      * @param \stdClass   $obj
      * @param array       $arrayMapping
      * @param string|null $language
+     * @param mixed       $definition
      * @param string      $className
      */
-    public function map(Element $field, \stdClass &$obj, array $arrayMapping, $language, $className): void
+    public function map(Element $field, \stdClass &$obj, array $arrayMapping, $language, $definition, $className): void
     {
         $names      = $this->getFieldNames($field, $arrayMapping);
         $pasredData = [
