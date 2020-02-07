@@ -8,11 +8,9 @@
 
 namespace Divante\MagentoIntegrationBundle\Domain\Mapper\Strategy;
 
-use Cassandra\Map;
 use Divante\MagentoIntegrationBundle\Domain\Mapper\MapperContext;
 use Pimcore\Model\DataObject\ClassDefinition;
 use Pimcore\Model\Webservice\Data\DataObject\Element;
-
 use Divante\MagentoIntegrationBundle\Domain\Helper\MapperHelper;
 use Symfony\Component\Translation\TranslatorInterface;
 
