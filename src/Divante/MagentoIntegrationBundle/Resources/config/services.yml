@@ -115,3 +115,10 @@ services:
 
 # Security
     Divante\MagentoIntegrationBundle\Security\ElementPermissionChecker: ~
+
+#Command
+    Divante\MagentoIntegrationBundle\Command\SendProductsMagentoCommand:
+    tags:
+        - { name: 'console.command', command: 'integration-magento:send:product' }
+
+    Divante\MagentoIntegrationBundle\Command\Service\SendProductsService: ~

@@ -30,6 +30,8 @@ initialize: function () {
             pimcore.globalmanager.add(key, value);
             tabs = Ext.getCmp('object_' + object.id);
             tabs.object.tab.items.items[1].add(value.getLayout());
+
+            this.addSendAllButton(object);
         }
         if (this.isSynchronized(object)) {
             var key = 'magentostatus_' + object.id;
@@ -72,6 +74,18 @@ initialize: function () {
 
     isSynchronized: function (object) {
         return ("synchronize-status" in  object.data.properties);
+    },
+
+    addSendAllButton: function (object) {
+        object.toolbar.add({
+            text: t('Send all products'),
+            iconCls: 'pimcore_icon_right',
+            scale: 'small',
+            handler: function () {
+                alert("TEST")
+            }.bind(this)
+        });
+        pimcore.layout.refresh();
     }
 });
 
