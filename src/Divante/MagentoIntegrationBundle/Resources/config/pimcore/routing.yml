@@ -2,8 +2,14 @@ magento_integration_object_mapper.product:
     resource: "@DivanteMagentoIntegrationBundle/Action/Mapper/GetProductMapperColumnsAction.php"
     type: annotation
     prefix: /admin
+
 magento_integration_object_mapper.category:
     resource: "@DivanteMagentoIntegrationBundle/Action/Mapper/GetCategoryMapperColumnsAction.php"
+    type: annotation
+    prefix: /admin
+
+magento_integration.admin.send.products:
+    resource: "@DivanteMagentoIntegrationBundle/Action/Admin/Integrator/SendProductsAction.php"
     type: annotation
     prefix: /admin
 
@@ -18,7 +24,6 @@ magento_integration_api_rest.update.category:
 magento_integration_api_rest.update.product:
     resource: "@DivanteMagentoIntegrationBundle/Action/Rest/Product/UpdateProductStatusAction.php"
     type:     annotation
-
 
 magento_integration_api_rest.get.category:
     resource: "@DivanteMagentoIntegrationBundle/Action/Rest/Category/GetCategoryAction.php"

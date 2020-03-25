@@ -77,12 +77,28 @@ initialize: function () {
     },
 
     addSendAllButton: function (object) {
+        console.log(object);
         object.toolbar.add({
             text: t('Send all products'),
             iconCls: 'pimcore_icon_right',
             scale: 'small',
             handler: function () {
-                alert("TEST")
+                Ext.Ajax.request({
+                    url: '/admin/integration-configuration/send/products',
+                    method: 'post',
+                    params: {
+                        id: object.id,
+                        storeViewId: object.data.data.magentoStore,
+                        instanceUrl: object.data.data.instanceUrl
+                    },
+                    success: function(){
+                        pimcore.helpers.showNotification(t("Success!"), t("We notified about product update"),
+                            "success");
+                    }.bind(this),
+                    failure: function () {
+                        console.log(arguments)
+                    }.bind(this)
+                });
             }.bind(this)
         });
         pimcore.layout.refresh();

@@ -6,7 +6,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputArgument;
 use Pimcore\Console\AbstractCommand;
-use Divante\MagentoIntegrationBundle\Command\Service\SendProductsService;
+use Divante\MagentoIntegrationBundle\Domain\Admin\SendProductsService;
 
 /**
  * Class SendProductsMagentoCommand
@@ -58,9 +58,12 @@ class SendProductsMagentoCommand extends AbstractCommand
     public function execute(InputInterface $input, OutputInterface $output): int
     {
         $idProduct = $input->getArgument("idProduct");
-        $idConfig = $input->getArgument("idConfifuration");
+        $idConfig = $input->getArgument("idConfiguration");
 
-        $this->sendProductService->sendProducts($idProduct, $idConfig);
+        $products = $this->sendProductService->sendProducts($idProduct, $idConfig);
+
+        $output->writeln("<fg=green>Success</>");
+        $output->writeln(count($products) . " product(s) sent!");
 
         return 0;
     }

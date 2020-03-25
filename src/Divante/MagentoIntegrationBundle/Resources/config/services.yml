@@ -17,6 +17,11 @@ services:
         public: true
         tags: ['controller.service_arguments']
 
+    Divante\MagentoIntegrationBundle\Action\Admin\:
+        resource: '../../Action/Admin'
+        public: true
+        tags: ['controller.service_arguments']
+
     # Domain
     Divante\MagentoIntegrationBundle\Domain\ElementDeleteService:
         arguments:
@@ -24,7 +29,9 @@ services:
     Divante\MagentoIntegrationBundle\Domain\RemoteElementService:
         arguments:
             - !tagged_iterator magento_integration.remote_element.service
-
+### Admin
+    Divante\MagentoIntegrationBundle\Domain\Admin\SendProductsService: ~
+    
 ### Asset
     Divante\MagentoIntegrationBundle\Domain\Asset\EventListener\AssetListener:
         tags:
@@ -118,7 +125,5 @@ services:
 
 #Command
     Divante\MagentoIntegrationBundle\Command\SendProductsMagentoCommand:
-    tags:
-        - { name: 'console.command', command: 'integration-magento:send:product' }
-
-    Divante\MagentoIntegrationBundle\Command\Service\SendProductsService: ~
+        tags:
+            - { name: 'console.command', command: 'integration-magento:send:product' }

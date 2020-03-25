@@ -1,13 +1,16 @@
 <?php
 
-namespace Divante\MagentoIntegrationBundle\Command\Service;
+namespace Divante\MagentoIntegrationBundle\Domain\Admin;
 
+use Divante\MagentoIntegrationBundle\Domain\Admin\Request\GetIntegrationConfiguration;
+use Pimcore\Model\DataObject\ClassDefinition;
 use Pimcore\Model\DataObject\IntegrationConfiguration;
 use Divante\MagentoIntegrationBundle\Domain\RemoteElementService;
 use Pimcore\Model\DataObject\Listing;
+use Symfony\Component\Process\Process;
 
 /**
- * Class SendProductsService
+ * Class SendProducts
  */
 class SendProductsService
 {
@@ -24,23 +27,32 @@ class SendProductsService
     }
 
     /**
+     * @param string $idConfiguration
+     */
+    public function excecuteCommandForAll(GetIntegrationConfiguration $query)
+    {
+        $process = new Process("bin/console bin/console integration-magento:send:product all " . $query->id);
+        $process->start();
+    }
+    /**
      * @param string $idProduct
      * @param string $idConfiguration
      */
-    public function sendProducts(string $idProduct, string $idConfiguration)
+    public function sendProducts(string $idProduct, string $idConfiguration): array
     {
         $configurationObj = IntegrationConfiguration::getById($idConfiguration);
         $products = [];
-        if ($idProduct === "--all") {
-            $products = $this->getProductIds($configurationObj);
+        if ($idProduct === "all") {
+            $products = $this->getProducts($configurationObj);
         }
-        if (is_int($idProduct)) {
+        if (is_numeric($idProduct)) {
             $products = $this->getProduct($idProduct);
         }
-
         foreach ($products as $product) {
             $this->remoteElementService->sendUpdateStatus($product, $configurationObj);
         }
+        
+        return $products;
     }
 
     /**
@@ -49,13 +61,13 @@ class SendProductsService
      */
     private function getProducts(IntegrationConfiguration $configuration): array
     {
-        $productClass = $configuration->getProductClass();
+        $classDefinition = ClassDefinition::getById($configuration->getProductClass());
         $listing = new Listing();
         $listing->setCondition(
-            "oo_className = :className AND o_path LIKE :path AND o_published = 1",
+            "o_className = :className AND o_path LIKE :path AND o_published = 1",
             [
-                "className" => $productClass->getClassName(),
-                "path" => sprintf("%s%", $configuration->getProductRoot())
+                "className" => $classDefinition->getName(),
+                "path" => sprintf("%s", $configuration->getProductRoot() . "%")
             ]
         );
 
@@ -70,7 +82,7 @@ class SendProductsService
     {
         $listing = new Listing();
         $listing->setCondition(
-            "o_id = :id",
+            "o_id = :id AND o_published = 1",
             [
                 "id" => $idProduct,
             ]
