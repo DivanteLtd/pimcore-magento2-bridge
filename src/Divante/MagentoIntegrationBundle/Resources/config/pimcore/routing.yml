@@ -8,6 +8,11 @@ magento_integration_object_mapper.category:
     type: annotation
     prefix: /admin
 
+magento_integration.admin.send.category:
+    resource: "@DivanteMagentoIntegrationBundle/Action/Admin/Integrator/SendCategoriesAction.php"
+    type: annotation
+    prefix: /admin
+
 magento_integration.admin.send.products:
     resource: "@DivanteMagentoIntegrationBundle/Action/Admin/Integrator/SendProductsAction.php"
     type: annotation
@@ -32,3 +37,4 @@ magento_integration_api_rest.get.category:
 magento_integration_api_rest.get.product:
     resource: "@DivanteMagentoIntegrationBundle/Action/Rest/Product/GetProductAction.php"
     type:     annotation
+

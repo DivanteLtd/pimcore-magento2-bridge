@@ -2,29 +2,30 @@
 
 namespace Divante\MagentoIntegrationBundle\Command;
 
+use Divante\MagentoIntegrationBundle\Domain\Admin\SendCategoriesService;
+use Pimcore\Console\AbstractCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputArgument;
-use Pimcore\Console\AbstractCommand;
-use Divante\MagentoIntegrationBundle\Domain\Admin\SendProductsService;
 
 /**
- * Class SendProductsMagentoCommand
+ * Class SendCategoriesMagentoCommand
+ * @package Divante\MagentoIntegrationBundle\Command
  */
-class SendProductsMagentoCommand extends AbstractCommand
+class SendCategoriesMagentoCommand extends AbstractCommand
 {
-    /** @var SendProductsService */
-    private $sendProductService;
+    /** @var SendCategoriesService */
+    private $sendCategoriesAction;
 
     /**
-     * SendProductsMagentoCommand constructor.
-     * @param SendProductsService $sendProductService
+     * SendCategoriesMagentoCommand constructor.
+     * @param SendCategoriesService $sendCategoriesAction
      * @param string|null $name
      */
-    public function __construct(SendProductsService $sendProductService, string $name = null)
+    public function __construct(SendCategoriesService $sendCategoriesAction, string $name = null)
     {
         parent::__construct($name);
-        $this->sendProductService = $sendProductService;
+        $this->sendCategoriesAction = $sendCategoriesAction;
     }
 
     /**
@@ -32,10 +33,10 @@ class SendProductsMagentoCommand extends AbstractCommand
      */
     protected function configure()
     {
-        $this->setDescription('Sends product or products if (all) that fulfill integration configuration');
+        $this->setDescription('Sends category or categories if (all) that fulfill integration configuration');
 
         $this->addArgument(
-            "idProduct",
+            "idCategory",
             InputArgument::REQUIRED,
             "id of product you want to send or 'all' if you want to send all of them"
         );
@@ -57,13 +58,13 @@ class SendProductsMagentoCommand extends AbstractCommand
      */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
-        $idProduct = $input->getArgument("idProduct");
+        $idCategory = $input->getArgument("idCategory");
         $idConfig = $input->getArgument("idConfiguration");
 
-        $products = $this->sendProductService->sendObjects($idProduct, $idConfig);
+        $products = $this->sendCategoriesAction->sendObjects($idCategory, $idConfig);
 
         $output->writeln("<fg=green>Success</>");
-        $output->writeln(count($products) . " product(s) sent!");
+        $output->writeln(count($products) . " category(ies) sent!");
 
         return 0;
     }

@@ -4,18 +4,18 @@ namespace Divante\MagentoIntegrationBundle\Action\Admin\Integrator;
 
 use Divante\MagentoIntegrationBundle\Domain\Admin\CommandExcecutor;
 use Divante\MagentoIntegrationBundle\Domain\Admin\Request\GetIntegrationConfiguration;
-use Divante\MagentoIntegrationBundle\Domain\Admin\SendProductsService;
+use Divante\MagentoIntegrationBundle\Domain\Admin\SendCategoriesService;
 use Divante\MagentoIntegrationBundle\Responder\JsonResponder;
+use Symfony\Component\Routing\Annotation\Route;
 use Divante\MagentoIntegrationBundle\Responder\MappedObjectJsonResponder;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class SendProductsAction
+ * Class SendCategoriesAction
  * @package Divante\MagentoIntegrationBundle\Action\Admin\Integrator
- * @Route("/integration-configuration/send/products", methods={"POST"})
+ * @Route("/integration-configuration/send/categories", methods={"POST"})
  */
-class SendProductsAction
+class SendCategoriesAction
 {
     /** @var CommandExcecutor */
     private $domain;
@@ -24,9 +24,9 @@ class SendProductsAction
     private $responder;
 
     /**
-     * GetProductAction constructor.
+     * SendCategoriesAction constructor.
      * @param CommandExcecutor $domain
-     * @param JsonResponder $responder
+     * @param JsonResponder $jsonResponder
      */
     public function __construct(CommandExcecutor $domain, JsonResponder $jsonResponder)
     {
@@ -39,7 +39,7 @@ class SendProductsAction
      */
     public function __invoke(GetIntegrationConfiguration $query)
     {
-        $this->domain->excecuteCommandSendProducts($query);
+        $this->domain->excecuteCommandSendCategories($query);
         return $this->responder->createResponse([]);
     }
 }

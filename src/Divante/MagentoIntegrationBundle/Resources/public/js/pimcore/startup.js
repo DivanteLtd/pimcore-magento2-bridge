@@ -9,11 +9,11 @@ pimcore.registerNS("pimcore.plugin.MagentoIntegrationBundle");
 pimcore.plugin.MagentoIntegrationBundle = Class.create(pimcore.plugin.admin, {
     getClassName: function () {
         return "pimcore.plugin.MagentoIntegrationBundle";
-},
+    },
 
-initialize: function () {
-    pimcore.plugin.broker.registerPlugin(this);
-},
+    initialize: function () {
+        pimcore.plugin.broker.registerPlugin(this);
+    },
 
     pimcoreReady: function (params, broker) {
     },
@@ -31,7 +31,8 @@ initialize: function () {
             tabs = Ext.getCmp('object_' + object.id);
             tabs.object.tab.items.items[1].add(value.getLayout());
 
-            this.addSendAllButton(object);
+            this.addSendAllProductsButton(object);
+            this.addSendAllCategoriesButton(object);
         }
         if (this.isSynchronized(object)) {
             var key = 'magentostatus_' + object.id;
@@ -76,10 +77,10 @@ initialize: function () {
         return ("synchronize-status" in  object.data.properties);
     },
 
-    addSendAllButton: function (object) {
+    addSendAllProductsButton: function (object) {
         console.log(object);
         object.toolbar.add({
-            text: t('Send all products'),
+            text: t('Send products'),
             iconCls: 'pimcore_icon_right',
             scale: 'small',
             handler: function () {
@@ -93,6 +94,34 @@ initialize: function () {
                     },
                     success: function(){
                         pimcore.helpers.showNotification(t("Success!"), t("We notified about product update"),
+                            "success");
+                    }.bind(this),
+                    failure: function () {
+                        console.log(arguments)
+                    }.bind(this)
+                });
+            }.bind(this)
+        });
+        pimcore.layout.refresh();
+    },
+
+    addSendAllCategoriesButton: function (object) {
+        console.log(object);
+        object.toolbar.add({
+            text: t('Send categories'),
+            iconCls: 'pimcore_icon_right',
+            scale: 'small',
+            handler: function () {
+                Ext.Ajax.request({
+                    url: '/admin/integration-configuration/send/categories',
+                    method: 'post',
+                    params: {
+                        id: object.id,
+                        storeViewId: object.data.data.magentoStore,
+                        instanceUrl: object.data.data.instanceUrl
+                    },
+                    success: function(){
+                        pimcore.helpers.showNotification(t("Success!"), t("We notified about categories update"),
                             "success");
                     }.bind(this),
                     failure: function () {

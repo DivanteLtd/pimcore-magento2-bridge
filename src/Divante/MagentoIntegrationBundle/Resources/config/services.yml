@@ -30,8 +30,11 @@ services:
         arguments:
             - !tagged_iterator magento_integration.remote_element.service
 ### Admin
+    Divante\MagentoIntegrationBundle\Domain\Admin\AbstactSendService: ~
     Divante\MagentoIntegrationBundle\Domain\Admin\SendProductsService: ~
-    
+    Divante\MagentoIntegrationBundle\Domain\Admin\SendCategoriesService: ~
+    Divante\MagentoIntegrationBundle\Domain\Admin\CommandExcecutor: ~
+
 ### Asset
     Divante\MagentoIntegrationBundle\Domain\Asset\EventListener\AssetListener:
         tags:
@@ -127,3 +130,7 @@ services:
     Divante\MagentoIntegrationBundle\Command\SendProductsMagentoCommand:
         tags:
             - { name: 'console.command', command: 'integration-magento:send:product' }
+
+    Divante\MagentoIntegrationBundle\Command\SendCategoriesMagentoCommand:
+        tags:
+            - { name: 'console.command', command: 'integration-magento:send:category' }
