@@ -58,7 +58,11 @@ abstract class IntegrationConfiguration extends Concrete implements IntegrationC
             $this->mappingArrays['product'] = [];
             foreach ($this->productMapping as $map) {
                 if ($map[0] != "") {
-                    $this->mappingArrays['product'][$map[0]][] = $map[1];
+                    $this->mappingArrays["product"][$map[0]][] = [
+                        "field" => $map[1],
+                        "strategy" => !empty($map[2]) ? $map[2] : null,
+                        "attributes" => !empty($map[3]) ? $map[3] : null
+                    ];
                 }
             }
         }
@@ -74,7 +78,11 @@ abstract class IntegrationConfiguration extends Concrete implements IntegrationC
             $this->mappingArrays['category'] = [];
             foreach ($this->categoryMapping as $map) {
                 if ($map[0] != "") {
-                    $this->mappingArrays['category'][$map[0]][] = $map[1];
+                    $this->mappingArrays["category"][$map[0]][] = [
+                        "field" => $map[1],
+                        "strategy" => !empty($map[2]) ? $map[2] : null,
+                        "attributes" => !empty($map[3]) ? $map[3] : null
+                    ];
                 }
             }
         }

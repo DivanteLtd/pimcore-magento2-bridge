@@ -29,7 +29,8 @@ interface MapStrategyInterface
 
     /**
      * @param Element $field
+     * @param array $custom
      * @return bool
      */
-    public function canProcess(Element $field): bool;
+    public function canProcess(Element $field, ?array $custom = null): bool;
 }

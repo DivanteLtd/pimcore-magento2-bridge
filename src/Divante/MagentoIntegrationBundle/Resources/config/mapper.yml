@@ -8,6 +8,8 @@ services:
             tags: [object_mapper.mapStrategy]
         Divante\MagentoIntegrationBundle\Domain\Mapper\Strategy\ClassificationStore\MapKeyStrategyInterface:
             tags: [object_mapper_classificationstore.mapStrategy]
+        Divante\MagentoIntegrationBundle\Domain\Mapper\Strategy\Custom\CustomStrategyInterface:
+            tags: [object_mapper.customStrategy]
 
     Divante\MagentoIntegrationBundle\Action\Mapper\:
         resource: '../../Action/Mapper'
@@ -18,7 +20,9 @@ services:
 
     Divante\MagentoIntegrationBundle\Domain\Mapper\MapperContext: ~
 
-    Divante\MagentoIntegrationBundle\Domain\Mapper\MapperColumnsService: ~
+    Divante\MagentoIntegrationBundle\Domain\Mapper\MapperColumnsService:
+        arguments:
+            - !tagged_iterator object_mapper.customStrategy
 
     Divante\MagentoIntegrationBundle\Domain\Mapper\Strategy\MapClassificationStoreValue:
         arguments:
