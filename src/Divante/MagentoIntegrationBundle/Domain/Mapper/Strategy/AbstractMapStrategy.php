@@ -40,6 +40,10 @@ abstract class AbstractMapStrategy implements MapStrategyInterface
     {
         if (array_key_exists($field->name, $mappingArray)) {
             $fieldName = $mappingArray[$field->name];
+            $fieldName = array_filter($fieldName, function ($element) {
+                return $element["strategy"] === null;
+            });
+            $fieldName = array_column($fieldName, "field");
         } else {
             $fieldName = [$field->name];
         }
@@ -61,9 +65,10 @@ abstract class AbstractMapStrategy implements MapStrategyInterface
 
     /**
      * @param Element $field
+     * @param array|null $custom
      * @return bool
      */
-    public function canProcess(Element $field): bool
+    public function canProcess(Element $field, ?array $custom = null): bool
     {
         return in_array($field->type, static::ALLOWED_TYPES_ARRAY);
     }

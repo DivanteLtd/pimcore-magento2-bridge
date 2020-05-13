@@ -8,6 +8,8 @@
 
 namespace Divante\MagentoIntegrationBundle\Domain\Mapper;
 
+use Divante\MagentoIntegrationBundle\Domain\Mapper\Strategy\Custom\CustomStrategyInterface;
+use Divante\MagentoIntegrationBundle\Domain\Mapper\Strategy\Custom\JsonStrategy;
 use Divante\MagentoIntegrationBundle\Model\Mapping\FromColumn;
 use Divante\MagentoIntegrationBundle\Model\Mapping\ToColumn;
 use Pimcore\Model\DataObject;
@@ -21,12 +23,16 @@ class MapperColumnsService
     /** @var MapperService  */
     private $mapperService;
 
+    /** @var CustomStrategyInterface[] */
+    private $strategies;
+
     /**
      * MapperColumnsService constructor.
      * @param MapperService $mapperService
      */
-    public function __construct(MapperService $mapperService)
+    public function __construct(iterable $strategies, MapperService $mapperService)
     {
+        $this->strategies = iterator_to_array($strategies);
         $this->mapperService = $mapperService;
     }
 
@@ -86,7 +92,8 @@ class MapperColumnsService
             'fromColumns'      => $fromColumns,
             'toColumns'        => $toColumns,
             'bricks'           => [],
-            'fieldcollections' => []
+            'fieldcollections' => [],
+            'strategies'       => $this->strategies
         ];
     }
 
@@ -122,6 +129,8 @@ class MapperColumnsService
             'config' => null,
             'fromColumn' => $mapElement[0] ?? null,
             'identifier' => $mapElement[0] ?? null,
+            'strategy' => $mapElement[2] ?? null,
+            'attributes' => $mapElement[3] ?? null,
             'interpreterConfig' => null,
             'primaryIdentifier' => false,
             'setter' => null,

@@ -89,4 +89,12 @@ class DivanteMagentoIntegrationBundle extends AbstractPimcoreBundle
     {
         return 'divante-ltd/pimcore5-module-magento2-integration';
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function getVersion()
+    {
+        return "2.0.0";
+    }
 }

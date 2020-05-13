@@ -48,6 +48,15 @@ pimcore.plugin.MagentoIntegrationBundle.ProductMapper = Class.create(pimcore.plu
                         data: config.fromColumns
                     });
 
+                    var strategiesColumnStore = new Ext.data.Store({
+                        fields: [
+                            'identifier',
+                            'label'
+                        ],
+                        collapsible: false,
+                        data: config.strategies
+                    });
+
                     if (typeof config.toColumns == 'undefined') {
                         config.toColumns = [];
                     }
@@ -67,6 +76,8 @@ pimcore.plugin.MagentoIntegrationBundle.ProductMapper = Class.create(pimcore.plu
                         fields: [
                             'fromColumn',
                             'toColumn',
+                            'strategies',
+                            'attributes',
                             'primaryIdentifier'
                         ]
                     });
@@ -163,6 +174,88 @@ pimcore.plugin.MagentoIntegrationBundle.ProductMapper = Class.create(pimcore.plu
                                         return val;
                                     }
                                 },
+                                {
+                                    text: t('Strategies'),
+                                    dataIndex: 'strategy',
+                                    flex: 1,
+                                    renderer: function (val) {
+                                        if (val) {
+                                            var rec = strategiesColumnStore.findRecord('identifier', val, 0, false, false, true);
+
+                                            if (rec) {
+                                                return rec.get('label');
+                                            }
+                                        }
+
+                                        return null;
+                                    },
+
+                                    editor: {
+                                        xtype: 'combo',
+                                        store: strategiesColumnStore,
+                                        mode: 'local',
+                                        displayField: 'label',
+                                        valueField: 'identifier',
+                                        object: this.object,
+                                        editable: true,
+                                        listeners: {
+                                            change: function (combo, newValue, oldValue, eOpts) {
+                                                var gridRecord = combo.up('grid').getSelectionModel().getSelection();
+                                                if (gridRecord.length > 0) {
+                                                    gridRecord = gridRecord[0];
+                                                    gridRecord.strategiesColumnStore = strategiesColumnStore;
+
+                                                    var strategy = strategiesColumnStore.findRecord('identifier', newValue, 0, false, false, true);
+                                                    var toColumn = toColumnStore.findRecord('identifier', gridRecord.get('toColumn'), 0, false, false, true);
+                                                    if (toColumn) {
+                                                        gridRecord.data['strategies'] = strategy;
+                                                        var array = this.object.edit.dataFields.productMapping.getValue();
+                                                        var value = '';
+                                                        if (strategy) {
+                                                            value = strategy.data.identifier;
+                                                        }
+                                                        array.find(function (value) {
+                                                            return value[1] === toColumn.data.identifier})[2] = value;
+                                                        if (value == "") {
+                                                            array.find(function (value) {
+                                                                return value[1] === toColumn.data.identifier})[3] = "";
+                                                        }
+                                                        this.object.edit.dataFields.productMapping.store.loadData(array, false);
+                                                        this.object.edit.dataFields.productMapping.dirty = true;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                {
+                                    text: t('Relation attributes'),
+                                    dataIndex: 'attributes',
+                                    flex: 1,
+                                    editable: false,
+                                    editor: {
+                                        xtype: 'textfield',
+                                        mode: 'local',
+                                        object: this.object,
+                                        listeners: {
+                                            change: function (combo, newValue, oldValue, eOpts) {
+                                                var gridRecord = grid.getSelectionModel().getSelection();
+                                                if (gridRecord.length > 0) {
+                                                    gridRecord = gridRecord[0];
+                                                    var toColumn = toColumnStore.findRecord('identifier', gridRecord.get('toColumn'), 0, false, false, true);
+                                                    if (toColumn) {
+                                                        var array = this.object.edit.dataFields.productMapping.getValue();
+                                                        array.find(function (newValue) {
+                                                            return newValue[1] === toColumn.data.identifier
+                                                        })[3] = newValue;
+                                                        this.object.edit.dataFields.productMapping.store.loadData(array, false);
+                                                        this.object.edit.dataFields.productMapping.dirty = true;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
                             ]
                         }
                     });

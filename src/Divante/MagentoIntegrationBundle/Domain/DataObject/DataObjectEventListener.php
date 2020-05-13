@@ -74,7 +74,9 @@ class DataObjectEventListener
     protected function getIntegrationsToDelete(Concrete $object): array
     {
         $originObject = Concrete::getById($object->getId(), true);
-
+        if (!$originObject instanceof Concrete) {
+            return [];
+        }
         if ($originObject->isPublished() && $object->isPublished()) {
             return $this->integrationService->getConfigurationsListDifference($object, $object);
         } elseif ($originObject->isPublished() && !$object->isPublished()) {

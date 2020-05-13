@@ -39,9 +39,8 @@ class MapperContext
     public function map(Element $field, \stdClass &$obj, array $arrayMapping, $language, $definition, $className): void
     {
         foreach ($this->strategies as $strategy) {
-            if ($strategy->canProcess($field)) {
+            if ($strategy->canProcess($field, $arrayMapping)) {
                 $strategy->map($field, $obj, $arrayMapping, $language, $definition, $className);
-                return;
             }
         }
     }
