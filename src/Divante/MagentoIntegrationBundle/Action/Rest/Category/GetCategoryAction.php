@@ -8,8 +8,8 @@
 
 namespace Divante\MagentoIntegrationBundle\Action\Rest\Category;
 
-use Divante\MagentoIntegrationBundle\Domain\Category\MappedCategoryService;
-use Divante\MagentoIntegrationBundle\Domain\Category\Request\GetCategory;
+use Divante\MagentoIntegrationBundle\Application\Category\MappedCategoryService;
+use Divante\MagentoIntegrationBundle\Action\Rest\Category\Type\GetCategory;
 use Divante\MagentoIntegrationBundle\Responder\MappedObjectJsonResponder;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;

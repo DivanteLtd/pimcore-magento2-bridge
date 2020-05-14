@@ -8,8 +8,8 @@
 
 namespace Divante\MagentoIntegrationBundle\Action\Rest\Category;
 
-use Divante\MagentoIntegrationBundle\Domain\Category\CategoryStatusService;
-use Divante\MagentoIntegrationBundle\Domain\Category\Request\UpdateStatus;
+use Divante\MagentoIntegrationBundle\Application\Category\CategoryStatusService;
+use Divante\MagentoIntegrationBundle\Action\Rest\Category\Type\UpdateStatus;
 use Divante\MagentoIntegrationBundle\Responder\JsonResponder;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;

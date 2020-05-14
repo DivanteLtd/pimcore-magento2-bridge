@@ -8,7 +8,7 @@
 
 namespace Divante\MagentoIntegrationBundle;
 
-use Divante\MagentoIntegrationBundle\Domain\Mapper\MapperStrategyCompilerPass;
+use Divante\MagentoIntegrationBundle\Application\Mapper\MapperStrategyCompilerPass;
 use Divante\MagentoIntegrationBundle\Migrations\Installer;
 use Pimcore\Extension\Bundle\AbstractPimcoreBundle;
 use Pimcore\Extension\Bundle\Traits\PackageVersionTrait;

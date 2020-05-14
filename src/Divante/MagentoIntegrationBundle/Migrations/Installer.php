@@ -8,7 +8,7 @@
 
 namespace Divante\MagentoIntegrationBundle\Migrations;
 
-use Divante\MagentoIntegrationBundle\Domain\Helper\IntegrationHelper;
+use Divante\MagentoIntegrationBundle\Domain\IntegrationConfiguration\IntegrationHelper;
 use Doctrine\DBAL\Migrations\Version;
 use Doctrine\DBAL\Schema\Schema;
 use Pimcore\Cache;

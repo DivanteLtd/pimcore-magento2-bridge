@@ -8,8 +8,8 @@
 
 namespace Divante\MagentoIntegrationBundle\Action\Rest\Product;
 
-use Divante\MagentoIntegrationBundle\Domain\Product\MappedProductService;
-use Divante\MagentoIntegrationBundle\Domain\Product\Request\GetProduct;
+use Divante\MagentoIntegrationBundle\Application\Product\MappedProductService;
+use Divante\MagentoIntegrationBundle\Action\Rest\Product\Type\GetProduct;
 use Divante\MagentoIntegrationBundle\Responder\MappedObjectJsonResponder;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
