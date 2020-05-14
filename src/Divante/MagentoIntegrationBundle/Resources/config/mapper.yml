@@ -4,32 +4,32 @@ services:
         autoconfigure: true
         public: false
     _instanceof:
-        Divante\MagentoIntegrationBundle\Domain\Mapper\Strategy\MapStrategyInterface:
+        Divante\MagentoIntegrationBundle\Application\Mapper\Strategy\MapStrategyInterface:
             tags: [object_mapper.mapStrategy]
-        Divante\MagentoIntegrationBundle\Domain\Mapper\Strategy\ClassificationStore\MapKeyStrategyInterface:
+        Divante\MagentoIntegrationBundle\Application\Mapper\Strategy\ClassificationStore\MapKeyStrategyInterface:
             tags: [object_mapper_classificationstore.mapStrategy]
-        Divante\MagentoIntegrationBundle\Domain\Mapper\Strategy\Custom\CustomStrategyInterface:
+        Divante\MagentoIntegrationBundle\Application\Mapper\Strategy\Custom\CustomStrategyInterface:
             tags: [object_mapper.customStrategy]
 
     Divante\MagentoIntegrationBundle\Action\Mapper\:
         resource: '../../Action/Mapper'
         public: true
 
-    Divante\MagentoIntegrationBundle\Domain\Mapper\MapperService:
-        arguments: ['@Divante\MagentoIntegrationBundle\Domain\Mapper\MapperContext', '@debug.event_dispatcher']
+    Divante\MagentoIntegrationBundle\Application\Mapper\MapperService:
+        arguments: ['@Divante\MagentoIntegrationBundle\Application\Mapper\MapperContext', '@debug.event_dispatcher']
 
-    Divante\MagentoIntegrationBundle\Domain\Mapper\MapperContext: ~
+    Divante\MagentoIntegrationBundle\Application\Mapper\MapperContext: ~
 
-    Divante\MagentoIntegrationBundle\Domain\Mapper\MapperColumnsService:
+    Divante\MagentoIntegrationBundle\Application\Mapper\MapperColumnsService:
         arguments:
             - !tagged_iterator object_mapper.customStrategy
 
-    Divante\MagentoIntegrationBundle\Domain\Mapper\Strategy\MapClassificationStoreValue:
+    Divante\MagentoIntegrationBundle\Application\Mapper\Strategy\MapClassificationStoreValue:
         arguments:
             - !tagged_iterator  object_mapper_classificationstore.mapStrategy
 
-    Divante\MagentoIntegrationBundle\Domain\Mapper\Strategy\:
-        resource: '../../Domain/Mapper/Strategy'
+    Divante\MagentoIntegrationBundle\Application\Mapper\Strategy\:
+        resource: '../../Application/Mapper/Strategy'
 
-    Divante\MagentoIntegrationBundle\Domain\Mapper\Strategy\ClassificationStore\:
-        resource: '../../Domain/Mapper/Strategy/ClassificationStore'
+    Divante\MagentoIntegrationBundle\Application\Mapper\Strategy\ClassificationStore\:
+        resource: '../../Application/Mapper/Strategy/ClassificationStore'

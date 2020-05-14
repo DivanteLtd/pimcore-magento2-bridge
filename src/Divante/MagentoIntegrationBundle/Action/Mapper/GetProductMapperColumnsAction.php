@@ -8,7 +8,7 @@
 
 namespace Divante\MagentoIntegrationBundle\Action\Mapper;
 
-use Divante\MagentoIntegrationBundle\Domain\Mapper\MapperColumnsService;
+use Divante\MagentoIntegrationBundle\Application\Mapper\MapperColumnsService;
 use Divante\MagentoIntegrationBundle\Responder\JsonResponder;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;

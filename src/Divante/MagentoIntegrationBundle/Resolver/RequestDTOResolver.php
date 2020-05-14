@@ -8,7 +8,7 @@
 
 namespace Divante\MagentoIntegrationBundle\Resolver;
 
-use Divante\MagentoIntegrationBundle\Domain\Common\Reqest\GetElement;
+use Divante\MagentoIntegrationBundle\Action\Common\Type\GetElement;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Controller\ArgumentValueResolverInterface;
 use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;

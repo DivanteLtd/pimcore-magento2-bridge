@@ -8,7 +8,7 @@
 
 namespace Divante\MagentoIntegrationBundle\Domain\Event;
 
-use Divante\MagentoIntegrationBundle\Model\DataObject\IntegrationConfiguration;
+use Divante\MagentoIntegrationBundle\Domain\DataObject\IntegrationConfiguration;
 use Pimcore\Model\Element\AbstractElement;
 use Symfony\Component\EventDispatcher\Event;
 

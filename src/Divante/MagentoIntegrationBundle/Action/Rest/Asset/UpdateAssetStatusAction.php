@@ -8,7 +8,7 @@
 
 namespace Divante\MagentoIntegrationBundle\Action\Rest\Asset;
 
-use Divante\MagentoIntegrationBundle\Domain\Asset\AssetStatusService;
+use Divante\MagentoIntegrationBundle\Application\Asset\AssetStatusService;
 use Divante\MagentoIntegrationBundle\Domain\Asset\Request\UpdateStatus;
 use Divante\MagentoIntegrationBundle\Responder\JsonResponder;
 use Symfony\Component\HttpFoundation\JsonResponse;

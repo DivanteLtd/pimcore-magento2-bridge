@@ -8,8 +8,8 @@
 
 namespace Divante\MagentoIntegrationBundle\Action\Rest\Product;
 
-use Divante\MagentoIntegrationBundle\Domain\Product\ProductStatusService;
-use Divante\MagentoIntegrationBundle\Domain\Product\Request\UpdateStatus;
+use Divante\MagentoIntegrationBundle\Application\Product\ProductStatusService;
+use Divante\MagentoIntegrationBundle\Action\Rest\Product\Type\UpdateStatus;
 use Divante\MagentoIntegrationBundle\Responder\JsonResponder;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
