@@ -250,7 +250,7 @@ class MapperService
             if ($element->type == 'select') {
                 $options = $this->getOptionsForSelect($element->name, $object);
                 if (!$options) {
-                    break;
+                    continue;
                 }
                 foreach ($options as $keyvalue) {
                     if ($keyvalue['value'] == $element->value) {
