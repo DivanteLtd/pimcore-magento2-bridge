@@ -80,15 +80,15 @@ abstract class AbstractMappedObjectService
     }
 
     /**
-     * @param                       $idArray
-     * @param GetElement            $request
+     * @param $idArray
+     * @param string $ids
      * @return array
      */
-    protected function getMissingIds($idArray, GetElement $request): array
+    protected function getMissingIds($idArray, string $ids): array
     {
         $missingData = [];
 
-        foreach (explode(',', $request->id) as $id) {
+        foreach (explode(',', $ids) as $id) {
             if (!in_array($id, $idArray)) {
                 $missingData[$id] = sprintf('Requested object with id %d does not exist.', $id);
             }

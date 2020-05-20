@@ -25,15 +25,17 @@ use Pimcore\Model\DataObject\Concrete;
 class MappedProductService extends AbstractMappedObjectService
 {
     /**
-     * @param GetProduct $query
+     * @param string $ids
+     * @param string $instanceUrl
+     * @param string $storeViewId
      * @return array
      */
-    public function getProducts(GetProduct $query): array
+    public function getProducts(string $ids, string $instanceUrl, string $storeViewId): array
     {
-        $objectsListing = $this->loadObjects($query->id);
+        $objectsListing = $this->loadObjects($ids);
         $mappedObjects  = [];
         /** @var array $fetchedIds */
-        $missingData = $this->getMissingIds($objectsListing->loadIdList(), $query);
+        $missingData = $this->getMissingIds($objectsListing->loadIdList(), $ids);
 
         /** @var Concrete $object */
         foreach ($objectsListing->getObjects() as $object) {
@@ -42,8 +44,8 @@ class MappedProductService extends AbstractMappedObjectService
                 $configurations = $this->configService->getConfigurations(
                     $object,
                     IntegrationHelper::RELATION_TYPE_PRODUCT,
-                    $query->instaceUrl,
-                    $query->storeViewId
+                    $instanceUrl,
+                    $storeViewId
                 );
                 if (!$configurations) {
                     $missingData[$object->getId()] = sprintf(

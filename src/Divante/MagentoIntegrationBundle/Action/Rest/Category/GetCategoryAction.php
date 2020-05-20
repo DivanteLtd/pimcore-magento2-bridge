@@ -8,8 +8,8 @@
 
 namespace Divante\MagentoIntegrationBundle\Action\Rest\Category;
 
+use Divante\MagentoIntegrationBundle\Action\Common\Type\IntegrationConfigurationRequest;
 use Divante\MagentoIntegrationBundle\Application\Category\MappedCategoryService;
-use Divante\MagentoIntegrationBundle\Action\Rest\Category\Type\GetCategory;
 use Divante\MagentoIntegrationBundle\Responder\MappedObjectJsonResponder;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
@@ -38,11 +38,17 @@ class GetCategoryAction
     }
 
     /**
-     * @param GetCategory $query
+     * @param IntegrationConfigurationRequest $query
      * @return JsonResponse
      */
-    public function __invoke(GetCategory $query): JsonResponse
+    public function __invoke(IntegrationConfigurationRequest $query): JsonResponse
     {
-        return $this->responder->createResponse($this->domain->getCategories($query));
+        return $this->responder->createResponse(
+            $this->domain->getCategories(
+                $query->id,
+                $query->instaceUrl,
+                $query->storeViewId
+            )
+        );
     }
 }

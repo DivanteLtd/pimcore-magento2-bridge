@@ -8,8 +8,8 @@
 
 namespace Divante\MagentoIntegrationBundle\Action\Rest\Product;
 
+use Divante\MagentoIntegrationBundle\Action\Common\Type\IntegrationConfigurationRequest;
 use Divante\MagentoIntegrationBundle\Application\Product\MappedProductService;
-use Divante\MagentoIntegrationBundle\Action\Rest\Product\Type\GetProduct;
 use Divante\MagentoIntegrationBundle\Responder\MappedObjectJsonResponder;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
@@ -39,11 +39,17 @@ class GetProductAction
     }
 
     /**
-     * @param GetProduct $query
+     * @param IntegrationConfigurationRequest $query
      * @return JsonResponse
      */
-    public function __invoke(GetProduct $query): JsonResponse
+    public function __invoke(IntegrationConfigurationRequest $query): JsonResponse
     {
-        return $this->responder->createResponse($this->domain->getProducts($query));
+        return $this->responder->createResponse(
+            $this->domain->getProducts(
+                $query->id,
+                $query->instaceUrl,
+                $query->storeViewId
+            )
+        );
     }
 }

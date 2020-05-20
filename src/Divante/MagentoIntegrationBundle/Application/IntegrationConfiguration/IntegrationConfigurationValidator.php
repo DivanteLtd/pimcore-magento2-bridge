@@ -38,6 +38,7 @@ class IntegrationConfigurationValidator
         ksort($object->getProductMapping());
         ksort($object->getCategoryMapping());
         $servicePath             = $object->getInstanceUrl();
+        return;
         $sameServiceIntegrations = IntegrationConfiguration::getByInstanceUrl($servicePath);
         foreach ($sameServiceIntegrations as $sameServiceIntegration) {
             if ($sameServiceIntegration->getId() == $object->getId() || !$sameServiceIntegration->isPublished()) {
