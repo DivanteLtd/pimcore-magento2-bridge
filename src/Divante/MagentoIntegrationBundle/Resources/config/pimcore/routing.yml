@@ -2,6 +2,7 @@ magento_integration_object_mapper.product:
     resource: "@DivanteMagentoIntegrationBundle/Action/Mapper/GetProductMapperColumnsAction.php"
     type: annotation
     prefix: /admin
+
 magento_integration_object_mapper.category:
     resource: "@DivanteMagentoIntegrationBundle/Action/Mapper/GetCategoryMapperColumnsAction.php"
     type: annotation

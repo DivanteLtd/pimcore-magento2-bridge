@@ -121,6 +121,9 @@ class ObjectRelationSubscriber implements EventSubscriberInterface
      */
     private function shouldProductBeUpdated(AbstractObject $object): bool
     {
+        if ($object->getType() !== AbstractObject::OBJECT_TYPE_OBJECT) {
+            return false;
+        }
         $classname = $object->getClassname();
         if (in_array(ucfirst($classname), [])) {
             return false;

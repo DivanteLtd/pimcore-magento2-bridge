@@ -9,7 +9,7 @@
 namespace Divante\MagentoIntegrationBundle\Application\IntegrationConfiguration;
 
 use Divante\MagentoIntegrationBundle\Domain\IntegrationConfiguration\IntegrationHelper;
-use Divante\MagentoIntegrationBundle\Domain\DataObject\IntegrationConfiguration;
+use Pimcore\Model\DataObject\IntegrationConfiguration;
 use Pimcore\Model\Element\ValidationException;
 
 /**
@@ -38,7 +38,6 @@ class IntegrationConfigurationValidator
         ksort($object->getProductMapping());
         ksort($object->getCategoryMapping());
         $servicePath             = $object->getInstanceUrl();
-        return;
         $sameServiceIntegrations = IntegrationConfiguration::getByInstanceUrl($servicePath);
         foreach ($sameServiceIntegrations as $sameServiceIntegration) {
             if ($sameServiceIntegration->getId() == $object->getId() || !$sameServiceIntegration->isPublished()) {

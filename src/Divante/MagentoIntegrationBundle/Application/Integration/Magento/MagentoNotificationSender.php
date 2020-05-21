@@ -118,11 +118,8 @@ class MagentoNotificationSender
         EndpointConfig $config,
         string $type
     ): void {
-        $objectId = $type === ObjectTypeHelper::PRODUCT
-            ? $object->getParentId()
-            : $object->getId();
         $payload = [
-            $config->getPayloadAttribute() => $objectId,
+            $config->getPayloadAttribute() => $object->getId(),
             "store_view_id"                => $configuration->getMagentoStore()
         ];
         $this->client

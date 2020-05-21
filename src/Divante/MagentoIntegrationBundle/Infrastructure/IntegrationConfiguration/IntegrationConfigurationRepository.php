@@ -75,7 +75,7 @@ class IntegrationConfigurationRepository
     {
         $configurationListing = $this->getListing();
         $configurationListing
-            ->setCondition("integrationId IN (?)", $integrationIds)
+            ->setCondition("integrationId IN (?)", [$integrationIds])
             ->load();
         return $configurationListing->getObjects();
     }
@@ -139,7 +139,7 @@ class IntegrationConfigurationRepository
             $productClasses[] = $object->getProductClass();
         }
 
-        return array_filter($productClasses);
+        return array_unique($productClasses);
     }
 
     /**
@@ -154,7 +154,7 @@ class IntegrationConfigurationRepository
             $categoryClasses[] = $object->getCategoryClass();
         }
 
-        return array_filter($categoryClasses);
+        return array_unique($categoryClasses);
     }
 
     /**

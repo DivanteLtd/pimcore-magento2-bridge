@@ -11,45 +11,61 @@ services:
         Divante\MagentoIntegrationBundle\Application\Notification\NotificatorInterface:
             tags: [pimcore_connector.notification.sender]
 
-# Action
+### Action
     Divante\MagentoIntegrationBundle\Action\:
         resource: '../../Action/*/'
         exclude: '../../Action/**/Type'
         public: true
         tags: ['controller.service_arguments']
 
-    # Domain
-    Divante\MagentoIntegrationBundle\Application\ElementDeleteService:
-        arguments:
-            - !tagged_iterator magento_integration.remote_element.service
 
+### Application
+    Divante\MagentoIntegrationBundle\Application\IntegrationConfiguration\IntegrationConfigurationService: ~
+    Divante\MagentoIntegrationBundle\Application\IntegrationConfiguration\IntegrationConfigurationValidator: ~
+
+    Divante\MagentoIntegrationBundle\Application\Common\IntegratedObjectRepositoryInterface: ~
+
+    Divante\MagentoIntegrationBundle\Application\Integration\Magento\MagentoStoreFetcher: ~
+
+    #Updaters
+    Divante\MagentoIntegrationBundle\Application\DataObject\StatusUpdater: ~
+    Divante\MagentoIntegrationBundle\Application\Asset\StatusUpdater: ~
+    Divante\MagentoIntegrationBundle\Application\DataObject\ObjectPropertyUpdater: ~
+
+    #Notificators
+    Divante\MagentoIntegrationBundle\Application\Notification\ProductNotificator: ~
+    Divante\MagentoIntegrationBundle\Application\Notification\CategoryNotificator: ~
+    Divante\MagentoIntegrationBundle\Application\Notification\AssetNotificator: ~
+
+    Divante\MagentoIntegrationBundle\Application\Integration\Magento\MagentoNotificationSender: ~
+
+    #BulkActions
+    Divante\MagentoIntegrationBundle\Application\BulkAction\BulkActionCommandExecutor: ~
+    Divante\MagentoIntegrationBundle\Application\BulkAction\BulkUpdateService:
+        $productRepository: '@Divante\MagentoIntegrationBundle\Infrastructure\Product\IntegratedProductRepository'
+        $categoryRepository: '@Divante\MagentoIntegrationBundle\Infrastructure\Category\IntegratedCategoryRepository'
+
+    #MappedServices
+    Divante\MagentoIntegrationBundle\Application\Product\MappedProductService:
+        arguments:
+            $integratedObjectRepository: '@Divante\MagentoIntegrationBundle\Infrastructure\Product\IntegratedProductRepository'
     Divante\MagentoIntegrationBundle\Application\Category\MappedCategoryService:
         arguments:
             $integratedObjectRepository: '@Divante\MagentoIntegrationBundle\Infrastructure\Category\IntegratedCategoryRepository'
 
-### IntegrationConfiguration
-    Divante\MagentoIntegrationBundle\Infrastructure\IntegrationConfiguration\IntegrationConfigurationListener:
-        tags:
-            - { name: kernel.event_listener, event: pimcore.dataobject.preUpdate,  method: onPreUpdate,  priority: 50 }
-            - { name: kernel.event_listener, event: pimcore.dataobject.preAdd,     method: onPreUpdate,  priority: 50 }
-
-    Divante\MagentoIntegrationBundle\Infrastructure\IntegrationConfiguration\IntegrationConfigurationRepository: ~
-    Divante\MagentoIntegrationBundle\Application\IntegrationConfiguration\IntegrationConfigurationService: ~
-    Divante\MagentoIntegrationBundle\Application\IntegrationConfiguration\IntegrationConfigurationValidator: ~
-
-### Product
-    Divante\MagentoIntegrationBundle\Application\Product\MappedProductService:
+    #Validators
+    Divante\MagentoIntegrationBundle\Application\Validator\Rules\:
+        resource: '../../Application/Validator/Rules'
+        tags: ['pimcore_connector.validator.common']
+    Divante\MagentoIntegrationBundle\Application\Validator\IntegratedObjectValidator:
         arguments:
-            $integratedObjectRepository: '@Divante\MagentoIntegrationBundle\Infrastructure\Product\IntegratedProductRepository'
+            - !tagged { tag: 'pimcore_connector.validator.common', default_index_method: 'getPriority'}
 
-# Installer
-    Divante\MagentoIntegrationBundle\Migrations\Installer:
-        public: true
+    Divante\MagentoIntegrationBundle\Application\Notification\NotificationSender:
         arguments:
-            $bundle: "@=service('kernel').getBundle('DivanteMagentoIntegrationBundle')"
+            - !tagged { tag: 'pimcore_connector.notification.sender'}
 
-
-# Providers
+### Domain
     Divante\MagentoIntegrationBundle\Domain\Provider\:
         resource: '../../Domain/Provider'
         public: true
@@ -62,96 +78,73 @@ services:
         class: Divante\MagentoIntegrationBundle\Domain\Provider\MagentoStore
         public: true
 
-# Resolver
+    magento-connector.path-callculator:
+        class: Divante\MagentoIntegrationBundle\Domain\IntegrationConfiguration\PathCalculator
+        public: true
+
+### Infrastructure
+    Divante\MagentoIntegrationBundle\Infrastructure\IntegrationConfiguration\IntegrationConfigurationListener:
+        tags:
+            - { name: kernel.event_listener, event: pimcore.dataobject.preUpdate,  method: onPreUpdate,  priority: 50 }
+            - { name: kernel.event_listener, event: pimcore.dataobject.preAdd,     method: onPreUpdate,  priority: 50 }
+
+    Divante\MagentoIntegrationBundle\Infrastructure\Security\ElementPermissionChecker: ~
+
+    Divante\MagentoIntegrationBundle\Infrastructure\Common\EventListenersManager: ~
+
+    #Subscribers
+    Divante\MagentoIntegrationBundle\Infrastructure\BulkAction\OnKernelTerminateSubscriber:
+        tags: ['kernel.event_subscriber']
+    Divante\MagentoIntegrationBundle\Infrastructure\DataObject\AfterObjectSentEventSubscriber:
+        tags: ['kernel.event_subscriber']
+    Divante\MagentoIntegrationBundle\Infrastructure\DataObject\OnDeleteEventSubscriber:
+        tags: ['kernel.event_subscriber']
+    Divante\MagentoIntegrationBundle\Infrastructure\DataObject\OnUpdateEventSubscriber:
+        tags: ['kernel.event_subscriber']
+#    Divante\MagentoIntegrationBundle\Infrastructure\DataObject\Relations\ObjectRelationSubscriber:
+#        tags: ['kernel.event_subscriber']
+    Divante\MagentoIntegrationBundle\Infrastructure\Asset\AssetSubscriber:
+        tags: ['kernel.event_subscriber']
+
+    #Repositories
+    Divante\MagentoIntegrationBundle\Infrastructure\Category\IntegratedCategoryRepository: ~
+    Divante\MagentoIntegrationBundle\Infrastructure\Product\IntegratedProductRepository: ~
+    Divante\MagentoIntegrationBundle\Infrastructure\IntegrationConfiguration\IntegrationConfigurationRepository: ~
+    Divante\MagentoIntegrationBundle\Infrastructure\DataObject\Relations\ObjectRelationRepository: ~
+
+    #Rest
+    Divante\MagentoIntegrationBundle\Infrastructure\Rest\GuzzleClientFactory: ~
+    Divante\MagentoIntegrationBundle\Infrastructure\Rest\RestEventFactory: ~
+    Divante\MagentoIntegrationBundle\Infrastructure\Rest\RequestClient:
+        calls:
+            - [setLogger, ['@monolog.logger.connector']]
+
+### Command
+    Divante\MagentoIntegrationBundle\Command\:
+        resource: '../../Command'
+        tags:
+            - { name: console.command }
+
+### Others
+    # Resolver
     Divante\MagentoIntegrationBundle\Resolver\RequestDTOResolver:
         arguments:
             - '@validator'
         tags:
             - { name: controller.request_value_resolver, priority: 50 }
 
-# Responder
+    #Installer
+    Divante\MagentoIntegrationBundle\Migrations\Installer:
+        public: true
+        arguments:
+            $bundle: "@=service('kernel').getBundle('DivanteMagentoIntegrationBundle')"
+
+    # Responder
     Divante\MagentoIntegrationBundle\Responder\JsonResponder: ~
     Divante\MagentoIntegrationBundle\Responder\MappedObjectJsonResponder: ~
 
-# Security
-    Divante\MagentoIntegrationBundle\Infrastructure\Security\ElementPermissionChecker: ~
-
-    Divante\MagentoIntegrationBundle\Application\BulkAction\BulkActionCommandExecutor: ~
-
-    Divante\MagentoIntegrationBundle\Infrastructure\BulkAction\OnKernelTerminateSubscriber:
-        tags: ['kernel.event_subscriber']
-
-    Divante\MagentoIntegrationBundle\Infrastructure\Category\IntegratedCategoryRepository: ~
-    Divante\MagentoIntegrationBundle\Infrastructure\Product\IntegratedProductRepository: ~
-
-    Divante\MagentoIntegrationBundle\Application\Common\IntegratedObjectRepositoryInterface: ~
-
-#Command
-    Divante\MagentoIntegrationBundle\Command\:
-        resource: '../../Command'
-        tags:
-            - { name: console.command }
-
-    Divante\MagentoIntegrationBundle\Application\BulkAction\BulkUpdateService:
-        $productRepository: '@Divante\MagentoIntegrationBundle\Infrastructure\Product\IntegratedProductRepository'
-        $categoryRepository: '@Divante\MagentoIntegrationBundle\Infrastructure\Category\IntegratedCategoryRepository'
-
-    magento-connector.path-callculator:
-        class: Divante\MagentoIntegrationBundle\Domain\IntegrationConfiguration\PathCalculator
-        public: true
-
-    Divante\MagentoIntegrationBundle\Application\Validator\Rules\:
-        resource: '../../Application/Validator/Rules'
-        tags: ['pimcore_connector.validator.common']
-
-    Divante\MagentoIntegrationBundle\Application\Validator\IntegratedObjectValidator:
-        arguments:
-            - !tagged { tag: 'pimcore_connector.validator.common', default_index_method: 'getPriority'}
-
-    Divante\MagentoIntegrationBundle\Application\Notification\NotificationSender:
-        arguments:
-            - !tagged { tag: 'pimcore_connector.notification.sender'}
-
-    Divante\MagentoIntegrationBundle\Application\Integration\Magento\MagentoStoreFetcher: ~
-
-    Divante\MagentoIntegrationBundle\Application\DataObject\ObjectPropertyUpdater: ~
-
-    Divante\MagentoIntegrationBundle\Infrastructure\Rest\RequestClient:
-        calls:
-            - [setLogger, ['@monolog.logger.connector']]
-
-    Divante\MagentoIntegrationBundle\Infrastructure\Rest\GuzzleClientFactory: ~
-
-    Divante\MagentoIntegrationBundle\Infrastructure\Rest\RestEventFactory: ~
-
-    Divante\MagentoIntegrationBundle\Infrastructure\Common\EventListenersManager: ~
-
-    Divante\MagentoIntegrationBundle\Infrastructure\DataObject\AfterObjectSentEventSubscriber:
-        tags: ['kernel.event_subscriber']
-
-    Divante\MagentoIntegrationBundle\Infrastructure\DataObject\OnDeleteEventSubscriber:
-        tags: ['kernel.event_subscriber']
-
-    Divante\MagentoIntegrationBundle\Infrastructure\DataObject\OnUpdateEventSubscriber:
-        tags: ['kernel.event_subscriber']
-
-    Divante\MagentoIntegrationBundle\Infrastructure\DataObject\Relations\ObjectRelationSubscriber:
-        tags: ['kernel.event_subscriber']
-
-    Divante\MagentoIntegrationBundle\Infrastructure\Asset\AssetSubscriber:
-        tags: ['kernel.event_subscriber']
-
-    Divante\MagentoIntegrationBundle\Application\Notification\ProductNotificator: ~
-    Divante\MagentoIntegrationBundle\Application\Notification\CategoryNotificator: ~
-    Divante\MagentoIntegrationBundle\Application\Notification\AssetNotificator: ~
-
-    Divante\MagentoIntegrationBundle\Application\Integration\Magento\MagentoNotificationSender: ~
-
+    #Monolog
     pimcore_connector.log_formatter:
         class: Monolog\Formatter\LineFormatter
         arguments: [null, null, true, false]
 
-    Divante\MagentoIntegrationBundle\Application\DataObject\StatusUpdater: ~
-    Divante\MagentoIntegrationBundle\Application\Asset\StatusUpdater: ~
-
-    Divante\MagentoIntegrationBundle\Infrastructure\DataObject\Relations\ObjectRelationRepository: ~
