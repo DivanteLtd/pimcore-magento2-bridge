@@ -8,9 +8,9 @@
 
 namespace Divante\MagentoIntegrationBundle\Application\Common;
 
-use Divante\MagentoIntegrationBundle\Action\Common\Type\GetElement;
 use Divante\MagentoIntegrationBundle\Application\IntegrationConfiguration\IntegrationConfigurationService;
 use Divante\MagentoIntegrationBundle\Application\Mapper\MapperService;
+use Divante\MagentoIntegrationBundle\Infrastructure\IntegrationConfiguration\IntegrationConfigurationRepository;
 use Divante\MagentoIntegrationBundle\Infrastructure\Security\ElementPermissionChecker;
 use Pimcore\Model\DataObject;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
@@ -30,17 +30,34 @@ abstract class AbstractMappedObjectService
     protected $mapper;
     /** @var EventDispatcherInterface */
     protected $eventDispatcher;
+    /** @var IntegratedObjectRepositoryInterface */
+    protected $integratedObjectRepository;
+    /** @var IntegrationConfigurationRepository */
+    protected $configRepository;
 
+    /**
+     * AbstractMappedObjectService constructor.
+     * @param ElementPermissionChecker $permissionChecker
+     * @param IntegrationConfigurationService $configService
+     * @param MapperService $mapper
+     * @param EventDispatcherInterface $eventDispatcher
+     * @param IntegrationConfigurationRepository $configRepository
+     * @param IntegratedObjectRepositoryInterface $integratedObjectRepository
+     */
     public function __construct(
         ElementPermissionChecker $permissionChecker,
         IntegrationConfigurationService $configService,
         MapperService $mapper,
-        EventDispatcherInterface $eventDispatcher
+        EventDispatcherInterface $eventDispatcher,
+        IntegrationConfigurationRepository $configRepository,
+        IntegratedObjectRepositoryInterface $integratedObjectRepository
     ) {
         $this->permissionChecker = $permissionChecker;
         $this->configService     = $configService;
         $this->mapper            = $mapper;
         $this->eventDispatcher   = $eventDispatcher;
+        $this->configRepository  = $configRepository;
+        $this->integratedObjectRepository = $integratedObjectRepository;
     }
 
     /**
@@ -80,12 +97,16 @@ abstract class AbstractMappedObjectService
     }
 
     /**
-     * @param $idArray
+     * @param array $elements
      * @param string $ids
      * @return array
      */
-    protected function getMissingIds($idArray, string $ids): array
+    protected function getMissingIds(array $elements, string $ids): array
     {
+        $idArray =  array_map(function ($element) {
+            return $element->getId();
+        }, $elements);
+
         $missingData = [];
 
         foreach (explode(',', $ids) as $id) {

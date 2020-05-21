@@ -8,9 +8,11 @@
 
 namespace Divante\MagentoIntegrationBundle\Application\IntegrationConfiguration;
 
+use Divante\MagentoIntegrationBundle\Domain\Common\ObjectTypeHelper;
 use Divante\MagentoIntegrationBundle\Domain\IntegrationConfiguration\IntegrationHelper;
 use Divante\MagentoIntegrationBundle\Infrastructure\IntegrationConfiguration\IntegrationConfigurationRepository;
 use Divante\MagentoIntegrationBundle\Domain\DataObject\IntegrationConfiguration;
+use http\Exception\InvalidArgumentException;
 use Pimcore\Model\DataObject;
 use Pimcore\Model\DataObject\AbstractObject;
 use Pimcore\Model\DataObject\Concrete;

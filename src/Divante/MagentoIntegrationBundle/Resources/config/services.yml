@@ -23,7 +23,9 @@ services:
         arguments:
             - !tagged_iterator magento_integration.remote_element.service
 
-    Divante\MagentoIntegrationBundle\Application\Category\MappedCategoryService: ~
+    Divante\MagentoIntegrationBundle\Application\Category\MappedCategoryService:
+        arguments:
+            $integratedObjectRepository: '@Divante\MagentoIntegrationBundle\Infrastructure\Category\IntegratedCategoryRepository'
 
 ### IntegrationConfiguration
     Divante\MagentoIntegrationBundle\Infrastructure\IntegrationConfiguration\IntegrationConfigurationListener:
@@ -36,7 +38,9 @@ services:
     Divante\MagentoIntegrationBundle\Application\IntegrationConfiguration\IntegrationConfigurationValidator: ~
 
 ### Product
-    Divante\MagentoIntegrationBundle\Application\Product\MappedProductService: ~
+    Divante\MagentoIntegrationBundle\Application\Product\MappedProductService:
+        arguments:
+            $integratedObjectRepository: '@Divante\MagentoIntegrationBundle\Infrastructure\Product\IntegratedProductRepository'
 
 # Installer
     Divante\MagentoIntegrationBundle\Migrations\Installer:
@@ -79,6 +83,8 @@ services:
 
     Divante\MagentoIntegrationBundle\Infrastructure\Category\IntegratedCategoryRepository: ~
     Divante\MagentoIntegrationBundle\Infrastructure\Product\IntegratedProductRepository: ~
+
+    Divante\MagentoIntegrationBundle\Application\Common\IntegratedObjectRepositoryInterface: ~
 
 #Command
     Divante\MagentoIntegrationBundle\Command\:

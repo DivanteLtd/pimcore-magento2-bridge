@@ -7,6 +7,7 @@ use Divante\MagentoIntegrationBundle\Domain\Common\ObjectTypeHelper;
 use Divante\MagentoIntegrationBundle\Infrastructure\IntegrationConfiguration\IntegrationConfigurationRepository;
 use Pimcore\Event\DataObjectEvents;
 use Pimcore\Event\Model\DataObjectEvent;
+use Pimcore\Model\DataObject\AbstractObject;
 use Pimcore\Model\DataObject\Concrete;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -60,6 +61,9 @@ class OnUpdateEventSubscriber implements EventSubscriberInterface
         }
         /** @var Concrete $object */
         $object = $objectEvent->getObject();
+        if ($object->getType() !== AbstractObject::OBJECT_TYPE_OBJECT) {
+            return;
+        }
         if (in_array($object->getClassId(), $this->repository->getAllProductClasses())) {
             $this->notificationSender->sentUpdateStatus(
                 $object,

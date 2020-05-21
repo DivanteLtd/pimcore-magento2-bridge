@@ -11,7 +11,6 @@ use Pimcore\Model\DataObject\IntegrationConfiguration;
  */
 class IntegratedCategoryRepository extends AbstractIntegratedObjectRepository
 {
-
     /**
      * @inheritDoc
      */
