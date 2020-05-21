@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Divante\MagentoIntegrationBundle\Infrastructure\DataObject;
 
 use Divante\MagentoIntegrationBundle\Application\DataObject\ObjectPropertyUpdater;
@@ -8,7 +7,6 @@ use Divante\MagentoIntegrationBundle\Domain\DataObject\Property\PropertyStatusHe
 use Divante\MagentoIntegrationBundle\Domain\Notification\Event\AbstractNotificationEvent;
 use Divante\MagentoIntegrationBundle\Domain\Notification\Event\UpdateNotificationFailedEvent;
 use Divante\MagentoIntegrationBundle\Domain\Notification\Event\UpdateNotificationSuccededEvent;
-use Pimcore\Model\DataObject\Product;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**

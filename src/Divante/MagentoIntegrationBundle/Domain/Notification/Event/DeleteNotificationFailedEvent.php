@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Divante\MagentoIntegrationBundle\Domain\Notification\Event;
 
 /**

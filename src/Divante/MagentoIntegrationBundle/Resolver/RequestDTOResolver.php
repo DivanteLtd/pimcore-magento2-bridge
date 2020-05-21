@@ -8,7 +8,6 @@
 
 namespace Divante\MagentoIntegrationBundle\Resolver;
 
-use Divante\MagentoIntegrationBundle\Action\Common\Type\GetElement;
 use Divante\MagentoIntegrationBundle\Action\Common\Type\IdRequest;
 use Divante\MagentoIntegrationBundle\Action\Common\Type\IntegrationConfigurationRequest;
 use Symfony\Component\HttpFoundation\Request;

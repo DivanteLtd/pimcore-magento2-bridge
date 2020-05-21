@@ -2,7 +2,6 @@
 
 namespace Divante\MagentoIntegrationBundle\Application\Asset;
 
-use Divante\MagentoIntegrationBundle\Action\Common\Type\UpdateStatus;
 use Divante\MagentoIntegrationBundle\Application\DataObject\ObjectPropertyUpdater;
 use Divante\MagentoIntegrationBundle\Domain\Common\Exception\NotPermittedException;
 use Divante\MagentoIntegrationBundle\Domain\DataObject\Property\PropertyStatusHelper;

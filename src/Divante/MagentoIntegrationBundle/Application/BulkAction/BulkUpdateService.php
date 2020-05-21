@@ -5,7 +5,6 @@ namespace Divante\MagentoIntegrationBundle\Application\BulkAction;
 use Divante\MagentoIntegrationBundle\Application\Common\IntegratedObjectRepositoryInterface;
 use Divante\MagentoIntegrationBundle\Application\Notification\NotificationSender;
 use Divante\MagentoIntegrationBundle\Domain\Common\ObjectTypeHelper;
-use Pimcore\Model\DataObject\AbstractObject;
 use Pimcore\Model\DataObject\Concrete;
 use Pimcore\Model\DataObject\IntegrationConfiguration;
 use Psr\Log\LoggerAwareInterface;

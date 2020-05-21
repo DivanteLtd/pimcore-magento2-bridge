@@ -9,4 +9,3 @@ namespace Divante\MagentoIntegrationBundle\Domain\Notification\Event;
 class DeleteNotificationSuccededEvent extends AbstractNotificationEvent
 {
 }
-

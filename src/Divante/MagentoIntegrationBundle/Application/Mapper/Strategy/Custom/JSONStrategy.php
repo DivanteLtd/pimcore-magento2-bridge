@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Divante\MagentoIntegrationBundle\Application\Mapper\Strategy\Custom;
 
 use Pimcore\Model\Webservice\Data\DataObject\Element;

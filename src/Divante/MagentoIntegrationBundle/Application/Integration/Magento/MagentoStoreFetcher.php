@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Divante\MagentoIntegrationBundle\Application\Integration\Magento;
 
 use Divante\MagentoIntegrationBundle\Domain\Provider\RestOutputProviderInterface;

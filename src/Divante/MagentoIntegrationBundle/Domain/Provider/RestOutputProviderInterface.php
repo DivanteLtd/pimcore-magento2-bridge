@@ -16,7 +16,6 @@ use Divante\MagentoIntegrationBundle\Domain\IntegrationConfiguration\Model\Endpo
  */
 interface RestOutputProviderInterface
 {
-
     public function parseConfig(): void;
 
     public function getAssetConfig(): EndpointConfig;

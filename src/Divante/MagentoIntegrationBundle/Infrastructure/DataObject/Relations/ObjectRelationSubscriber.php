@@ -5,7 +5,6 @@ namespace Divante\MagentoIntegrationBundle\Infrastructure\DataObject\Relations;
 use Divante\MagentoIntegrationBundle\Application\BulkAction\BulkActionCommandExecutor;
 use Divante\MagentoIntegrationBundle\Domain\Common\ObjectTypeHelper;
 use Divante\MagentoIntegrationBundle\Infrastructure\IntegrationConfiguration\IntegrationConfigurationRepository;
-use Divante\MagentoIntegrationBundle\Infrastructure\Product\IntegratedProductRepository;
 use Pimcore\Event\Model\DataObjectEvent;
 use Pimcore\Model\DataObject\AbstractObject;
 use Pimcore\Model\Webservice\Data\Mapper;

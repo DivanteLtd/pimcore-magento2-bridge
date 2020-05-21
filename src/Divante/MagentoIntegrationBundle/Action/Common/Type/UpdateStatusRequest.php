@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Divante\MagentoIntegrationBundle\Action\Common\Type;
 
 use Symfony\Component\HttpFoundation\Request;

@@ -9,7 +9,6 @@
 namespace Divante\MagentoIntegrationBundle\Domain\Provider;
 
 use Divante\MagentoIntegrationBundle\Domain\IntegrationConfiguration\Model\EndpointConfig;
-use Divante\MagentoIntegrationBundle\Domain\Provider\RestOutputProviderInterface;
 use Symfony\Component\Config\FileLocatorInterface;
 use Symfony\Component\Yaml\Yaml;
 

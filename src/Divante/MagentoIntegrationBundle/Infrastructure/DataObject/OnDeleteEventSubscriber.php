@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Divante\MagentoIntegrationBundle\Infrastructure\DataObject;
 
 use Divante\MagentoIntegrationBundle\Application\Notification\NotificationSender;
