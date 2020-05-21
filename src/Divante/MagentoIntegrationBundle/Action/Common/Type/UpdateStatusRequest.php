@@ -1,10 +1,5 @@
 <?php
-/**
- * @category    selena
- * @date        14/04/2020
- * @author      Michał Bolka <mbolka@divante.co>
- * @copyright   Copyright (c) 2020 Divante Ltd. (https://divante.co)
- */
+
 
 namespace Divante\MagentoIntegrationBundle\Action\Common\Type;
 
