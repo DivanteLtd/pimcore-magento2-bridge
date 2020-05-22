@@ -41,6 +41,14 @@ class IntegrationConfigurationRepository
     }
 
     /**
+     * @return IntegrationConfiguration[]
+     */
+    public function getAllConfigurations(): array
+    {
+        return $this->getListing()->load();
+    }
+
+    /**
      * @param AbstractObject $object
      * @return IntegrationConfiguration[]
      */

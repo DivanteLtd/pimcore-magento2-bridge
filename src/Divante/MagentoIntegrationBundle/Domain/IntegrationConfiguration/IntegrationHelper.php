@@ -35,4 +35,6 @@ class IntegrationHelper
     ];
     const PRODUCT_TYPE_CONFIGURABLE_ATTRIBUTE = 'configurable_attributes';
     const PRODUCT_TYPE_CONFIGURABLE = 'configurable';
+
+    const WEBSITE_SETTINGS_ALLOWED_CLASSES = "allowed_classes";
 }

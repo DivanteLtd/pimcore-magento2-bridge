@@ -48,4 +48,31 @@ class ObjectRelationRepository
         GROUP BY configuration
         ");
     }
+
+    /**
+     * @param array $productClasses
+     * @param array $categoryClasses
+     * @return array
+     * @throws \Exception
+     */
+    public function getAllPossibleRelationClassesNames(array $productClasses, array $categoryClasses): array
+    {
+        $classesList = new ClassDefinition\Listing();
+        $classes = array_map(function ($classDef) {
+            return $classDef->getName();
+        }, $classesList->load());
+
+        foreach ($productClasses as $classId) {
+            $productClass = ClassDefinition::getById($classId);
+            $index = array_search($productClass->getName(), $classes);
+            unset($classes[$index]);
+        }
+        foreach ($categoryClasses as $classId) {
+            $categoryClass = ClassDefinition::getById($classId);
+            $index = array_search($categoryClass->getName(), $classes);
+            unset($classes[$index]);
+        }
+
+        return $classes;
+    }
 }

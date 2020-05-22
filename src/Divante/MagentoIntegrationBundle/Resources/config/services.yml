@@ -27,6 +27,8 @@ services:
 
     Divante\MagentoIntegrationBundle\Application\Integration\Magento\MagentoStoreFetcher: ~
 
+    Divante\MagentoIntegrationBundle\Application\DataObject\RelationClassCollector: ~
+
     #Updaters
     Divante\MagentoIntegrationBundle\Application\DataObject\StatusUpdater: ~
     Divante\MagentoIntegrationBundle\Application\Asset\StatusUpdater: ~
@@ -101,8 +103,8 @@ services:
         tags: ['kernel.event_subscriber']
     Divante\MagentoIntegrationBundle\Infrastructure\DataObject\OnUpdateEventSubscriber:
         tags: ['kernel.event_subscriber']
-#    Divante\MagentoIntegrationBundle\Infrastructure\DataObject\Relations\ObjectRelationSubscriber:
-#        tags: ['kernel.event_subscriber']
+    Divante\MagentoIntegrationBundle\Infrastructure\DataObject\Relations\ObjectRelationSubscriber:
+        tags: ['kernel.event_subscriber']
     Divante\MagentoIntegrationBundle\Infrastructure\Asset\AssetSubscriber:
         tags: ['kernel.event_subscriber']
 

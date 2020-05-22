@@ -4,10 +4,12 @@ namespace Divante\MagentoIntegrationBundle\Infrastructure\DataObject\Relations;
 
 use Divante\MagentoIntegrationBundle\Application\BulkAction\BulkActionCommandExecutor;
 use Divante\MagentoIntegrationBundle\Domain\Common\ObjectTypeHelper;
+use Divante\MagentoIntegrationBundle\Domain\IntegrationConfiguration\IntegrationHelper;
 use Divante\MagentoIntegrationBundle\Infrastructure\IntegrationConfiguration\IntegrationConfigurationRepository;
 use Pimcore\Event\Model\DataObjectEvent;
 use Pimcore\Model\DataObject\AbstractObject;
 use Pimcore\Model\Webservice\Data\Mapper;
+use Pimcore\Model\WebsiteSetting;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
@@ -74,6 +76,9 @@ class ObjectRelationSubscriber implements EventSubscriberInterface
                 $productsClass,
                 ObjectTypeHelper::PRODUCT
             );
+            if (empty($results)) {
+                continue;
+            }
             $this->processResults($results, ObjectTypeHelper::PRODUCT);
         }
 
@@ -84,6 +89,9 @@ class ObjectRelationSubscriber implements EventSubscriberInterface
                 $categoryClass,
                 ObjectTypeHelper::CATEGORY
             );
+            if (empty($results)) {
+                continue;
+            }
             $this->processResults($results, ObjectTypeHelper::CATEGORY);
         }
     }
@@ -124,7 +132,11 @@ class ObjectRelationSubscriber implements EventSubscriberInterface
             return false;
         }
         $classname = $object->getClassname();
-        if (in_array(ucfirst($classname), [])) {
+        $allowedClasses = WebsiteSetting::getByName(IntegrationHelper::WEBSITE_SETTINGS_ALLOWED_CLASSES);
+        $allowedClasses = $allowedClasses instanceof WebsiteSetting
+            ? json_decode($allowedClasses->getData(), true)
+            : [];
+        if (!in_array(ucfirst($classname), $allowedClasses)) {
             return false;
         }
         $objNamespace = sprintf("Pimcore\Model\DataObject\%s", $classname);
