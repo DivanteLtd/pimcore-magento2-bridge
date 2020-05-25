@@ -106,6 +106,7 @@ services:
     Divante\MagentoIntegrationBundle\Infrastructure\DataObject\Relations\ObjectRelationSubscriber:
         tags: ['kernel.event_subscriber']
     Divante\MagentoIntegrationBundle\Infrastructure\Asset\AssetSubscriber:
+        public: true
         tags: ['kernel.event_subscriber']
 
     #Repositories

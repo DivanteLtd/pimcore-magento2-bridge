@@ -62,7 +62,7 @@ class MapObjectBricks extends AbstractMapStrategy
                 $fieldDefinition = $brickDefinition->getFieldDefinition($attribute->name);
                 $attribute->label = $fieldDefinition ? $fieldDefinition->getTitle() : $attribute->name;
                 $attribute->name = $field->name . '_' . $brick->type . '_' . $attribute->name;
-                $this->mapperContext->map($attribute, $obj, $arrayMapping, $language, $className);
+                $this->mapperContext->map($attribute, $obj, $arrayMapping, $language, $brickDefinition, $className);
             }
         }
     }
