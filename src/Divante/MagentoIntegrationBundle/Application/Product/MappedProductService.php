@@ -13,7 +13,6 @@ use Divante\MagentoIntegrationBundle\Domain\Event\IntegratedObjectEvent;
 use Divante\MagentoIntegrationBundle\Domain\Event\PostMappingObjectEvent;
 use Divante\MagentoIntegrationBundle\Domain\IntegrationConfiguration\IntegrationHelper;
 use Divante\MagentoIntegrationBundle\Domain\Mapper\MapperEventTypes;
-use Divante\MagentoIntegrationBundle\Action\Rest\Product\Type\GetProduct;
 use Divante\MagentoIntegrationBundle\Domain\DataObject\IntegrationConfiguration;
 use Pimcore\Model\DataObject\AbstractObject;
 use Pimcore\Model\DataObject\Concrete;
@@ -25,45 +24,42 @@ use Pimcore\Model\DataObject\Concrete;
 class MappedProductService extends AbstractMappedObjectService
 {
     /**
-     * @param GetProduct $query
+     * @param string $ids
+     * @param string $instanceUrl
+     * @param string $storeViewId
      * @return array
      */
-    public function getProducts(GetProduct $query): array
+    public function getProducts(string $ids, string $instanceUrl, string $storeViewId): array
     {
-        $objectsListing = $this->loadObjects($query->id);
-        $mappedObjects  = [];
-        /** @var array $fetchedIds */
-        $missingData = $this->getMissingIds($objectsListing->loadIdList(), $query);
-
-        /** @var Concrete $object */
-        foreach ($objectsListing->getObjects() as $object) {
+        $configurations = $this->configRepository->getByConfiguration(
+            $instanceUrl,
+            $storeViewId
+        );
+        if (!$configurations || empty($configurations)) {
+            return [
+                "success" => false,
+                "message" => sprintf(
+                    "Couldn't find configuration object with params instanceUrl: %s and storeViewId: %s",
+                    $instanceUrl,
+                    $storeViewId
+                )
+            ];
+        }
+        $configuration = reset($configurations);
+        $products = $this->integratedObjectRepository->getObjects(explode(",", $ids), $configuration);
+        $missingData = $this->getMissingIds($products, $ids);
+        $mappedObjects = [];
+        foreach ($products as $object) {
             try {
                 $this->permissionChecker->checkElementPermission($object, 'get');
-                $configurations = $this->configService->getConfigurations(
-                    $object,
-                    IntegrationHelper::RELATION_TYPE_PRODUCT,
-                    $query->instaceUrl,
-                    $query->storeViewId
-                );
-                if (!$configurations) {
-                    $missingData[$object->getId()] = sprintf(
-                        'Requested object with id %d does not exist.',
-                        $object->getId()
-                    );
-                }
-
-                $mappedObject                    = $this->getMappedObject($object, reset($configurations));
-                $mappedObject->attr_checksum     = $this->mapper->getAttributesChecksum($mappedObject);
-                $mappedObjects[$object->getId()] = $mappedObject;
+                $mappedObjects[$object->getId()] = $this->getMappedObject($object, $configuration);
             } catch (\Exception $exception) {
                 return ['success' => false];
             }
         }
 
-        if (!$mappedObjects) {
-            return ['success' => false];
-        }
         return ['data' => $mappedObjects, 'missing_objects' => $missingData, 'success' => true];
+
     }
 
     /**

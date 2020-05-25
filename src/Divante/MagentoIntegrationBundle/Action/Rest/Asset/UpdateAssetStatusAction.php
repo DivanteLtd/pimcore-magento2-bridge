@@ -8,8 +8,9 @@
 
 namespace Divante\MagentoIntegrationBundle\Action\Rest\Asset;
 
-use Divante\MagentoIntegrationBundle\Application\Asset\AssetStatusService;
-use Divante\MagentoIntegrationBundle\Domain\Asset\Request\UpdateStatus;
+use Divante\MagentoIntegrationBundle\Action\Common\Type\UpdateStatusRequest;
+use Divante\MagentoIntegrationBundle\Application\Asset\StatusUpdater;
+use Divante\MagentoIntegrationBundle\Domain\Common\Exception\NotPermittedException;
 use Divante\MagentoIntegrationBundle\Responder\JsonResponder;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
@@ -18,34 +19,39 @@ use Symfony\Component\Routing\Annotation\Route;
  * Class UpdateAssetStatusAction
  * @package Divante\MagentoIntegrationBundle\Action\Rest\Asset
  * @Route("/webservice/rest/asset/update-status", methods={"POST"})
- *
  */
 class UpdateAssetStatusAction
 {
-    /** @var AssetStatusService */
+    /** @var UpdateStatusRequest */
     private $domain;
     /** @var JsonResponder */
     private $responder;
 
     /**
      * UpdateAssetStatusAction constructor.
-     * @param AssetStatusService $domain
-     * @param JsonResponder      $jsonResponder
+     * @param UpdateStatusRequest $domain
+     * @param JsonResponder $jsonResponder
      */
-    public function __construct(AssetStatusService $domain, JsonResponder $jsonResponder)
+    public function __construct(StatusUpdater $domain, JsonResponder $jsonResponder)
     {
         $this->domain    = $domain;
         $this->responder = $jsonResponder;
     }
 
     /**
-     * @param UpdateStatus $input
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     * @throws \Exception
+     * @param UpdateStatusRequest $updateStatus
+     * @return JsonResponse
+     * @throws NotPermittedException
      */
-    public function __invoke(UpdateStatus $input): JsonResponse
+    public function __invoke(UpdateStatusRequest $updateStatus): JsonResponse
     {
-        $this->domain->updateStatus($input);
-        return $this->responder->createResponse([]);
+        return $this->responder->createResponse(
+            $this->domain->updateStatus(
+                $updateStatus->id,
+                $updateStatus->instaceUrl,
+                $updateStatus->storeViewId,
+                $updateStatus->status
+            )
+        );
     }
 }

@@ -8,7 +8,8 @@
 
 namespace Divante\MagentoIntegrationBundle\Resolver;
 
-use Divante\MagentoIntegrationBundle\Action\Common\Type\GetElement;
+use Divante\MagentoIntegrationBundle\Action\Common\Type\IdRequest;
+use Divante\MagentoIntegrationBundle\Action\Common\Type\IntegrationConfigurationRequest;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Controller\ArgumentValueResolverInterface;
 use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
@@ -45,9 +46,12 @@ class RequestDTOResolver implements ArgumentValueResolverInterface
             return false;
         }
         $reflection = new \ReflectionClass($argument->getType());
+        $parentClass = $reflection->getParentClass();
         return
-            $reflection->getParentClass()
-            && $reflection->getParentClass()->getName() == GetElement::class;
+            $parentClass
+            && ($parentClass->getName() == IdRequest::class
+                || $parentClass->getName() == IntegrationConfigurationRequest::class
+            );
     }
 
     /**

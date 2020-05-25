@@ -30,6 +30,8 @@ initialize: function () {
             pimcore.globalmanager.add(key, value);
             tabs = Ext.getCmp('object_' + object.id);
             tabs.object.tab.items.items[1].add(value.getLayout());
+            this.addSendAllProductsButton(object);
+            this.addSendAllCategoriesButton(object);
         }
         if (this.isSynchronized(object)) {
             var key = 'magentostatus_' + object.id;
@@ -71,7 +73,63 @@ initialize: function () {
     },
 
     isSynchronized: function (object) {
-        return ("synchronize-status" in  object.data.properties);
+        return ("synchronize_status" in  object.data.properties);
+    },
+
+    addSendAllProductsButton: function (object) {
+        console.log(object);
+        object.toolbar.add({
+            text: t('Send products'),
+            iconCls: 'pimcore_icon_right',
+            scale: 'small',
+            handler: function () {
+                Ext.Ajax.request({
+                    url: '/admin/integration-configuration/send/products',
+                    method: 'post',
+                    params: {
+                        id: object.id,
+                        storeViewId: object.data.data.magentoStore,
+                        instanceUrl: object.data.data.instanceUrl
+                    },
+                    success: function(){
+                        pimcore.helpers.showNotification(t("Success!"), t("Mass update of products has been started"),
+                            "success");
+                    }.bind(this),
+                    failure: function () {
+                        console.log(arguments)
+                    }.bind(this)
+                });
+            }.bind(this)
+        });
+        pimcore.layout.refresh();
+    },
+
+    addSendAllCategoriesButton: function (object) {
+        console.log(object);
+        object.toolbar.add({
+            text: t('Send categories'),
+            iconCls: 'pimcore_icon_right',
+            scale: 'small',
+            handler: function () {
+                Ext.Ajax.request({
+                    url: '/admin/integration-configuration/send/categories',
+                    method: 'post',
+                    params: {
+                        id: object.id,
+                        storeViewId: object.data.data.magentoStore,
+                        instanceUrl: object.data.data.instanceUrl
+                    },
+                    success: function(){
+                        pimcore.helpers.showNotification(t("Success!"), t("Mass update of categories has been started"),
+                            "success");
+                    }.bind(this),
+                    failure: function () {
+                        console.log(arguments)
+                    }.bind(this)
+                });
+            }.bind(this)
+        });
+        pimcore.layout.refresh();
     }
 });
 

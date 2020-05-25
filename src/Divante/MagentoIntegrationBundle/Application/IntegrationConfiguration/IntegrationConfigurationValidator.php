@@ -9,7 +9,7 @@
 namespace Divante\MagentoIntegrationBundle\Application\IntegrationConfiguration;
 
 use Divante\MagentoIntegrationBundle\Domain\IntegrationConfiguration\IntegrationHelper;
-use Divante\MagentoIntegrationBundle\Domain\DataObject\IntegrationConfiguration;
+use Pimcore\Model\DataObject\IntegrationConfiguration;
 use Pimcore\Model\Element\ValidationException;
 
 /**

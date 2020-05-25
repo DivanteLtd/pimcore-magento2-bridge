@@ -8,8 +8,6 @@
 
 namespace Divante\MagentoIntegrationBundle\Domain\Mapper\Model;
 
-use Divante\MagentoIntegrationBundle\Domain\Mapper\Model\FromColumn;
-
 /**
  * Class FromColumn
  * @package Divante\MagentoIntegrationBundle\Model\Mapping

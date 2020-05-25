@@ -8,14 +8,13 @@
 
 namespace Divante\MagentoIntegrationBundle\Application\Category;
 
-use Divante\MagentoIntegrationBundle\Action\Rest\Category\Type\GetCategory;
 use Divante\MagentoIntegrationBundle\Application\Common\AbstractMappedObjectService;
 use Divante\MagentoIntegrationBundle\Domain\Event\IntegratedObjectEvent;
 use Divante\MagentoIntegrationBundle\Domain\Event\PostMappingObjectEvent;
-use Divante\MagentoIntegrationBundle\Domain\IntegrationConfiguration\IntegrationHelper;
 use Divante\MagentoIntegrationBundle\Domain\Mapper\MapperEventTypes;
 use Divante\MagentoIntegrationBundle\Domain\DataObject\IntegrationConfiguration;
 use Pimcore\Model\DataObject\Concrete;
+use Divante\MagentoIntegrationBundle\Domain\IntegrationConfiguration\IntegrationHelper;
 
 /**
  * Class MappedCategoryService
@@ -23,42 +22,44 @@ use Pimcore\Model\DataObject\Concrete;
  */
 class MappedCategoryService extends AbstractMappedObjectService
 {
-    public function getCategories(GetCategory $query)
+    /**
+     * @param string $ids
+     * @param string $instanceUrl
+     * @param string $storeViewId
+     * @return array
+     */
+    public function getCategories(string $ids, string $instanceUrl, string $storeViewId)
     {
-        $objectsListing = $this->loadObjects($query->id);
-        $mappedObjects  = [];
-        /** @var array $fetchedIds */
-        $missingData = $this->getMissingIds($objectsListing->loadIdList(), $query);
-        /** @var Concrete $object */
-        foreach ($objectsListing->getObjects() as $object) {
+        $configurations = $this->configRepository->getByConfiguration(
+            $instanceUrl,
+            $storeViewId
+        );
+        if (!$configurations || empty($configurations)) {
+            return [
+                "success" => false,
+                "message" => sprintf(
+                    "Couldn't find configuration object with params instanceUrl: %s and storeViewId: %s",
+                    $instanceUrl,
+                    $storeViewId
+                )
+            ];
+        }
+        $configuration = reset($configurations);
+        $categories = $this->integratedObjectRepository->getObjects(explode(",", $ids), $configuration);
+        $missingData = $this->getMissingIds($categories, $ids);
+
+        $mappedObjects = [];
+        foreach ($categories as $object) {
             try {
                 $this->permissionChecker->checkElementPermission($object, 'get');
-                $configurations = $this->configService->getConfigurations(
-                    $object,
-                    IntegrationHelper::RELATION_TYPE_CATEGORY,
-                    $query->instaceUrl,
-                    $query->storeViewId
-                );
-                if (!$configurations) {
-                    $missingData[$object->getId()] = sprintf(
-                        'Requested object with id %d does not exist.',
-                        $object->getId()
-                    );
-                    continue;
-                }
-
-                $mappedObjects[$object->getId()] = $this->getMappedObject($object, reset($configurations));
+                $mappedObjects[$object->getId()] = $this->getMappedObject($object, $configuration);
             } catch (\Exception $exception) {
                 return ['success' => false, 'missing_objects' => $missingData];
             }
         }
 
-        if (!$mappedObjects) {
-            return ['success' => false, 'missing_objects' => $missingData];
-        }
+        return ['data' => $mappedObjects, 'missing_objects' => $missingData, 'success' => true];
 
-        $data = ['data' => $mappedObjects, 'missing_objects' => $missingData, 'success' => true];
-        return $data;
     }
 
     /**
