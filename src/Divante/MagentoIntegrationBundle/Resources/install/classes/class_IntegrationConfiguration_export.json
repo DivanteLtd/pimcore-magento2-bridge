@@ -1,5 +1,5 @@
 {
-    "id": "CONNECTOR_INTEGRATION_CONFIG",
+    "id": "IntegrationConfiguration",
     "description": null,
     "parentClass": "Divante\\MagentoIntegrationBundle\\Domain\\DataObject\\IntegrationConfiguration",
     "listingParentClass": null,
