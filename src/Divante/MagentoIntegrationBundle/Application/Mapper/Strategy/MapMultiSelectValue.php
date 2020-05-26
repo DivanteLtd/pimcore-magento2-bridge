@@ -38,7 +38,8 @@ class MapMultiSelectValue extends MapTextValue
         $parsedData = [
             'value' => $this->getFieldValues($field, $language),
             'type' => static::TYPE,
-            'label' => $this->getLabel($field, $language)
+            'label' => $this->getLabel($field, $language),
+            static::ATTR_CONF => $this->getAttrConf($field, $arrayMapping)
         ];
 
         foreach ($names as $name) {

@@ -35,7 +35,8 @@ class MapTextValue extends AbstractMapStrategy
         $parsedData = [
             'value' => $field->value !== "" ? $field->value : null,
             'type'  => static::TYPE,
-            'label' => $this->getLabel($field, $language)
+            'label' => $this->getLabel($field, $language),
+            static::ATTR_CONF => $this->getAttrConf($field, $arrayMapping)
         ];
 
         foreach ($names as $name) {

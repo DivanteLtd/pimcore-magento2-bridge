@@ -1,7 +1,7 @@
 pimcore.registerNS("pimcore.plugin.MagentoIntegrationBundle.ProductMapper");
 pimcore.plugin.MagentoIntegrationBundle.ProductMapper = Class.create(pimcore.plugin.MagentoIntegrationBundle.item, {
-        initialize: function (object) {
-            this.object = object;
+    initialize: function (object) {
+        this.object = object;
     },
     reloadMapper: function (object) {
         this.object = object;
@@ -248,6 +248,146 @@ pimcore.plugin.MagentoIntegrationBundle.ProductMapper = Class.create(pimcore.plu
                                                         array.find(function (newValue) {
                                                             return newValue[1] === toColumn.data.identifier
                                                         })[3] = newValue;
+                                                        this.object.edit.dataFields.productMapping.store.loadData(array, false);
+                                                        this.object.edit.dataFields.productMapping.dirty = true;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                {
+                                    text: t('Searchable'),
+                                    dataIndex: 'searchable',
+                                    flex: 1,
+                                    editable: true,
+                                    editor: {
+                                        xtype: 'textfield',
+                                        mode: 'local',
+                                        object: this.object,
+                                        listeners: {
+                                            change: function (combo, newValue, oldValue, eOpts) {
+                                                var gridRecord = grid.getSelectionModel().getSelection();
+                                                if (gridRecord.length > 0) {
+                                                    gridRecord = gridRecord[0];
+                                                    var toColumn = toColumnStore.findRecord('identifier', gridRecord.get('toColumn'), 0, false, false, true);
+                                                    if (toColumn) {
+                                                        var array = this.object.edit.dataFields.productMapping.getValue();
+                                                        array.find(function (newValue) {
+                                                            return newValue[1] === toColumn.data.identifier
+                                                        })[4] = newValue;
+                                                        this.object.edit.dataFields.productMapping.store.loadData(array, false);
+                                                        this.object.edit.dataFields.productMapping.dirty = true;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                {
+                                    text: t('Filterable'),
+                                    dataIndex: 'filterable',
+                                    flex: 1,
+                                    editable: true,
+                                    editor: {
+                                        xtype: 'textfield',
+                                        mode: 'local',
+                                        object: this.object,
+                                        listeners: {
+                                            change: function (combo, newValue, oldValue, eOpts) {
+                                                var gridRecord = grid.getSelectionModel().getSelection();
+                                                if (gridRecord.length > 0) {
+                                                    gridRecord = gridRecord[0];
+                                                    var toColumn = toColumnStore.findRecord('identifier', gridRecord.get('toColumn'), 0, false, false, true);
+                                                    if (toColumn) {
+                                                        var array = this.object.edit.dataFields.productMapping.getValue();
+                                                        array.find(function (newValue) {
+                                                            return newValue[1] === toColumn.data.identifier
+                                                        })[5] = newValue;
+                                                        this.object.edit.dataFields.productMapping.store.loadData(array, false);
+                                                        this.object.edit.dataFields.productMapping.dirty = true;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                {
+                                    text: t('Comparable'),
+                                    dataIndex: 'comparable',
+                                    flex: 1,
+                                    editable: true,
+                                    editor: {
+                                        xtype: 'textfield',
+                                        mode: 'local',
+                                        object: this.object,
+                                        listeners: {
+                                            change: function (combo, newValue, oldValue, eOpts) {
+                                                var gridRecord = grid.getSelectionModel().getSelection();
+                                                if (gridRecord.length > 0) {
+                                                    gridRecord = gridRecord[0];
+                                                    var toColumn = toColumnStore.findRecord('identifier', gridRecord.get('toColumn'), 0, false, false, true);
+                                                    if (toColumn) {
+                                                        var array = this.object.edit.dataFields.productMapping.getValue();
+                                                        array.find(function (newValue) {
+                                                            return newValue[1] === toColumn.data.identifier
+                                                        })[6] = newValue;
+                                                        this.object.edit.dataFields.productMapping.store.loadData(array, false);
+                                                        this.object.edit.dataFields.productMapping.dirty = true;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                {
+                                    text: t('Visible on front'),
+                                    dataIndex: 'visible_on_front',
+                                    flex: 1,
+                                    editable: true,
+                                    editor: {
+                                        xtype: 'textfield',
+                                        mode: 'local',
+                                        object: this.object,
+                                        listeners: {
+                                            change: function (combo, newValue, oldValue, eOpts) {
+                                                var gridRecord = grid.getSelectionModel().getSelection();
+                                                if (gridRecord.length > 0) {
+                                                    gridRecord = gridRecord[0];
+                                                    var toColumn = toColumnStore.findRecord('identifier', gridRecord.get('toColumn'), 0, false, false, true);
+                                                    if (toColumn) {
+                                                        var array = this.object.edit.dataFields.productMapping.getValue();
+                                                        array.find(function (newValue) {
+                                                            return newValue[1] === toColumn.data.identifier
+                                                        })[7] = newValue;
+                                                        this.object.edit.dataFields.productMapping.store.loadData(array, false);
+                                                        this.object.edit.dataFields.productMapping.dirty = true;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                {
+                                    text: t('Used in product listing'),
+                                    dataIndex: 'used_in_product_listing',
+                                    flex: 1,
+                                    editable: true,
+                                    editor: {
+                                        xtype: 'textfield',
+                                        mode: 'local',
+                                        object: this.object,
+                                        listeners: {
+                                            change: function (combo, newValue, oldValue, eOpts) {
+                                                var gridRecord = grid.getSelectionModel().getSelection();
+                                                if (gridRecord.length > 0) {
+                                                    gridRecord = gridRecord[0];
+                                                    var toColumn = toColumnStore.findRecord('identifier', gridRecord.get('toColumn'), 0, false, false, true);
+                                                    if (toColumn) {
+                                                        var array = this.object.edit.dataFields.productMapping.getValue();
+                                                        array.find(function (newValue) {
+                                                            return newValue[1] === toColumn.data.identifier
+                                                        })[8] = newValue;
                                                         this.object.edit.dataFields.productMapping.store.loadData(array, false);
                                                         this.object.edit.dataFields.productMapping.dirty = true;
                                                     }

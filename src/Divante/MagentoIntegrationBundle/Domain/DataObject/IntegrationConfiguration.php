@@ -19,6 +19,12 @@ use Pimcore\Model\DataObject\Concrete;
  */
 abstract class IntegrationConfiguration extends Concrete implements IntegrationConfigurationInterface
 {
+    const ATTR_CONF_FILTERABLE = 'filterable';
+    const ATTR_CONF_SEARCHABLE = 'searchable';
+    const ATTR_CONF_COMPARABLE = 'comparable';
+    const ATTR_CONF_VISIBLE_ON_FRONT = 'visible_on_front';
+    const ATTR_CONF_PRODUCT_LISTING= 'used_in_product_listing';
+
     /** @var array */
     protected $productMapping;
     /** @var array */
@@ -62,7 +68,14 @@ abstract class IntegrationConfiguration extends Concrete implements IntegrationC
                     $this->mappingArrays["product"][$map[0]][] = [
                         "field" => $map[1],
                         "strategy" => !empty($map[2]) ? $map[2] : null,
-                        "attributes" => !empty($map[3]) ? $map[3] : null
+                        "attributes" => !empty($map[3]) ? $map[3] : null,
+                        "attr_conf" => [
+                            static::ATTR_CONF_SEARCHABLE => !empty($map[4]) ? $map[4] : null,
+                            static::ATTR_CONF_FILTERABLE => !empty($map[5]) ? $map[5] : null,
+                            static::ATTR_CONF_COMPARABLE => !empty($map[6]) ? $map[6] : null,
+                            static::ATTR_CONF_VISIBLE_ON_FRONT => !empty($map[7]) ? $map[7] : null,
+                            static::ATTR_CONF_PRODUCT_LISTING => !empty($map[8]) ? $map[8] : null,
+                        ]
                     ];
                 }
             }

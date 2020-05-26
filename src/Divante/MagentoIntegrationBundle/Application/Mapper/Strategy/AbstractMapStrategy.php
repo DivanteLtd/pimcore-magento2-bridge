@@ -20,6 +20,8 @@ abstract class AbstractMapStrategy implements MapStrategyInterface
 {
     const ALLOWED_TYPES_ARRAY = [];
 
+    const ATTR_CONF = 'attr_conf';
+
     /** @var TranslatorInterface  */
     protected $translator;
 
@@ -49,6 +51,24 @@ abstract class AbstractMapStrategy implements MapStrategyInterface
             $fieldName = [$field->name];
         }
         return str_replace('-', '_', array_map('strtolower', $fieldName));
+    }
+
+    /**
+     * @param Element $field
+     * @param array $mappingArray
+     * @return array|mixed
+     */
+    protected function getAttrConf(Element $field, array $mappingArray)
+    {
+        $attrConf = [];
+        if (
+            array_key_exists($field->name, $mappingArray)
+            && array_key_exists(0, $mappingArray[$field->name])
+            && array_key_exists('attr_conf', $mappingArray[$field->name][0])
+        ) {
+            $attrConf = $mappingArray[$field->name][0]['attr_conf'];
+        }
+        return $attrConf;
     }
 
     /**

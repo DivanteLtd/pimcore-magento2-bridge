@@ -37,7 +37,8 @@ class MapQuantityValue extends AbstractMapStrategy
             'value' => $field->value['value'],
             'unit'  => $field->value['unitAbbreviation'],
             'type'  => static::TYPE,
-            'label' => $this->getLabel($field, $language)
+            'label' => $this->getLabel($field, $language),
+            static::ATTR_CONF => $this->getAttrConf($field, $arrayMapping)
         ];
         foreach ($names as $name) {
             $obj->{$name} = $parsedData;

@@ -35,7 +35,8 @@ class MapSelectValue extends MapTextValue
         $parsedData = [
             'type'  => static::TYPE,
             'label' => $this->getLabel($field, $language),
-            'value' => $this->getFieldValue($field, $language)
+            'value' => $this->getFieldValue($field, $language),
+            static::ATTR_CONF => $this->getAttrConf($field, $arrayMapping)
         ];
         foreach ($names as $name) {
             $obj->{$name} = $parsedData;
