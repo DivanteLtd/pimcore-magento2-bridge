@@ -22,7 +22,7 @@ abstract class IntegrationConfiguration extends Concrete implements IntegrationC
     const ATTR_CONF_SEARCHABLE = 'searchable';
     const ATTR_CONF_COMPARABLE = 'comparable';
     const ATTR_CONF_VISIBLE_ON_FRONT = 'visible_on_front';
-    const ATTR_CONF_PRODUCT_LISTING= 'used_in_product_listing';
+    const ATTR_CONF_PRODUCT_LISTING = 'used_in_product_listing';
 
     /** @var array */
     protected $productMapping;
@@ -63,18 +63,19 @@ abstract class IntegrationConfiguration extends Concrete implements IntegrationC
         if (!array_key_exists('product', $this->mappingArrays) || !$this->mappingArrays['product']) {
             $this->mappingArrays['product'] = [];
             foreach ($this->productMapping as $map) {
+                $attrConf = [
+                    static::ATTR_CONF_SEARCHABLE => !empty($map[4]) ? $this->prepareMappingValue($map[4]) : null,
+                    static::ATTR_CONF_FILTERABLE => !empty($map[5]) ? $this->prepareMappingValue($map[5]) : null,
+                    static::ATTR_CONF_COMPARABLE => !empty($map[6]) ? $this->prepareMappingValue($map[6]) : null,
+                    static::ATTR_CONF_VISIBLE_ON_FRONT => !empty($map[7]) ? $this->prepareMappingValue($map[7]) : null,
+                    static::ATTR_CONF_PRODUCT_LISTING => !empty($map[8]) ? $this->prepareMappingValue($map[8]) : null,
+                ];
                 if ($map[0] != "") {
                     $this->mappingArrays["product"][$map[0]][] = [
                         "field" => $map[1],
                         "strategy" => !empty($map[2]) ? $map[2] : null,
                         "attributes" => !empty($map[3]) ? $map[3] : null,
-                        "attr_conf" => [
-                            static::ATTR_CONF_SEARCHABLE => !empty($map[4]) ? $map[4] : null,
-                            static::ATTR_CONF_FILTERABLE => !empty($map[5]) ? $map[5] : null,
-                            static::ATTR_CONF_COMPARABLE => !empty($map[6]) ? $map[6] : null,
-                            static::ATTR_CONF_VISIBLE_ON_FRONT => !empty($map[7]) ? $map[7] : null,
-                            static::ATTR_CONF_PRODUCT_LISTING => !empty($map[8]) ? $map[8] : null,
-                        ]
+                        "attr_conf" => $attrConf
                     ];
                 }
             }
@@ -164,5 +165,17 @@ abstract class IntegrationConfiguration extends Concrete implements IntegrationC
     public function getMagentoStore()
     {
         return $this->magentoStore;
+    }
+
+    /**
+     * @param string $value
+     * @return bool
+     */
+    protected function prepareMappingValue(string $value): bool
+    {
+        if ($value == 'true') {
+            return true;
+        }
+        return false;
     }
 }

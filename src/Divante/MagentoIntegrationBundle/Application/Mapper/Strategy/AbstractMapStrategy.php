@@ -64,9 +64,9 @@ abstract class AbstractMapStrategy implements MapStrategyInterface
         if (
             array_key_exists($field->name, $mappingArray)
             && array_key_exists(0, $mappingArray[$field->name])
-            && array_key_exists('attr_conf', $mappingArray[$field->name][0])
+            && array_key_exists(static::ATTR_CONF, $mappingArray[$field->name][0])
         ) {
-            $attrConf = $mappingArray[$field->name][0]['attr_conf'];
+            $attrConf = $mappingArray[$field->name][0][static::ATTR_CONF];
         }
         return $attrConf;
     }

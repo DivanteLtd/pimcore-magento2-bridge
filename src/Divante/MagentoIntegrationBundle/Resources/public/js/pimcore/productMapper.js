@@ -260,9 +260,9 @@ pimcore.plugin.MagentoIntegrationBundle.ProductMapper = Class.create(pimcore.plu
                                     text: t('Searchable'),
                                     dataIndex: 'searchable',
                                     flex: 1,
-                                    editable: true,
+                                    editable: false,
                                     editor: {
-                                        xtype: 'textfield',
+                                        xtype: 'checkbox',
                                         mode: 'local',
                                         object: this.object,
                                         listeners: {
@@ -288,9 +288,9 @@ pimcore.plugin.MagentoIntegrationBundle.ProductMapper = Class.create(pimcore.plu
                                     text: t('Filterable'),
                                     dataIndex: 'filterable',
                                     flex: 1,
-                                    editable: true,
+                                    editable: false,
                                     editor: {
-                                        xtype: 'textfield',
+                                        xtype: 'checkbox',
                                         mode: 'local',
                                         object: this.object,
                                         listeners: {
@@ -316,9 +316,9 @@ pimcore.plugin.MagentoIntegrationBundle.ProductMapper = Class.create(pimcore.plu
                                     text: t('Comparable'),
                                     dataIndex: 'comparable',
                                     flex: 1,
-                                    editable: true,
+                                    editable: false,
                                     editor: {
-                                        xtype: 'textfield',
+                                        xtype: 'checkbox',
                                         mode: 'local',
                                         object: this.object,
                                         listeners: {
@@ -344,9 +344,9 @@ pimcore.plugin.MagentoIntegrationBundle.ProductMapper = Class.create(pimcore.plu
                                     text: t('Visible on front'),
                                     dataIndex: 'visible_on_front',
                                     flex: 1,
-                                    editable: true,
+                                    editable: false,
                                     editor: {
-                                        xtype: 'textfield',
+                                        xtype: 'checkbox',
                                         mode: 'local',
                                         object: this.object,
                                         listeners: {
@@ -372,9 +372,9 @@ pimcore.plugin.MagentoIntegrationBundle.ProductMapper = Class.create(pimcore.plu
                                     text: t('Used in product listing'),
                                     dataIndex: 'used_in_product_listing',
                                     flex: 1,
-                                    editable: true,
+                                    editable: false,
                                     editor: {
-                                        xtype: 'textfield',
+                                        xtype: 'checkbox',
                                         mode: 'local',
                                         object: this.object,
                                         listeners: {
