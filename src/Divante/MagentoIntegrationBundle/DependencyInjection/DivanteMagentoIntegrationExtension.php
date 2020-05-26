@@ -8,6 +8,8 @@
 
 namespace Divante\MagentoIntegrationBundle\DependencyInjection;
 
+use Divante\MagentoIntegrationBundle\Application\Mapper\Strategy\Custom\CustomStrategyInterface;
+use Divante\MagentoIntegrationBundle\Application\Mapper\Strategy\MapStrategyInterface;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader;
@@ -25,6 +27,13 @@ class DivanteMagentoIntegrationExtension extends Extension
      */
     public function load(array $configs, ContainerBuilder $container)
     {
+        $container->registerForAutoconfiguration(CustomStrategyInterface::class)
+            ->addTag('object_mapper.customStrategy')
+        ;
+        $container->registerForAutoconfiguration(MapStrategyInterface::class)
+            ->addTag('object_mapper.mapStrategy')
+        ;
+
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yml');
     }

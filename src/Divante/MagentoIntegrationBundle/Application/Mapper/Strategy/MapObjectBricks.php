@@ -8,7 +8,6 @@
 
 namespace Divante\MagentoIntegrationBundle\Application\Mapper\Strategy;
 
-use Divante\MagentoIntegrationBundle\Application\Mapper\Strategy\AbstractMapStrategy;
 use Divante\MagentoIntegrationBundle\Application\Mapper\MapperContext;
 use Pimcore\Model\DataObject\Objectbrick;
 use Pimcore\Model\Webservice\Data\DataObject\Element;
