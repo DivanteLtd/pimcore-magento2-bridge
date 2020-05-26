@@ -2,9 +2,6 @@
 
 namespace Divante\MagentoIntegrationBundle\Application\Mapper\Strategy\Custom;
 
-use Divante\MagentoIntegrationBundle\Application\Mapper\Strategy\Custom\CustomStrategyInterface;
-use Pimcore\Model\Webservice\Data\DataObject\Element;
-
 /**
  * Class EmptyStrategy
  * @package Divante\MagentoIntegrationBundle\Domain\Mapper\Strategy\Custom
