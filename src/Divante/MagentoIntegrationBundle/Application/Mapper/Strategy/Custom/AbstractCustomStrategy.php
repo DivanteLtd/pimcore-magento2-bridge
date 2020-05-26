@@ -2,7 +2,6 @@
 
 namespace Divante\MagentoIntegrationBundle\Application\Mapper\Strategy\Custom;
 
-use Divante\MagentoIntegrationBundle\Application\Mapper\Strategy\Custom\CustomStrategyInterface;
 use Divante\MagentoIntegrationBundle\Application\Mapper\Strategy\MapStrategyInterface;
 use Pimcore\Model\Webservice\Data\DataObject\Element;
 use Symfony\Component\Translation\TranslatorInterface;
@@ -13,6 +12,12 @@ use Symfony\Component\Translation\TranslatorInterface;
  */
 abstract class AbstractCustomStrategy implements CustomStrategyInterface, MapStrategyInterface
 {
+    /** @var string  */
+    public $label;
+
+    /** @var string  */
+    public $identifier;
+
     /** @var TranslatorInterface  */
     protected $translator;
 
@@ -23,6 +28,8 @@ abstract class AbstractCustomStrategy implements CustomStrategyInterface, MapStr
     public function __construct(TranslatorInterface $translator)
     {
         $this->translator = $translator;
+        $this->label = $this->getLabel();
+        $this->identifier = $this->getIdentifier();
     }
 
     /**
