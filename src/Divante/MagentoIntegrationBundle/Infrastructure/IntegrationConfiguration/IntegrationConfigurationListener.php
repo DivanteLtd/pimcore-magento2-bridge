@@ -8,11 +8,14 @@
 
 namespace Divante\MagentoIntegrationBundle\Infrastructure\IntegrationConfiguration;
 
+use Divante\MagentoIntegrationBundle\Application\DataObject\RelationClassCollector;
 use Divante\MagentoIntegrationBundle\Application\IntegrationConfiguration\IntegrationConfigurationValidator;
 use Divante\MagentoIntegrationBundle\Domain\DataObject\IntegrationConfiguration;
+use Divante\MagentoIntegrationBundle\Domain\IntegrationConfiguration\IntegrationHelper;
 use Pimcore\Event\Model\DataObjectEvent;
 use Pimcore\Model\DataObject\AbstractObject;
 use Pimcore\Model\Element\ValidationException;
+use Pimcore\Model\WebsiteSetting;
 
 /**
  * Class IntegrationConfigurationListener
@@ -23,13 +26,20 @@ class IntegrationConfigurationListener
     /** @var IntegrationConfigurationValidator */
     private $validator;
 
+    /** @var RelationClassCollector */
+    private $relationClassCollector;
+
     /**
      * IntegrationConfigurationListener constructor.
      * @param IntegrationConfigurationValidator $validator
+     * @param RelationClassCollector $relationClassCollector
      */
-    public function __construct(IntegrationConfigurationValidator $validator)
-    {
+    public function __construct(
+        IntegrationConfigurationValidator $validator,
+        RelationClassCollector $relationClassCollector
+    ) {
         $this->validator = $validator;
+        $this->relationClassCollector = $relationClassCollector;
     }
 
     /**
@@ -44,6 +54,17 @@ class IntegrationConfigurationListener
             return;
         }
         $this->validator->validate($object);
-        return;
+
+        $allowedRelationClasses = $this->relationClassCollector->getRelatedClassFromConfigurations();
+
+        $websiteConfig = WebsiteSetting::getByName(IntegrationHelper::WEBSITE_SETTINGS_ALLOWED_CLASSES);
+        if (!$websiteConfig) {
+            $websiteConfig = new WebsiteSetting();
+            $websiteConfig->setName(IntegrationHelper::WEBSITE_SETTINGS_ALLOWED_CLASSES);
+            $websiteConfig->setType("text");
+        }
+
+        $websiteConfig->setData(json_encode($allowedRelationClasses));
+        $websiteConfig->save();
     }
 }

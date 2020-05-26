@@ -9,7 +9,6 @@
 namespace Divante\MagentoIntegrationBundle\Domain\DataObject;
 
 use Divante\MagentoIntegrationBundle\Domain\IntegrationConfiguration\IntegrationHelper;
-use Divante\MagentoIntegrationBundle\Domain\DataObject\IntegrationConfigurationInterface;
 use Pimcore\Model\Asset;
 use Pimcore\Model\DataObject\Concrete;
 

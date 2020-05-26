@@ -8,11 +8,10 @@
 
 namespace Divante\MagentoIntegrationBundle\Domain\Provider;
 
+use Divante\MagentoIntegrationBundle\Application\Integration\Magento\MagentoStoreFetcher;
 use Divante\MagentoIntegrationBundle\Domain\DataObject\IntegrationConfiguration;
-use Divante\MagentoIntegrationBundle\Rest\RestClientBuilder;
 use Pimcore\Model\DataObject\ClassDefinition\Data;
 use Pimcore\Model\DataObject\ClassDefinition\DynamicOptionsProvider\SelectOptionsProviderInterface;
-use Divante\MagentoIntegrationBundle\Infrastructure\Rest\RestClient;
 use Psr\Container\NotFoundExceptionInterface;
 
 /**
@@ -21,42 +20,40 @@ use Psr\Container\NotFoundExceptionInterface;
  */
 class MagentoStore implements SelectOptionsProviderInterface
 {
-    /** @var RestClientBuilder */
-    private $builder;
+    /** @var MagentoStoreFetcher */
+    private $storeFetcher;
 
     /**
      * MagentoStoreProvider constructor.
-     * @param RestClientBuilder $builder
+     * @param MagentoStoreFetcher $fetcher
      */
-    public function __construct(RestClientBuilder $builder)
+    public function __construct(MagentoStoreFetcher $fetcher)
     {
-        $this->builder = $builder;
+        $this->storeFetcher = $fetcher;
     }
 
     /**
      * @param array $context
-     * @param Data  $fieldDefinition
+     * @param Data $fieldDefinition
      *
      * @return array
      * @throws NotFoundExceptionInterface
      */
     public function getOptions($context, $fieldDefinition): array
     {
-        if (!isset($context['object']) || !$context['object'] instanceof IntegrationConfiguration) {
+        if (!isset($context['object'])
+            || !$context['object'] instanceof IntegrationConfiguration
+            || !$context['object']->getInstanceUrl()) {
             return $this->hasNoOption();
         }
 
-        $client = $this->builder->getClient($context['object']);
+        $stores = $this->storeFetcher->getStores($context['object']);
 
-        if (!$client instanceof RestClient) {
-            return $this->hasNoOption();
-        }
-        $stores = $client->getStores();
-        if (count($stores) == 0) {
+        if (!is_array($stores) || count($stores) == 0) {
             return $this->hasNoOption();
         }
         return array_map(function ($elem) {
-            return ["key" => $elem->name, "value" => $elem->id];
+            return ["key" => $elem['name'], "value" => $elem['id']];
         }, $stores);
     }
 

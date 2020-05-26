@@ -1,0 +1,9 @@
+monolog:
+    channels: ['connector']
+    handlers:
+        connector:
+            type: stream
+            path: "%kernel.logs_dir%/connector/%kernel.environment%.log"
+            level: info
+            channels: [connector]
+            formatter: pimcore_connector.log_formatter

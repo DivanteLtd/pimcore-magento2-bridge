@@ -56,10 +56,11 @@ class MapMultiSelectValue extends MapTextValue
     {
         $values = [];
         foreach ($field->value as $value) {
+            $key = is_array($value) ? $value['key'] : $value;
             $values[] =
                 (object)[
-                    'key'   => $this->translator->trans($value['key'], [], null, $language),
-                    'value' => $value['value']
+                    'key'   => $this->translator->trans($key, [], null, $language),
+                    'value' => is_array($value) ? $value['value'] : $value
                 ];
         }
         return $values;

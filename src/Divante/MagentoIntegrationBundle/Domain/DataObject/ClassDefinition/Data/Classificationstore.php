@@ -20,7 +20,7 @@ class Classificationstore extends ClassificationstoreParent
 {
     /**
      * Classificationstore copy constructor.
-     * @param \Pimcore\Model\DataObject\ClassDefinition\Data\Classificationstore $field
+     * @param ClassificationstoreParent $field
      */
     public function __construct(ClassificationstoreParent $field)
     {

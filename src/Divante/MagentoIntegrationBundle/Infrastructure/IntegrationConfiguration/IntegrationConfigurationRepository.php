@@ -10,6 +10,7 @@ namespace Divante\MagentoIntegrationBundle\Infrastructure\IntegrationConfigurati
 
 use Pimcore\Model\DataObject\AbstractObject;
 use Pimcore\Model\DataObject\IntegrationConfiguration;
+use Pimcore\Model\Factory;
 
 /**
  * Class IntegrationConfigurationRepository
@@ -17,6 +18,77 @@ use Pimcore\Model\DataObject\IntegrationConfiguration;
  */
 class IntegrationConfigurationRepository
 {
+    /**
+     * @var Factory
+     */
+    private $factory;
+
+    /**
+     * IntegrationConfigurationRepository constructor.
+     * @param Factory $factory
+     */
+    public function __construct(Factory $factory)
+    {
+        $this->factory = $factory;
+    }
+
+    /**
+     * @return \Pimcore\Model\AbstractModel|\Pimcore\Model\Listing\AbstractListing
+     */
+    private function getListing()
+    {
+        return $this->factory->build(IntegrationConfiguration\Listing::class);
+    }
+
+    /**
+     * @return IntegrationConfiguration[]
+     */
+    public function getAllConfigurations(): array
+    {
+        return $this->getListing()->load();
+    }
+
+    /**
+     * @param AbstractObject $object
+     * @return IntegrationConfiguration[]
+     */
+    public function getByProduct(AbstractObject $object): array
+    {
+        return $this->getListing()
+            ->setCondition(
+                ":path LIKE CONCAT('%', productRootPath, '%')",
+                ['path' => $object->getPath()]
+            )->load();
+    }
+
+    /**
+     * @param AbstractObject $object
+     * @return IntegrationConfiguration[]
+     */
+    public function getByCategory(AbstractObject $object): array
+    {
+        return $this->getListing()
+            ->setCondition(
+                ":path LIKE CONCAT('%', categoryRootPath, '%')",
+                ['path' => $object->getPath()]
+            )->load();
+    }
+
+    /**
+     * @param array $integrationIds
+     * @return array
+     * @throws \Exception
+     */
+    public function getByIntegrationIds(array $integrationIds): array
+    {
+        $configurationListing = $this->getListing();
+        $configurationListing
+            ->setCondition("integrationId IN (?)", [$integrationIds])
+            ->load();
+        return $configurationListing->getObjects();
+    }
+
+
     /**
      * @param AbstractObject $object
      * @param string         $instanceUrl
@@ -28,7 +100,7 @@ class IntegrationConfigurationRepository
         string $instanceUrl,
         int $storeView
     ) {
-        $conditionData = $this->getConfigurationConditions($object, $instanceUrl, $storeView);
+        $conditionData = $this->getConfigurationConditions($instanceUrl, $storeView, $object);
         try {
             $configurationListing = new IntegrationConfiguration\Listing();
             $configurationListing
@@ -41,26 +113,77 @@ class IntegrationConfigurationRepository
     }
 
     /**
+     * @param string              $instanceUrl
+     * @param int                 $storeView
+     * @param AbstractObject|null $object
+     * @return array
+     */
+    public function getByConfiguration(
+        string $instanceUrl,
+        int $storeView,
+        ?AbstractObject $object = null
+    ): array {
+        $conditionData = $this->getConfigurationConditions($instanceUrl, $storeView, $object);
+        try {
+            $configurationListing = new IntegrationConfiguration\Listing();
+            $configurationListing
+                ->setCondition($conditionData['condition'], $conditionData['data'])
+                ->load();
+        } catch (\Exception $exception) {
+            return [];
+        }
+        return $configurationListing->getObjects();
+    }
+
+    /**
+     * @return array
+     */
+    public function getAllProductClasses(): array
+    {
+        $listing = $this->getListing();
+        $productClasses = [];
+        /** @var IntegrationConfiguration $object */
+        foreach ($listing->getData() as $object) {
+            $productClasses[] = $object->getProductClass();
+        }
+
+        return array_unique($productClasses);
+    }
+
+    /**
+     * @return array
+     */
+    public function getAllCategoryClasses(): array
+    {
+        $listing = $this->getListing();
+        $categoryClasses = [];
+        /** @var IntegrationConfiguration $object */
+        foreach ($listing->getData() as $object) {
+            $categoryClasses[] = $object->getCategoryClass();
+        }
+
+        return array_unique($categoryClasses);
+    }
+
+    /**
      * @param AbstractObject $object
      * @param string         $instanceUrl
      * @param int            $storeView
      * @return array
      */
     protected function getConfigurationConditions(
-        AbstractObject $object,
         $instanceUrl,
-        int $storeView
+        int $storeView,
+        ?AbstractObject $object
     ): array {
         if (!$instanceUrl) {
             $condition     = "(productClass = :class OR categoryClass = :class)";
             $conditionData = ['class' => $object->getClassId()];
         } else {
-            $condition     = "instanceUrl = :instance AND magentoStore = :storeView AND " .
-                "(productClass = :class OR categoryClass = :class)";
+            $condition     = "instanceUrl = :instance AND magentoStore = :storeView";
             $conditionData = [
                 'instance'  => $instanceUrl,
                 'storeView' => $storeView,
-                'class'     => $object->getClassId()
             ];
         }
         return ['condition' => $condition, 'data' => $conditionData];
