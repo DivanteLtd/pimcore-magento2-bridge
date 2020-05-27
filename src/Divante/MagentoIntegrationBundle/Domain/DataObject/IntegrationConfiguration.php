@@ -8,6 +8,7 @@
 
 namespace Divante\MagentoIntegrationBundle\Domain\DataObject;
 
+use Divante\MagentoIntegrationBundle\Domain\DataObject\IntegrationConfiguration\AttributeType;
 use Divante\MagentoIntegrationBundle\Domain\IntegrationConfiguration\IntegrationHelper;
 use Pimcore\Model\Asset;
 use Pimcore\Model\DataObject\Concrete;
@@ -18,12 +19,6 @@ use Pimcore\Model\DataObject\Concrete;
  */
 abstract class IntegrationConfiguration extends Concrete implements IntegrationConfigurationInterface
 {
-    const ATTR_CONF_FILTERABLE = 'filterable';
-    const ATTR_CONF_SEARCHABLE = 'searchable';
-    const ATTR_CONF_COMPARABLE = 'comparable';
-    const ATTR_CONF_VISIBLE_ON_FRONT = 'visible_on_front';
-    const ATTR_CONF_PRODUCT_LISTING = 'used_in_product_listing';
-
     /** @var array */
     protected $productMapping;
     /** @var array */
@@ -64,11 +59,11 @@ abstract class IntegrationConfiguration extends Concrete implements IntegrationC
             $this->mappingArrays['product'] = [];
             foreach ($this->productMapping as $map) {
                 $attrConf = [
-                    static::ATTR_CONF_SEARCHABLE => !empty($map[4]) ? $this->prepareMappingValue($map[4]) : null,
-                    static::ATTR_CONF_FILTERABLE => !empty($map[5]) ? $this->prepareMappingValue($map[5]) : null,
-                    static::ATTR_CONF_COMPARABLE => !empty($map[6]) ? $this->prepareMappingValue($map[6]) : null,
-                    static::ATTR_CONF_VISIBLE_ON_FRONT => !empty($map[7]) ? $this->prepareMappingValue($map[7]) : null,
-                    static::ATTR_CONF_PRODUCT_LISTING => !empty($map[8]) ? $this->prepareMappingValue($map[8]) : null,
+                    AttributeType::SEARCHABLE => !empty($map[4]) ? $this->prepareMappingValue($map[4]) : null,
+                    AttributeType::FILTERABLE => !empty($map[5]) ? $this->prepareMappingValue($map[5]) : null,
+                    AttributeType::COMPARABLE => !empty($map[6]) ? $this->prepareMappingValue($map[6]) : null,
+                    AttributeType::VISIBLE_ON_FRONT => !empty($map[7]) ? $this->prepareMappingValue($map[7]) : null,
+                    AttributeType::PRODUCT_LISTING => !empty($map[8]) ? $this->prepareMappingValue($map[8]) : null,
                 ];
                 if ($map[0] != "") {
                     $this->mappingArrays["product"][$map[0]][] = [
