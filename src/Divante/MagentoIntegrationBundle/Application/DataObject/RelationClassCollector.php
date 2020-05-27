@@ -44,6 +44,9 @@ class RelationClassCollector
 
         $allowedClasses = [];
         foreach ($configurations as $configuration) {
+            if (!$configuration->getProductClass()) {
+                continue;
+            }
             $allowed = $this->getRelatedClass($configuration->getProductClass());
             if (empty($allowed)) {
                 $allowedClasses = $classes;
@@ -51,6 +54,9 @@ class RelationClassCollector
             }
             $allowedClasses = array_merge($allowedClasses, $allowed);
 
+            if (!$configuration->getCategoryClass()) {
+                continue;
+            }
             $allowed = $this->getRelatedClass($configuration->getCategoryClass());
             if (empty($allowed)) {
                 $allowedClasses = $classes;
