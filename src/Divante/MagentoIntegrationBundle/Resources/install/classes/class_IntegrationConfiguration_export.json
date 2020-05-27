@@ -1,5 +1,5 @@
 {
-    "id": "IntegrationConfiguration",
+    "id": "4",
     "description": null,
     "parentClass": "Divante\\MagentoIntegrationBundle\\Domain\\DataObject\\IntegrationConfiguration",
     "listingParentClass": null,
@@ -8,12 +8,13 @@
     "allowInherit": false,
     "allowVariants": false,
     "showVariants": false,
-    "implementsInterfaces": null,
+    "cacheRawRelationData": false,
     "layoutDefinitions": {
         "fieldtype": "panel",
         "labelWidth": 100,
         "layout": null,
         "border": false,
+        "icon": null,
         "name": "pimcore_root",
         "type": null,
         "region": null,
@@ -45,6 +46,7 @@
                         "labelWidth": 100,
                         "layout": null,
                         "border": false,
+                        "icon": "",
                         "name": "Layout",
                         "type": null,
                         "region": "west",
@@ -60,7 +62,6 @@
                             {
                                 "fieldtype": "input",
                                 "width": null,
-                                "defaultValue": null,
                                 "queryColumnType": "varchar",
                                 "columnType": "varchar",
                                 "columnLength": 190,
@@ -81,13 +82,11 @@
                                 "relationType": false,
                                 "invisible": false,
                                 "visibleGridView": false,
-                                "visibleSearch": false,
-                                "defaultValueGenerator": ""
+                                "visibleSearch": false
                             },
                             {
                                 "fieldtype": "input",
                                 "width": null,
-                                "defaultValue": null,
                                 "queryColumnType": "varchar",
                                 "columnType": "varchar",
                                 "columnLength": 190,
@@ -108,13 +107,11 @@
                                 "relationType": false,
                                 "invisible": false,
                                 "visibleGridView": false,
-                                "visibleSearch": false,
-                                "defaultValueGenerator": ""
+                                "visibleSearch": false
                             },
                             {
                                 "fieldtype": "input",
                                 "width": null,
-                                "defaultValue": null,
                                 "queryColumnType": "varchar",
                                 "columnType": "varchar",
                                 "columnLength": 190,
@@ -135,8 +132,7 @@
                                 "relationType": false,
                                 "invisible": false,
                                 "visibleGridView": false,
-                                "visibleSearch": false,
-                                "defaultValueGenerator": ""
+                                "visibleSearch": false
                             },
                             {
                                 "fieldtype": "text",
@@ -183,8 +179,7 @@
                                 "relationType": false,
                                 "invisible": false,
                                 "visibleGridView": false,
-                                "visibleSearch": false,
-                                "defaultValueGenerator": ""
+                                "visibleSearch": false
                             },
                             {
                                 "fieldtype": "select",
@@ -211,8 +206,7 @@
                                 "relationType": false,
                                 "invisible": false,
                                 "visibleGridView": false,
-                                "visibleSearch": false,
-                                "defaultValueGenerator": ""
+                                "visibleSearch": false
                             },
                             {
                                 "fieldtype": "select",
@@ -239,8 +233,7 @@
                                 "relationType": false,
                                 "invisible": false,
                                 "visibleGridView": false,
-                                "visibleSearch": false,
-                                "defaultValueGenerator": ""
+                                "visibleSearch": false
                             },
                             {
                                 "fieldtype": "manyToOneRelation",
@@ -257,6 +250,7 @@
                                 "assetTypes": [],
                                 "documentsAllowed": false,
                                 "documentTypes": [],
+                                "lazyLoading": false,
                                 "classes": [],
                                 "pathFormatterClass": "",
                                 "name": "productRoot",
@@ -288,6 +282,7 @@
                                 "assetTypes": [],
                                 "documentsAllowed": false,
                                 "documentTypes": [],
+                                "lazyLoading": null,
                                 "classes": [],
                                 "pathFormatterClass": "",
                                 "name": "categoryRoot",
@@ -329,8 +324,7 @@
                                 "relationType": false,
                                 "invisible": false,
                                 "visibleGridView": false,
-                                "visibleSearch": false,
-                                "defaultValueGenerator": ""
+                                "visibleSearch": false
                             },
                             {
                                 "fieldtype": "select",
@@ -357,18 +351,17 @@
                                 "relationType": false,
                                 "invisible": false,
                                 "visibleGridView": false,
-                                "visibleSearch": false,
-                                "defaultValueGenerator": ""
+                                "visibleSearch": false
                             }
                         ],
-                        "locked": false,
-                        "icon": ""
+                        "locked": false
                     },
                     {
                         "fieldtype": "panel",
                         "labelWidth": 100,
                         "layout": null,
                         "border": false,
+                        "icon": "",
                         "name": "Mappings",
                         "type": null,
                         "region": "center",
@@ -385,28 +378,48 @@
                                 "fieldtype": "table",
                                 "width": "",
                                 "height": "",
-                                "cols": 4,
+                                "cols": 9,
                                 "colsFixed": true,
                                 "rows": "",
                                 "rowsFixed": false,
                                 "data": "|name||\n|sku||\n|visibility||\n|is_active_in_pim||\n|url_key||\n|category_ids||\n|qty||\n|description||\n|short_description||\n|image||\n|small_image||\n|thumbnail||\n|media_gallery||\n|manufacturer||\n|news_from_date||\n|news_to_date||\n|related_products||\n|up_sell_products||\n|cross_sell_products||",
-                                "columnConfigActivated": false,
+                                "columnConfigActivated": true,
                                 "columnConfig": [
                                     {
                                         "key": 0,
-                                        "label": 0
+                                        "label": "Pimcore"
                                     },
                                     {
-                                        "key": 1,
-                                        "label": 1
+                                        "key": "1",
+                                        "label": "Magento"
                                     },
                                     {
-                                        "key": 2,
-                                        "label": 2
+                                        "key": "2",
+                                        "label": "Strategy"
                                     },
                                     {
-                                        "key": 3,
-                                        "label": 3
+                                        "key": "3",
+                                        "label": "Relation attributes"
+                                    },
+                                    {
+                                        "key": "4",
+                                        "label": "Searchable"
+                                    },
+                                    {
+                                        "key": 5,
+                                        "label": "Filterable"
+                                    },
+                                    {
+                                        "key": 6,
+                                        "label": "Comparable"
+                                    },
+                                    {
+                                        "key": 7,
+                                        "label": "Visible on front"
+                                    },
+                                    {
+                                        "key": 8,
+                                        "label": "Used in product listing"
                                     }
                                 ],
                                 "queryColumnType": "longtext",
@@ -474,14 +487,14 @@
                                 "visibleSearch": false
                             }
                         ],
-                        "locked": false,
-                        "icon": ""
+                        "locked": false
                     },
                     {
                         "fieldtype": "panel",
                         "labelWidth": 100,
                         "layout": null,
                         "border": false,
+                        "icon": "",
                         "name": "Hidden",
                         "type": null,
                         "region": "south",
@@ -541,22 +554,18 @@
                                 "visibleSearch": false
                             }
                         ],
-                        "locked": false,
-                        "icon": ""
+                        "locked": false
                     }
                 ],
-                "locked": false,
-                "icon": null
+                "locked": false
             }
         ],
-        "locked": false,
-        "icon": null
+        "locked": false
     },
     "icon": null,
     "previewUrl": null,
     "group": null,
     "linkGeneratorReference": null,
-    "compositeIndices": null,
     "propertyVisibility": {
         "grid": {
             "id": true,
