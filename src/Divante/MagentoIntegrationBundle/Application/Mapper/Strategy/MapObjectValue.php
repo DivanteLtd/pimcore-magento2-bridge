@@ -35,7 +35,8 @@ class MapObjectValue extends AbstractMapStrategy
         $pasredData = [
             'type'  => static::TYPE,
             'value' => $this->getFieldValue($field),
-            'label' => $this->getLabel($field, $language)
+            'label' => $this->getLabel($field, $language),
+            static::ATTR_CONF => $this->getAttrConf($field, $arrayMapping)
         ];
         foreach ($names as $name) {
             $obj->{$name} = $pasredData;
