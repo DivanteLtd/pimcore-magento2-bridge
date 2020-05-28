@@ -144,7 +144,9 @@ class IntegrationConfigurationRepository
         $productClasses = [];
         /** @var IntegrationConfiguration $object */
         foreach ($listing->getData() as $object) {
-            $productClasses[] = $object->getProductClass();
+            if ($object->getProductClass()) {
+                $productClasses[] = $object->getProductClass();
+            }
         }
 
         return array_unique($productClasses);
@@ -159,7 +161,9 @@ class IntegrationConfigurationRepository
         $categoryClasses = [];
         /** @var IntegrationConfiguration $object */
         foreach ($listing->getData() as $object) {
-            $categoryClasses[] = $object->getCategoryClass();
+            if ($object->getCategoryClass()) {
+                $categoryClasses[] = $object->getCategoryClass();
+            }
         }
 
         return array_unique($categoryClasses);

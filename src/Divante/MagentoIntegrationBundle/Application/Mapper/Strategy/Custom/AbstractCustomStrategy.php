@@ -13,6 +13,12 @@ use Symfony\Component\Translation\TranslatorInterface;
  */
 abstract class AbstractCustomStrategy implements CustomStrategyInterface, MapStrategyInterface
 {
+    /** @var string */
+    public $label;
+
+    /** @var string */
+    public $identifier;
+
     /** @var TranslatorInterface  */
     protected $translator;
 
@@ -23,6 +29,8 @@ abstract class AbstractCustomStrategy implements CustomStrategyInterface, MapStr
     public function __construct(TranslatorInterface $translator)
     {
         $this->translator = $translator;
+        $this->label = $this->getLabel();
+        $this->identifier = $this->getIdentifier();
     }
 
     /**
@@ -68,7 +76,7 @@ abstract class AbstractCustomStrategy implements CustomStrategyInterface, MapStr
         $magentoFields = [];
         foreach ($custom as $config) {
             if ($config["strategy"] === $this->getIdentifier()) {
-                $magentoFields[] = $config;
+                $magentoFields[] = $config['field'];
                 break;
             }
         }
