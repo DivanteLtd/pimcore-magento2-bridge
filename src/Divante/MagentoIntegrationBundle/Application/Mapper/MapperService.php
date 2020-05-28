@@ -69,6 +69,7 @@ class MapperService
         }
 
         $objectClass = DataObject\ClassDefinition::getByName($out->className);
+        $onlyMapped = $configuration->getSendOnlyMapped();
         foreach ($out as $key => $value) {
             if ($key != self::ELEMENTS_PROPERTY_NAME) {
                 $object->{$key} = $value;
@@ -79,6 +80,9 @@ class MapperService
                 });
                 /** @var Element $element */
                 foreach ($value as $element) {
+                    if ($onlyMapped && !array_key_exists($element->name, $mappingArray)) {
+                        continue;
+                    }
                     $label          = $objectClass->getFieldDefinition($element->name)->getTitle();
                     $element->label = $label ? $label : $element->name;
                     $this->mapperContext->map(
