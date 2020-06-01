@@ -58,19 +58,18 @@ abstract class IntegrationConfiguration extends Concrete implements IntegrationC
         if (!array_key_exists('product', $this->mappingArrays) || !$this->mappingArrays['product']) {
             $this->mappingArrays['product'] = [];
             foreach ($this->productMapping as $map) {
-                $attrConf = [
-                    AttributeType::SEARCHABLE => !empty($map[4]) ? $this->prepareMappingValue($map[4]) : null,
-                    AttributeType::FILTERABLE => !empty($map[5]) ? $this->prepareMappingValue($map[5]) : null,
-                    AttributeType::COMPARABLE => !empty($map[6]) ? $this->prepareMappingValue($map[6]) : null,
-                    AttributeType::VISIBLE_ON_FRONT => !empty($map[7]) ? $this->prepareMappingValue($map[7]) : null,
-                    AttributeType::PRODUCT_LISTING => !empty($map[8]) ? $this->prepareMappingValue($map[8]) : null,
-                ];
                 if ($map[0] != "") {
                     $this->mappingArrays["product"][$map[0]][] = [
                         "field" => $map[1],
                         "strategy" => !empty($map[2]) ? $map[2] : null,
                         "attributes" => !empty($map[3]) ? $map[3] : null,
-                        "attr_conf" => $attrConf
+                        "attr_conf" => [
+                            AttributeType::SEARCHABLE => $map[4],
+                            AttributeType::FILTERABLE => $map[5],
+                            AttributeType::COMPARABLE => $map[6],
+                            AttributeType::VISIBLE_ON_FRONT => $map[7],
+                            AttributeType::PRODUCT_LISTING => $map[8],
+                        ]
                     ];
                 }
             }
@@ -160,17 +159,5 @@ abstract class IntegrationConfiguration extends Concrete implements IntegrationC
     public function getMagentoStore()
     {
         return $this->magentoStore;
-    }
-
-    /**
-     * @param string $value
-     * @return bool
-     */
-    protected function prepareMappingValue(string $value): bool
-    {
-        if ($value == 'true') {
-            return true;
-        }
-        return false;
     }
 }
