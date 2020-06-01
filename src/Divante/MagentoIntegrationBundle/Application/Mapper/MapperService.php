@@ -79,6 +79,9 @@ class MapperService
                 });
                 /** @var Element $element */
                 foreach ($value as $element) {
+                    if (!$configuration->canElementBeMapped($element, $mappingArray)) {
+                        continue;
+                    }
                     $label          = $objectClass->getFieldDefinition($element->name)->getTitle();
                     $element->label = $label ? $label : $element->name;
                     $this->mapperContext->map(

@@ -12,6 +12,7 @@ use Divante\MagentoIntegrationBundle\Domain\DataObject\IntegrationConfiguration\
 use Divante\MagentoIntegrationBundle\Domain\IntegrationConfiguration\IntegrationHelper;
 use Pimcore\Model\Asset;
 use Pimcore\Model\DataObject\Concrete;
+use Pimcore\Model\Webservice\Data\DataObject\Element;
 
 /**
  * Class IntegrationConfiguration
@@ -172,5 +173,19 @@ abstract class IntegrationConfiguration extends Concrete implements IntegrationC
             return true;
         }
         return false;
+    }
+
+    /**
+     * @param Element $element
+     * @param array $mappings
+     * @return bool
+     */
+    public function canElementBeMapped(Element $element, array $mappings): bool
+    {
+        if (!$this->sendOnlyMapped) {
+            return true;
+        }
+
+        return array_key_exists($element->name, $mappings);
     }
 }
