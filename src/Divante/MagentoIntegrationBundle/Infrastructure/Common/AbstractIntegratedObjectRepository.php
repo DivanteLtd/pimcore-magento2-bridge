@@ -75,7 +75,7 @@ abstract class AbstractIntegratedObjectRepository implements IntegratedObjectRep
                 ]
             )
         );
-
+        $listing->setObjectTypes([AbstractObject::OBJECT_TYPE_VARIANT, AbstractObject::OBJECT_TYPE_OBJECT]);
         return $listing->getObjects();
     }
 }

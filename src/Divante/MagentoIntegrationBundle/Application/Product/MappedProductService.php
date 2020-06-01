@@ -46,6 +46,7 @@ class MappedProductService extends AbstractMappedObjectService
             ];
         }
         $configuration = reset($configurations);
+        AbstractObject::getGetInheritedValues(true);
         $products = $this->integratedObjectRepository->getObjects(explode(",", $ids), $configuration);
         $missingData = $this->getMissingIds($products, $ids);
         $mappedObjects = [];
