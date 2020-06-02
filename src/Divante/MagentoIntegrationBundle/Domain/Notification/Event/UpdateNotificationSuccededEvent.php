@@ -8,4 +8,5 @@ namespace Divante\MagentoIntegrationBundle\Domain\Notification\Event;
  */
 class UpdateNotificationSuccededEvent extends AbstractNotificationEvent
 {
+    public const NAME = 'magento-notification.update.succeed';
 }

@@ -14,8 +14,8 @@ use GuzzleHttp\Exception\GuzzleException;
 use Pimcore\Model\DataObject\Concrete;
 use Pimcore\Model\DataObject\IntegrationConfiguration;
 use Pimcore\Model\Element\AbstractElement;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Class MagentoNotificationSender
@@ -135,7 +135,8 @@ class MagentoNotificationSender
             $responseData = (string) $response->getBody();
             if ($response->getStatusCode() === 200) {
                 $this->eventDispatcher->dispatch(
-                    new UpdateNotificationSuccededEvent($object, $configuration, $responseData)
+                    new UpdateNotificationSuccededEvent($object, $configuration, $responseData),
+                    UpdateNotificationSuccededEvent::NAME
                 );
                 return;
             }
@@ -144,7 +145,8 @@ class MagentoNotificationSender
         }
 
         $this->eventDispatcher->dispatch(
-            new UpdateNotificationFailedEvent($object, $configuration, $responseData)
+            new UpdateNotificationFailedEvent($object, $configuration, $responseData),
+            UpdateNotificationFailedEvent::NAME
         );
     }
 
@@ -170,7 +172,8 @@ class MagentoNotificationSender
             $responseData = (string)$response->getBody();
             if ($response->getStatusCode() === 200) {
                 $this->eventDispatcher->dispatch(
-                    new DeleteNotificationSuccededEvent($object, $configuration, $responseData)
+                    new DeleteNotificationSuccededEvent($object, $configuration, $responseData),
+                    DeleteNotificationSuccededEvent::NAME
                 );
                 return;
             }
@@ -178,7 +181,8 @@ class MagentoNotificationSender
             $responseData = $exception->getMessage();
         }
         $this->eventDispatcher->dispatch(
-            new DeleteNotificationFailedEvent($object, $configuration, $responseData)
+            new DeleteNotificationFailedEvent($object, $configuration, $responseData),
+            DeleteNotificationFailedEvent::NAME
         );
     }
 }

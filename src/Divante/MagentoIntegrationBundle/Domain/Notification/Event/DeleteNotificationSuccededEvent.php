@@ -8,4 +8,5 @@ namespace Divante\MagentoIntegrationBundle\Domain\Notification\Event;
  */
 class DeleteNotificationSuccededEvent extends AbstractNotificationEvent
 {
+    public const NAME = 'magento-notification.delete.succeed';
 }
