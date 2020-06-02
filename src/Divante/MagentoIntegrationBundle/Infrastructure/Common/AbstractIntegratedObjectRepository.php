@@ -40,6 +40,7 @@ abstract class AbstractIntegratedObjectRepository implements IntegratedObjectRep
     public function getAllObjects(IntegrationConfiguration $configuration): array
     {
         AbstractObject::setHideUnpublished(false);
+        AbstractObject::setGetInheritedValues(true);
         $listing = new Listing();
         list($conditions, $params) = $this->getObjectConditions($configuration);
         $listing->setCondition(
@@ -51,7 +52,7 @@ abstract class AbstractIntegratedObjectRepository implements IntegratedObjectRep
                 ]
             )
         );
-
+        $listing->setObjectTypes([AbstractObject::OBJECT_TYPE_VARIANT, AbstractObject::OBJECT_TYPE_OBJECT]);
         return $listing->getObjects();
     }
 
@@ -65,6 +66,7 @@ abstract class AbstractIntegratedObjectRepository implements IntegratedObjectRep
     public function getObjects(array $objectsId, IntegrationConfiguration $configuration): array
     {
         $listing = new Listing();
+        AbstractObject::setGetInheritedValues(true);
         list($conditions, $params) = $this->getObjectConditions($configuration, $objectsId);
         $listing->setCondition(
             $conditions . " AND o_path LIKE :path",
@@ -75,7 +77,7 @@ abstract class AbstractIntegratedObjectRepository implements IntegratedObjectRep
                 ]
             )
         );
-
+        $listing->setObjectTypes([AbstractObject::OBJECT_TYPE_VARIANT, AbstractObject::OBJECT_TYPE_OBJECT]);
         return $listing->getObjects();
     }
 }

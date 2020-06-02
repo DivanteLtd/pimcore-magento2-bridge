@@ -20,7 +20,9 @@ class IsObject implements ObjectValidationRuleInterface
      */
     public function isValid(AbstractObject $object, IntegrationConfiguration $configuration, string $type)
     {
-        if ($object->getType() != AbstractObject::OBJECT_TYPE_OBJECT) {
+        if ($object->getType() != AbstractObject::OBJECT_TYPE_OBJECT
+            && $object->getType() != AbstractObject::OBJECT_TYPE_VARIANT
+        ) {
             throw new ValidationException("Element is not a valid object");
         }
     }
