@@ -9,8 +9,6 @@
 namespace Divante\MagentoIntegrationBundle\Application\Mapper;
 
 use Divante\MagentoIntegrationBundle\Application\Mapper\Strategy\Custom\CustomStrategyInterface;
-use Divante\MagentoIntegrationBundle\Application\Mapper\MapperService;
-use Divante\MagentoIntegrationBundle\Domain\Mapper\Strategy\Custom\JsonStrategy;
 use Divante\MagentoIntegrationBundle\Domain\Mapper\Model\FromColumn;
 use Divante\MagentoIntegrationBundle\Domain\Mapper\Model\ToColumn;
 use Pimcore\Model\DataObject;
