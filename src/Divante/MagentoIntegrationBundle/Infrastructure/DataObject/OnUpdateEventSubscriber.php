@@ -56,9 +56,10 @@ class OnUpdateEventSubscriber implements EventSubscriberInterface
      */
     public function sendUpdateNotification(DataObjectEvent $objectEvent)
     {
-        if ($objectEvent->hasArgument("saveVersionOnly")) {
+        if ($this->isSaveOnly($objectEvent)) {
             return;
         }
+
         /** @var Concrete $object */
         $object = $objectEvent->getObject();
         if ($object->getType() === AbstractObject::OBJECT_TYPE_FOLDER) {
@@ -79,5 +80,18 @@ class OnUpdateEventSubscriber implements EventSubscriberInterface
                 ObjectTypeHelper::CATEGORY
             );
         }
+    }
+
+    /**
+     * @param DataObjectEvent $objectEvent
+     * @return bool
+     */
+    protected function isSaveOnly(DataObjectEvent $objectEvent): bool
+    {
+        if ($objectEvent->hasArgument("saveVersionOnly")) {
+            return true;
+        }
+
+        return !$objectEvent->getObject()->isPublished();
     }
 }

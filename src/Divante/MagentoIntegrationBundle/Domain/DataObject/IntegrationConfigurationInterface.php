@@ -8,7 +8,9 @@
 
 namespace Divante\MagentoIntegrationBundle\Domain\DataObject;
 
+use Pimcore\Model\DataObject\AbstractObject;
 use Pimcore\Model\DataObject\Concrete;
+use Pimcore\Model\Webservice\Data\DataObject\Element;
 
 /**
  * Interface IntegrationConfigurationInterface
@@ -35,11 +37,20 @@ interface IntegrationConfigurationInterface
      * @return mixed
      */
     public function getId();
-    /** @return \Pimcore\Model\DataObject\AbstractObject*/
+
+    /**
+     * @return AbstractObject
+     */
     public function getParent();
-    /** @return \Pimcore\Model\DataObject\AbstractObject*/
+
+    /**
+     * @return AbstractObject
+     */
     public function getProductRoot();
-    /** @return \Pimcore\Model\DataObject\AbstractObject*/
+
+    /**
+     * @return AbstractObject
+     */
     public function getCategoryRoot();
 
     /**
@@ -58,6 +69,15 @@ interface IntegrationConfigurationInterface
      */
     public function areParentsPublished(Concrete $object): bool;
 
-    /** @return int */
+    /**
+     * @return int
+     */
     public function getMagentoStore();
+
+    /**
+     * @param Element $element
+     * @param array $mappings
+     * @return bool
+     */
+    public function canElementBeMapped(Element $element, array $mappings): bool;
 }
