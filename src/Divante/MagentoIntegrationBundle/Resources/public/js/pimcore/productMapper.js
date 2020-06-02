@@ -269,7 +269,7 @@ pimcore.plugin.MagentoIntegrationBundle.ProductMapper = Class.create(pimcore.plu
                                                 var toColumn = toColumnStore.findRecord('identifier', gridRecord.get('toColumn'), 0, false, false, true);
                                                 if (toColumn) {
                                                     var array = this.object.edit.dataFields.productMapping.getValue();
-                                                    array[rowIndex][4] = (checked === true);
+                                                    array[rowIndex][4] = checked;
                                                     this.object.edit.dataFields.productMapping.store.loadData(array, false);
                                                     this.object.edit.dataFields.productMapping.dirty = true;
                                                 }
@@ -290,7 +290,7 @@ pimcore.plugin.MagentoIntegrationBundle.ProductMapper = Class.create(pimcore.plu
                                                 var toColumn = toColumnStore.findRecord('identifier', gridRecord.get('toColumn'), 0, false, false, true);
                                                 if (toColumn) {
                                                     var array = this.object.edit.dataFields.productMapping.getValue();
-                                                    array[rowIndex][5] = (checked === true);
+                                                    array[rowIndex][5] = checked;
                                                     this.object.edit.dataFields.productMapping.store.loadData(array, false);
                                                     this.object.edit.dataFields.productMapping.dirty = true;
                                                 }
@@ -311,7 +311,7 @@ pimcore.plugin.MagentoIntegrationBundle.ProductMapper = Class.create(pimcore.plu
                                                 var toColumn = toColumnStore.findRecord('identifier', gridRecord.get('toColumn'), 0, false, false, true);
                                                 if (toColumn) {
                                                     var array = this.object.edit.dataFields.productMapping.getValue();
-                                                    array[rowIndex][6] = (checked === true);
+                                                    array[rowIndex][6] = checked;
                                                     this.object.edit.dataFields.productMapping.store.loadData(array, false);
                                                     this.object.edit.dataFields.productMapping.dirty = true;
                                                 }
@@ -332,7 +332,7 @@ pimcore.plugin.MagentoIntegrationBundle.ProductMapper = Class.create(pimcore.plu
                                                 var toColumn = toColumnStore.findRecord('identifier', gridRecord.get('toColumn'), 0, false, false, true);
                                                 if (toColumn) {
                                                     var array = this.object.edit.dataFields.productMapping.getValue();
-                                                    array[rowIndex][7] = (checked === true);
+                                                    array[rowIndex][7] = checked;
                                                     this.object.edit.dataFields.productMapping.store.loadData(array, false);
                                                     this.object.edit.dataFields.productMapping.dirty = true;
                                                 }
@@ -353,7 +353,7 @@ pimcore.plugin.MagentoIntegrationBundle.ProductMapper = Class.create(pimcore.plu
                                                 var toColumn = toColumnStore.findRecord('identifier', gridRecord.get('toColumn'), 0, false, false, true);
                                                 if (toColumn) {
                                                     var array = this.object.edit.dataFields.productMapping.getValue();
-                                                    array[rowIndex][8] = (checked === true);
+                                                    array[rowIndex][8] = checked;
                                                     this.object.edit.dataFields.productMapping.store.loadData(array, false);
                                                     this.object.edit.dataFields.productMapping.dirty = true;
                                                 }
