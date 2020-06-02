@@ -55,7 +55,7 @@ class OnDeleteEventSubscriber implements EventSubscriberInterface
     {
         /** @var Concrete $object */
         $object = $objectEvent->getObject();
-        if ($object->getType() !== AbstractObject::OBJECT_TYPE_OBJECT) {
+        if ($object->getType() === AbstractObject::OBJECT_TYPE_FOLDER) {
             return;
         }
         if (in_array($object->getClassId(), $this->repository->getAllProductClasses())) {
