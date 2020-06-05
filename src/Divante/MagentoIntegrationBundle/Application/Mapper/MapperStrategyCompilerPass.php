@@ -8,7 +8,7 @@
 
 namespace Divante\MagentoIntegrationBundle\Application\Mapper;
 
-use Divante\MagentoIntegrationBundle\Application\Mapper\MapperContext;
+use Divante\MagentoIntegrationBundle\Application\Mapper\Strategy\MapClassificationStoreValue;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
@@ -29,6 +29,17 @@ class MapperStrategyCompilerPass implements CompilerPassInterface
             $container->findTaggedServiceIds('object_mapper.mapStrategy')
         );
 
+        foreach ($strategyServiceIds as $strategyServiceId) {
+            $contextDefinition->addMethodCall(
+                'addStrategy',
+                [new Reference($strategyServiceId)]
+            );
+        }
+
+        $contextDefinition  = $container->findDefinition(MapClassificationStoreValue::class);
+        $strategyServiceIds = array_keys(
+            $container->findTaggedServiceIds('object_mapper_classificationstore.mapStrategy')
+        );
         foreach ($strategyServiceIds as $strategyServiceId) {
             $contextDefinition->addMethodCall(
                 'addStrategy',
