@@ -8,7 +8,6 @@
 
 namespace Divante\MagentoIntegrationBundle\Application\Mapper;
 
-use Divante\MagentoIntegrationBundle\Application\Mapper\MapperContext;
 use Divante\MagentoIntegrationBundle\Domain\IntegrationConfiguration\IntegrationHelper;
 use Divante\MagentoIntegrationBundle\Domain\Mapper\MapperHelper;
 use Divante\MagentoIntegrationBundle\Domain\DataObject\IntegrationConfiguration;
@@ -18,21 +17,21 @@ use Pimcore\Model\DataObject;
 use Pimcore\Model\DataObject\Concrete;
 use Pimcore\Model\Webservice\Data\DataObject\Element;
 use Pimcore\Model\Webservice\Data\Mapper;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
+/**
+ * Class MapperService
+ * @package Divante\MagentoIntegrationBundle\Application\Mapper
+ */
 class MapperService
 {
     const ELEMENTS_PROPERTY_NAME = 'elements';
 
     /** @var MapperContext */
     private $mapperContext;
-    /** @var EventDispatcherInterface */
-    private $eventDispatcher;
 
-    public function __construct(MapperContext $context, EventDispatcherInterface $eventDispatcher)
+    public function __construct(MapperContext $context)
     {
-        $this->mapperContext   = $context;
-        $this->eventDispatcher = $eventDispatcher;
+        $this->mapperContext = $context;
     }
 
     /**

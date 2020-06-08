@@ -15,8 +15,7 @@ services:
         resource: '../../Action/Mapper'
         public: true
 
-    Divante\MagentoIntegrationBundle\Application\Mapper\MapperService:
-        arguments: ['@Divante\MagentoIntegrationBundle\Application\Mapper\MapperContext', '@debug.event_dispatcher']
+    Divante\MagentoIntegrationBundle\Application\Mapper\MapperService: ~
 
     Divante\MagentoIntegrationBundle\Application\Mapper\MapperContext: ~
 
