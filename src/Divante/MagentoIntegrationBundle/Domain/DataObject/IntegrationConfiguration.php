@@ -10,6 +10,7 @@ namespace Divante\MagentoIntegrationBundle\Domain\DataObject;
 
 use Divante\MagentoIntegrationBundle\Domain\DataObject\IntegrationConfiguration\AttributeType;
 use Divante\MagentoIntegrationBundle\Domain\IntegrationConfiguration\IntegrationHelper;
+use Divante\MagentoIntegrationBundle\Domain\Mapper\MapperHelper;
 use Pimcore\Model\Asset;
 use Pimcore\Model\DataObject\Concrete;
 use Pimcore\Model\Webservice\Data\DataObject\Element;
@@ -170,6 +171,9 @@ abstract class IntegrationConfiguration extends Concrete implements IntegrationC
     public function canElementBeMapped(Element $element, array $mappings): bool
     {
         if (!$this->sendOnlyMapped) {
+            return true;
+        }
+        if ($element->name === MapperHelper::LOCALIZED_FIELD_TYPE) {
             return true;
         }
 
