@@ -56,15 +56,16 @@ class OnUpdateEventSubscriber implements EventSubscriberInterface
      */
     public function sendUpdateNotification(DataObjectEvent $objectEvent)
     {
-        if ($this->isSaveOnly($objectEvent)) {
-            return;
-        }
-
         /** @var Concrete $object */
         $object = $objectEvent->getObject();
         if ($object->getType() === AbstractObject::OBJECT_TYPE_FOLDER) {
             return;
         }
+        
+        if ($this->isSaveOnly($objectEvent)) {
+            return;
+        }
+
         if (in_array($object->getClassId(), $this->repository->getAllProductClasses())) {
             $this->notificationSender->sentUpdateStatus(
                 $object,
