@@ -124,7 +124,7 @@ reloadMapper: function (object) {
                                             }
                                         }
 
-                                        return null;
+                                        return val;
                                     },
                                     editor: {
                                         xtype: 'combo',
@@ -145,8 +145,6 @@ reloadMapper: function (object) {
                                                     if (row) {
                                                         if (fromColumn) {
                                                             newValue = fromColumn.data.identifier;
-                                                        } else {
-                                                            newValue = "";
                                                         }
                                                         var array = this.object.edit.dataFields.categoryMapping.getValue();
                                                         array[row][0] = newValue;

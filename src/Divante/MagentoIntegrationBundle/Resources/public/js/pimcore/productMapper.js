@@ -121,7 +121,7 @@ pimcore.plugin.MagentoIntegrationBundle.ProductMapper = Class.create(pimcore.plu
                                             }
                                         }
 
-                                        return null;
+                                        return val;
                                     },
                                     editor: {
                                         xtype: 'combo',
@@ -142,8 +142,6 @@ pimcore.plugin.MagentoIntegrationBundle.ProductMapper = Class.create(pimcore.plu
                                                     if (row) {
                                                         if (fromColumn) {
                                                             newValue = fromColumn.data.identifier;
-                                                        } else {
-                                                            newValue = "";
                                                         }
                                                         var array = this.object.edit.dataFields.productMapping.getValue();
                                                         array[row][0] = newValue;
