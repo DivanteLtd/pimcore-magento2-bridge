@@ -273,26 +273,19 @@ pimcore.plugin.MagentoIntegrationBundle.ProductMapper = Class.create(pimcore.plu
                                 {
                                     text: t('Searchable'),
                                     dataIndex: 'searchable',
-                                    flex: 1,
-                                    editable: false,
-                                    editor: {
-                                        xtype: 'checkbox',
-                                        mode: 'local',
-                                        object: this.object,
-                                        listeners: {
-                                            change: function (combo, newValue, oldValue, eOpts) {
-                                                var gridRecord = grid.getSelectionModel().getSelection();
-                                                if (gridRecord.length > 0) {
-                                                    gridRecord = gridRecord[0];
-                                                    var toColumn = toColumnStore.findRecord('identifier', gridRecord.get('toColumn'), 0, false, false, true);
-                                                    if (toColumn) {
-                                                        var array = this.object.edit.dataFields.productMapping.getValue();
-                                                        array.find(function (newValue) {
-                                                            return newValue[1] === toColumn.data.identifier
-                                                        })[4] = newValue;
-                                                        this.object.edit.dataFields.productMapping.store.loadData(array, false);
-                                                        this.object.edit.dataFields.productMapping.dirty = true;
-                                                    }
+                                    xtype: 'checkcolumn',
+                                    editable: true,
+                                    object: this.object,
+                                    listeners: {
+                                        checkChange: function (column, rowIndex, checked, record, eOpts) {
+                                            gridRecord = grid.getStore().getAt(rowIndex);
+                                            if (gridRecord) {
+                                                var toColumn = toColumnStore.findRecord('identifier', gridRecord.get('toColumn'), 0, false, false, true);
+                                                if (toColumn) {
+                                                    var array = this.object.edit.dataFields.productMapping.getValue();
+                                                    array[rowIndex][4] = checked;
+                                                    this.object.edit.dataFields.productMapping.store.loadData(array, false);
+                                                    this.object.edit.dataFields.productMapping.dirty = true;
                                                 }
                                             }
                                         }
@@ -301,26 +294,19 @@ pimcore.plugin.MagentoIntegrationBundle.ProductMapper = Class.create(pimcore.plu
                                 {
                                     text: t('Filterable'),
                                     dataIndex: 'filterable',
-                                    flex: 1,
-                                    editable: false,
-                                    editor: {
-                                        xtype: 'checkbox',
-                                        mode: 'local',
-                                        object: this.object,
-                                        listeners: {
-                                            change: function (combo, newValue, oldValue, eOpts) {
-                                                var gridRecord = grid.getSelectionModel().getSelection();
-                                                if (gridRecord.length > 0) {
-                                                    gridRecord = gridRecord[0];
-                                                    var toColumn = toColumnStore.findRecord('identifier', gridRecord.get('toColumn'), 0, false, false, true);
-                                                    if (toColumn) {
-                                                        var array = this.object.edit.dataFields.productMapping.getValue();
-                                                        array.find(function (newValue) {
-                                                            return newValue[1] === toColumn.data.identifier
-                                                        })[5] = newValue;
-                                                        this.object.edit.dataFields.productMapping.store.loadData(array, false);
-                                                        this.object.edit.dataFields.productMapping.dirty = true;
-                                                    }
+                                    xtype: 'checkcolumn',
+                                    editable: true,
+                                    object: this.object,
+                                    listeners: {
+                                        checkChange: function (column, rowIndex, checked, record, eOpts) {
+                                            gridRecord = grid.getStore().getAt(rowIndex);
+                                            if (gridRecord) {
+                                                var toColumn = toColumnStore.findRecord('identifier', gridRecord.get('toColumn'), 0, false, false, true);
+                                                if (toColumn) {
+                                                    var array = this.object.edit.dataFields.productMapping.getValue();
+                                                    array[rowIndex][5] = checked;
+                                                    this.object.edit.dataFields.productMapping.store.loadData(array, false);
+                                                    this.object.edit.dataFields.productMapping.dirty = true;
                                                 }
                                             }
                                         }
@@ -329,26 +315,19 @@ pimcore.plugin.MagentoIntegrationBundle.ProductMapper = Class.create(pimcore.plu
                                 {
                                     text: t('Comparable'),
                                     dataIndex: 'comparable',
-                                    flex: 1,
-                                    editable: false,
-                                    editor: {
-                                        xtype: 'checkbox',
-                                        mode: 'local',
-                                        object: this.object,
-                                        listeners: {
-                                            change: function (combo, newValue, oldValue, eOpts) {
-                                                var gridRecord = grid.getSelectionModel().getSelection();
-                                                if (gridRecord.length > 0) {
-                                                    gridRecord = gridRecord[0];
-                                                    var toColumn = toColumnStore.findRecord('identifier', gridRecord.get('toColumn'), 0, false, false, true);
-                                                    if (toColumn) {
-                                                        var array = this.object.edit.dataFields.productMapping.getValue();
-                                                        array.find(function (newValue) {
-                                                            return newValue[1] === toColumn.data.identifier
-                                                        })[6] = newValue;
-                                                        this.object.edit.dataFields.productMapping.store.loadData(array, false);
-                                                        this.object.edit.dataFields.productMapping.dirty = true;
-                                                    }
+                                    xtype: 'checkcolumn',
+                                    editable: true,
+                                    object: this.object,
+                                    listeners: {
+                                        checkChange: function (column, rowIndex, checked, record, eOpts) {
+                                            gridRecord = grid.getStore().getAt(rowIndex);
+                                            if (gridRecord) {
+                                                var toColumn = toColumnStore.findRecord('identifier', gridRecord.get('toColumn'), 0, false, false, true);
+                                                if (toColumn) {
+                                                    var array = this.object.edit.dataFields.productMapping.getValue();
+                                                    array[rowIndex][6] = checked;
+                                                    this.object.edit.dataFields.productMapping.store.loadData(array, false);
+                                                    this.object.edit.dataFields.productMapping.dirty = true;
                                                 }
                                             }
                                         }
@@ -357,26 +336,19 @@ pimcore.plugin.MagentoIntegrationBundle.ProductMapper = Class.create(pimcore.plu
                                 {
                                     text: t('Visible on front'),
                                     dataIndex: 'visible_on_front',
-                                    flex: 1,
-                                    editable: false,
-                                    editor: {
-                                        xtype: 'checkbox',
-                                        mode: 'local',
-                                        object: this.object,
-                                        listeners: {
-                                            change: function (combo, newValue, oldValue, eOpts) {
-                                                var gridRecord = grid.getSelectionModel().getSelection();
-                                                if (gridRecord.length > 0) {
-                                                    gridRecord = gridRecord[0];
-                                                    var toColumn = toColumnStore.findRecord('identifier', gridRecord.get('toColumn'), 0, false, false, true);
-                                                    if (toColumn) {
-                                                        var array = this.object.edit.dataFields.productMapping.getValue();
-                                                        array.find(function (newValue) {
-                                                            return newValue[1] === toColumn.data.identifier
-                                                        })[7] = newValue;
-                                                        this.object.edit.dataFields.productMapping.store.loadData(array, false);
-                                                        this.object.edit.dataFields.productMapping.dirty = true;
-                                                    }
+                                    xtype: 'checkcolumn',
+                                    editable: true,
+                                    object: this.object,
+                                    listeners: {
+                                        checkChange: function (column, rowIndex, checked, record, eOpts) {
+                                            gridRecord = grid.getStore().getAt(rowIndex);
+                                            if (gridRecord) {
+                                                var toColumn = toColumnStore.findRecord('identifier', gridRecord.get('toColumn'), 0, false, false, true);
+                                                if (toColumn) {
+                                                    var array = this.object.edit.dataFields.productMapping.getValue();
+                                                    array[rowIndex][7] = checked;
+                                                    this.object.edit.dataFields.productMapping.store.loadData(array, false);
+                                                    this.object.edit.dataFields.productMapping.dirty = true;
                                                 }
                                             }
                                         }
@@ -385,26 +357,19 @@ pimcore.plugin.MagentoIntegrationBundle.ProductMapper = Class.create(pimcore.plu
                                 {
                                     text: t('Used in product listing'),
                                     dataIndex: 'used_in_product_listing',
-                                    flex: 1,
-                                    editable: false,
-                                    editor: {
-                                        xtype: 'checkbox',
-                                        mode: 'local',
-                                        object: this.object,
-                                        listeners: {
-                                            change: function (combo, newValue, oldValue, eOpts) {
-                                                var gridRecord = grid.getSelectionModel().getSelection();
-                                                if (gridRecord.length > 0) {
-                                                    gridRecord = gridRecord[0];
-                                                    var toColumn = toColumnStore.findRecord('identifier', gridRecord.get('toColumn'), 0, false, false, true);
-                                                    if (toColumn) {
-                                                        var array = this.object.edit.dataFields.productMapping.getValue();
-                                                        array.find(function (newValue) {
-                                                            return newValue[1] === toColumn.data.identifier
-                                                        })[8] = newValue;
-                                                        this.object.edit.dataFields.productMapping.store.loadData(array, false);
-                                                        this.object.edit.dataFields.productMapping.dirty = true;
-                                                    }
+                                    xtype: 'checkcolumn',
+                                    editable: true,
+                                    object: this.object,
+                                    listeners: {
+                                        checkChange: function (column, rowIndex, checked, record, eOpts) {
+                                            gridRecord = grid.getStore().getAt(rowIndex);
+                                            if (gridRecord) {
+                                                var toColumn = toColumnStore.findRecord('identifier', gridRecord.get('toColumn'), 0, false, false, true);
+                                                if (toColumn) {
+                                                    var array = this.object.edit.dataFields.productMapping.getValue();
+                                                    array[rowIndex][8] = checked;
+                                                    this.object.edit.dataFields.productMapping.store.loadData(array, false);
+                                                    this.object.edit.dataFields.productMapping.dirty = true;
                                                 }
                                             }
                                         }

@@ -77,7 +77,6 @@ initialize: function () {
     },
 
     addSendAllProductsButton: function (object) {
-        console.log(object);
         object.toolbar.add({
             text: t('Send products'),
             iconCls: 'pimcore_icon_right',
@@ -105,7 +104,6 @@ initialize: function () {
     },
 
     addSendAllCategoriesButton: function (object) {
-        console.log(object);
         object.toolbar.add({
             text: t('Send categories'),
             iconCls: 'pimcore_icon_right',
