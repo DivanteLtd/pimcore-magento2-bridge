@@ -40,13 +40,15 @@ class MapSelectKey extends AbstractMapKeyStrategy
     ): void {
         $names         = $this->mapStringNames($attribute['name'], $group['name'], $arrayMapping);
         $valuesWithKey = $this->getFieldValue($field, $attribute, $language);
-
+        if (!$valuesWithKey) {
+            return;
+        }
         $parsedData = [
             'type'  => MapSelectValue::TYPE,
             'label' => $this->getLabel($field->getTitle(), $language),
             'value' => $valuesWithKey
         ];
-
+        
         if (count($valuesWithKey) == 1) {
             $parsedData['value'] = $parsedData['value'][0];
             $parsedData['type']  = self::SINGLE_TYPE;
@@ -82,7 +84,7 @@ class MapSelectKey extends AbstractMapKeyStrategy
     protected function getFieldValue(KeyConfig $field, array $attribute, $language)
     {
         $options       = $this->getOptions($field);
-        $valuesWithKey = null;
+        $valuesWithKey = [];
         $valuesArray   = is_array($attribute['value']) ? $attribute['value'] : [$attribute['value']];
         foreach ($valuesArray as $singleValue) {
             foreach ($options as $struct) {
