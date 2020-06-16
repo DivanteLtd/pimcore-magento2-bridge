@@ -95,15 +95,20 @@ Pimcore admin panel. It will be shown after save as a popup to inform administra
 ## <a name="bulk-notification"></a>Bulk notification
 A new feature in Magento 2 - Pimcore Integration Module is the ability to send multiple products or categories to Magento.
 To do so, you need your configuration object. Two new button should be visible in Pimcore's object menu (see image below).
-By clicking one or the other, all objects fulfilling your current configuration will be send to Magento asynchronized.
+By clicking one or the other, all objects fulfilling your current configuration will be send to Magento asynchronously.
 
 ![Screenshot](doc/images/bulk_notification.png)
 
 You can also execute it from the CLI using this two methods:
+
 `integration-magento:send:category {ids} {integrationId}`
+
 `integration-magento:send:product {ids} {integrationId}`
-- ids is product/category id separated by a coma if you only want to send selected objects or `all`
-- integrationId is the id of integration object you want to integrate
+
+`ids` is product/category id separated by a coma if you only want to send selected objects or `all`
+`integrationId` is the id of integration object you want to integrate
+
+> Note that to fully support asynchronous bulk notification your server must support `fastcgi_finish_request`
 
 ## <a name="contributing"></a>Contributing
 
