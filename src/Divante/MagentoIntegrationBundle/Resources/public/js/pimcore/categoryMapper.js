@@ -135,6 +135,11 @@ reloadMapper: function (object) {
                                         object: this.object,
                                         editable: true,
                                         listeners: {
+                                            select: function (comp, record, index) {
+                                                if (comp.getValue() === "" || comp.getValue() === "(Empty)") {
+                                                    comp.setValue(null);
+                                                }
+                                            },
                                             change: function (combo, newValue, oldValue, eOpts) {
                                                 var gridRecord = combo.up('grid').getSelectionModel().getSelection();
                                                 if (gridRecord.length > 0) {
