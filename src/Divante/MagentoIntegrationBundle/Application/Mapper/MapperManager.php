@@ -135,12 +135,14 @@ class MapperManager implements LoggerAwareInterface
                 throw new ValidationException("Impossible to delete this field, it's required");
             }
             array_pop($table);
-        } else {
-            foreach ($table as $index => $row) {
-                if ($row[1] === $toColumn) {
-                    unset($table[$index]);
-                    break;
-                }
+
+            return $table;
+        }
+
+        foreach ($table as $index => $row) {
+            if ($row[1] === $toColumn) {
+                unset($table[$index]);
+                break;
             }
         }
 
