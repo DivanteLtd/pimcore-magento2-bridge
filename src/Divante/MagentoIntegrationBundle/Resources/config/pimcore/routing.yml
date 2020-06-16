@@ -38,3 +38,13 @@ magento_integration_bulk_action.send.categories:
     resource: "@DivanteMagentoIntegrationBundle/Action/Admin/SendCategoriesAction.php"
     type: annotation
     prefix: /admin
+
+magento_integration_mapper.add-row:
+    resource: "@DivanteMagentoIntegrationBundle/Action/Mapper/AddRowAction.php"
+    type: annotation
+    prefix: /admin
+
+magento_integration_mapper.remove-row:
+    resource: "@DivanteMagentoIntegrationBundle/Action/Mapper/RemoveRowAction.php"
+    type: annotation
+    prefix: /admin

@@ -3,6 +3,7 @@ pimcore.registerNS("pimcore.plugin.MagentoIntegrationBundle.CategoryMapper");
 pimcore.plugin.MagentoIntegrationBundle.CategoryMapper = Class.create(pimcore.plugin.MagentoIntegrationBundle.item, {
     initialize: function (object) {
         this.object = object;
+        this.requiredFields = ["name", "url_key"];
 },
 reloadMapper: function (object) {
     this.object = object;
@@ -106,6 +107,7 @@ reloadMapper: function (object) {
                             groupHeaderTpl: '{name}'
                         }],
                         object: this.object,
+                        tbar: this.getToolbar(),
                         columns: {
                             defaults: {},
                             items: [
@@ -122,9 +124,8 @@ reloadMapper: function (object) {
                                             }
                                         }
 
-                                        return null;
+                                        return val;
                                     },
-
                                     editor: {
                                         xtype: 'combo',
                                         store: fromColumnStore,
@@ -134,23 +135,24 @@ reloadMapper: function (object) {
                                         object: this.object,
                                         editable: true,
                                         listeners: {
+                                            select: function (comp, record, index) {
+                                                if (comp.getValue() === "" || comp.getValue() === "(Empty)") {
+                                                    comp.setValue(null);
+                                                }
+                                            },
                                             change: function (combo, newValue, oldValue, eOpts) {
-                                                let gridRecord = combo.up('grid').getSelectionModel().getSelection();
+                                                var gridRecord = combo.up('grid').getSelectionModel().getSelection();
                                                 if (gridRecord.length > 0) {
                                                     gridRecord = gridRecord[0];
-                                                    gridRecord.fromColumnStore = fromColumnStore;
 
-                                                    const fromColumn = fromColumnStore.findRecord('identifier', newValue, 0, false, false, true);
-                                                    const toColumn = toColumnStore.findRecord('identifier', gridRecord.get('toColumn'), 0, false, false, true);
-                                                    if (toColumn) {
-                                                        gridRecord.data['fromColumn'] = fromColumn;
-                                                        const array = this.object.edit.dataFields.categoryMapping.getValue();
-                                                        let value = '';
+                                                    var fromColumn = fromColumnStore.findRecord('identifier', newValue, 0, false, false, true);
+                                                    var row = grid.store.indexOf(gridRecord);
+                                                    if (row) {
                                                         if (fromColumn) {
-                                                            value = fromColumn.data.identifier;
+                                                            newValue = fromColumn.data.identifier;
                                                         }
-                                                        array.find(function (value) {
-                                                            return value[1] === toColumn.data.identifier})[0] = value;
+                                                        var array = this.object.edit.dataFields.categoryMapping.getValue();
+                                                        array[row][0] = newValue;
                                                         this.object.edit.dataFields.categoryMapping.store.loadData(array, false);
                                                         this.object.edit.dataFields.categoryMapping.dirty = true;
                                                     }
@@ -176,6 +178,26 @@ reloadMapper: function (object) {
                                         }
 
                                         return val;
+                                    },
+                                    editor: {
+                                        xtype: 'textfield',
+                                        mode: 'local',
+                                        object: this.object,
+                                        listeners: {
+                                            change: function (combo, newValue, oldValue, eOpts) {
+                                                var gridRecord = grid.getSelectionModel().getSelection();
+                                                if (gridRecord.length > 0) {
+                                                    gridRecord = gridRecord[0];
+                                                    var row = grid.store.indexOf(gridRecord);
+                                                    if (row && !this.requiredFields.includes(row[1])) {
+                                                        var array = this.object.edit.dataFields.categoryMapping.getValue();
+                                                        array[row][1] = newValue;
+                                                        this.object.edit.dataFields.categoryMapping.store.loadData(array, false);
+                                                        this.object.edit.dataFields.categoryMapping.dirty = true;
+                                                    }
+                                                }
+                                            }.bind(this)
+                                        }
                                     }
                                 },
                                 {
@@ -193,7 +215,6 @@ reloadMapper: function (object) {
 
                                         return null;
                                     },
-
                                     editor: {
                                         xtype: 'combo',
                                         store: strategiesColumnStore,
@@ -210,19 +231,17 @@ reloadMapper: function (object) {
                                                     gridRecord.strategiesColumnStore = strategiesColumnStore;
 
                                                     var strategy = strategiesColumnStore.findRecord('identifier', newValue, 0, false, false, true);
-                                                    var toColumn = toColumnStore.findRecord('identifier', gridRecord.get('toColumn'), 0, false, false, true);
-                                                    if (toColumn) {
-                                                        gridRecord.data['strategies'] = strategy;
+                                                    var row = grid.store.indexOf(gridRecord);
+                                                    if (row) {
                                                         var array = this.object.edit.dataFields.categoryMapping.getValue();
-                                                        var value = '';
                                                         if (strategy) {
-                                                            value = strategy.data.identifier;
+                                                            newValue = strategy.data.identifier;
+                                                        } else {
+                                                            newValue = '';
                                                         }
-                                                        array.find(function (value) {
-                                                            return value[1] === toColumn.data.identifier})[2] = value;
-                                                        if (value == "") {
-                                                            array.find(function (value) {
-                                                                return value[1] === toColumn.data.identifier})[3] = "";
+                                                        array[row][2] = newValue;
+                                                        if (newValue === '') {
+                                                            array[row][3] = "";
                                                         }
                                                         this.object.edit.dataFields.categoryMapping.store.loadData(array, false);
                                                         this.object.edit.dataFields.categoryMapping.dirty = true;
@@ -245,12 +264,10 @@ reloadMapper: function (object) {
                                                 var gridRecord = grid.getSelectionModel().getSelection();
                                                 if (gridRecord.length > 0) {
                                                     gridRecord = gridRecord[0];
-                                                    var toColumn = toColumnStore.findRecord('identifier', gridRecord.get('toColumn'), 0, false, false, true);
-                                                    if (toColumn) {
+                                                    var row = grid.store.indexOf(gridRecord);
+                                                    if (row) {
                                                         var array = this.object.edit.dataFields.categoryMapping.getValue();
-                                                        array.find(function (newValue) {
-                                                            return newValue[1] === toColumn.data.identifier
-                                                        })[3] = newValue;
+                                                        array[row][3] = newValue;
                                                         this.object.edit.dataFields.categoryMapping.store.loadData(array, false);
                                                         this.object.edit.dataFields.categoryMapping.dirty = true;
                                                     }
@@ -260,8 +277,54 @@ reloadMapper: function (object) {
                                     }
                                 }
                             ]
-                        }
+                        },
+                        listeners: {
+                            beforeedit: function(editor, e, eOpts) {
+                                if (e.field === "toColumn"){
+                                    if (this.requiredFields.includes(e.value)) {
+                                        return false;
+                                    }
+                                }
+                                return true;
+                            }.bind(this),
+                            rowcontextmenu: function (grid, record, tr, rowIndex, e, eOpts) {
+                                var menu = new Ext.menu.Menu();
+                                var data = grid.getStore().getAt(rowIndex);
+                                var selectedRows = grid.getSelectionModel().getSelection();
 
+                                if (!this.requiredFields.includes(selectedRows[0].data.toColumn) && selectedRows.length <= 1) {
+                                    menu.add(new Ext.menu.Item({
+                                        text: t('delete'),
+                                        iconCls: "pimcore_icon_delete",
+                                        handler: function (data) {
+                                            var selectedRows = grid.getSelectionModel().getSelection();
+                                            var selectedColumn = (selectedRows[0].data.toColumn);
+                                            Ext.Ajax.request({
+                                                url: '/admin/mappings/remove-row/category',
+                                                method: 'post',
+                                                params: {
+                                                    id: this.object.id,
+                                                    toColumn: selectedColumn
+                                                },
+                                                success: function (response) {
+                                                    response = JSON.parse(response.responseText)
+                                                    if (response.success) {
+                                                        this.object.reload();
+                                                    } else {
+                                                        Ext.MessageBox.alert(t("An error occurred"), t(response.message));
+                                                    }
+                                                }.bind(this),
+                                            });
+                                        }.bind(this, grid, data)
+                                    }));
+                                }
+
+                                pimcore.plugin.broker.fireEvent("prepareOnRowContextmenu", menu, this, selectedRows);
+
+                                e.stopEvent();
+                                menu.showAt(e.pageX, e.pageY);
+                            }.bind(this)
+                        },
                     });
 
                     this.mappingSettings.add(grid);
@@ -269,5 +332,55 @@ reloadMapper: function (object) {
             });
         }
     },
+    getToolbar: function () {
+        this.addRow = new Ext.Button({
+            iconCls: 'pimcore_icon_add',
+            text: '<b>' + t("Add Row") + '</b>',
+            tooltip: t("Add new row"),
+            handler: function () {
+                Ext.Ajax.request({
+                    url: '/admin/mappings/add-row/category',
+                    method: 'post',
+                    params: {
+                        id: this.object.id
+                    },
+                    success: function(){
+                        this.object.reload();
+                    }.bind(this),
+                    failure: function (e) {
+                        Ext.MessageBox.alert(t("An error occured"));
+                    }.bind(this)
+                });
+            }.bind(this)
+        });
 
+        this.deleteRow = new Ext.Button({
+            iconCls: 'pimcore_icon_delete',
+            text: '<b>' + t("Remove row") + '<b>',
+            tooltip: t("Remove selected row"),
+            handler: function () {
+                Ext.Ajax.request({
+                    url: '/admin/mappings/remove-row/category',
+                    method: 'post',
+                    params: {
+                        id: this.object.id
+                    },
+                    success: function(){
+                        this.object.reload();
+                    }.bind(this),
+                    failure: function (e) {
+                        Ext.MessageBox.alert(t("An error occured"));
+                    }.bind(this)
+                });
+            }.bind(this)
+        });
+
+        return new Ext.Toolbar({
+            scrollable: "x",
+            items: [
+                this.addRow, "-",
+                this.deleteRow, "-",
+            ]
+        });
+    },
 });
