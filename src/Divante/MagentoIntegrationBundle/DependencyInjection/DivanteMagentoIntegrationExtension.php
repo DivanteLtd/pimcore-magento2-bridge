@@ -10,6 +10,7 @@ namespace Divante\MagentoIntegrationBundle\DependencyInjection;
 
 use Divante\MagentoIntegrationBundle\Application\Mapper\Strategy\Custom\CustomStrategyInterface;
 use Divante\MagentoIntegrationBundle\Application\Mapper\Strategy\MapStrategyInterface;
+use Divante\MagentoIntegrationBundle\Application\Validator\Rules\ObjectValidationRuleInterface;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader;
@@ -33,7 +34,9 @@ class DivanteMagentoIntegrationExtension extends Extension
         $container->registerForAutoconfiguration(MapStrategyInterface::class)
             ->addTag('object_mapper.mapStrategy')
         ;
-
+        $container->registerForAutoconfiguration(ObjectValidationRuleInterface::class)
+            ->addTag('pimcore_connector.validator.common')
+        ;
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yml');
     }

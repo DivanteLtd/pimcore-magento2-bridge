@@ -14,6 +14,9 @@ The second part of this module (Magento 2 - Pimcore Integration Module) is avail
 	- [Usage/Setting up](#usage)
 	- [Features](#features)
 	- [Supported Pimcore types](#supported-types)
+	- [Custom Strategies](#custom-strategies)
+	- [Validators](#validators)
+	- [Bulk Magento notification](#bulk-notification)
 	- [Contributing](#contributing)
 	- [Licensing](#licensing)
 	- [Standards & Code Quality](#standards)
@@ -71,7 +74,42 @@ This module is compatible with Pimcore >= 5.4 and Pimcore 6.0.
 - Localized fields
 - Image
 - Image gallery
- 
+
+## <a name="custom-strategies"></a>Custom Strategies
+If you have a type that is not supported or want, for a specific class attribute, to be mapped differently from standard types,
+you can define custom strategies.
+
+It's easy, all you need to do is to extends `AbstractCustomStrategy` and implement required methods.
+When done, you will see your custom strategy in `Mapping tabs` in your configuration object.
+Moreover if for example you're mapping a relational field. In column `Relation attributes`, you can set fields that will only be mapped in
+the related object. Of course if you set so in your custom strategy.
+
+## <a name="validators"></a>Validators
+Before sending data to Magento, objects have to pass validation rules. The ones defined in connector are general
+and necessary for it to work properly.
+
+If you need to set a custom validation for your project you have to create a validation class and implement `ObjectValidationRuleInterface`.
+If object is not fulfilling your rules, throw `Pimcore\Model\Element\ValidationException`, with the message you want to be displayed in
+Pimcore admin panel. It will be shown after save as a popup to inform administrator about the issue.
+
+## <a name="bulk-notification"></a>Bulk notification
+A new feature in Magento 2 - Pimcore Integration Module is the ability to send multiple products or categories to Magento.
+To do so, you need your configuration object. Two new button should be visible in Pimcore's object menu (see image below).
+By clicking one or the other, all objects fulfilling your current configuration will be send to Magento asynchronously.
+
+![Screenshot](doc/images/bulk_notification.png)
+
+You can also execute it from the CLI using this two methods:
+
+`integration-magento:send:category {ids} {integrationId}`
+
+`integration-magento:send:product {ids} {integrationId}`
+
+`ids` is product/category id separated by a coma if you only want to send selected objects or `all`
+`integrationId` is the id of integration object you want to integrate
+
+> Note that to fully support asynchronous bulk notification your server must support `fastcgi_finish_request`
+
 ## <a name="contributing"></a>Contributing
 
 If you'd like to contribute, please fork the repository and use a feature branch. Pull requests are warmly welcome.
