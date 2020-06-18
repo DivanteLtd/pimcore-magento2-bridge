@@ -45,6 +45,10 @@ class ObjectPropertyUpdater implements LoggerAwareInterface
         if (!$data) {
             $data = [];
         }
+        if (array_key_exists($this->getPropertyIndex($configuration), $data)
+            && $data[$this->getPropertyIndex($configuration)] === $status) {
+            return;
+        }
         $data[$this->getPropertyIndex($configuration)] = $status;
         $this->saveProperty($element, $data);
     }
@@ -62,6 +66,7 @@ class ObjectPropertyUpdater implements LoggerAwareInterface
         if ($element instanceof Concrete) {
             $element->setOmitMandatoryCheck(true);
         }
+
         $element->save();
         Version::enable();
         $this->eventListenersManager->restoreEventListeners();

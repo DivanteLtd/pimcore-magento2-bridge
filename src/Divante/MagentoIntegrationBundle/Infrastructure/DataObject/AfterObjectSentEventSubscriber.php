@@ -38,10 +38,10 @@ class AfterObjectSentEventSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            UpdateNotificationSuccededEvent::class => [
+            UpdateNotificationSuccededEvent::NAME => [
                 ['setStatusSendSuccess', 0]
             ],
-            UpdateNotificationFailedEvent::class => [
+            UpdateNotificationFailedEvent::NAME => [
                 ['setStatusSendFailed', 0]
             ]
         ];

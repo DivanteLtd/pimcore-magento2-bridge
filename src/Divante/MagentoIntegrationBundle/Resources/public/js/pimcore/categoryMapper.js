@@ -135,6 +135,11 @@ reloadMapper: function (object) {
                                         object: this.object,
                                         editable: true,
                                         listeners: {
+                                            focus: function (comp, record, index) {
+                                                if (comp.getValue() === "" || comp.getValue() === "(Empty)") {
+                                                    comp.setValue(null);
+                                                }
+                                            },
                                             select: function (comp, record, index) {
                                                 if (comp.getValue() === "" || comp.getValue() === "(Empty)") {
                                                     comp.setValue(null);
@@ -147,7 +152,7 @@ reloadMapper: function (object) {
 
                                                     var fromColumn = fromColumnStore.findRecord('identifier', newValue, 0, false, false, true);
                                                     var row = grid.store.indexOf(gridRecord);
-                                                    if (row) {
+                                                    if (typeof(row) !== 'undefined' && row != null) {
                                                         if (fromColumn) {
                                                             newValue = fromColumn.data.identifier;
                                                         }
@@ -232,7 +237,7 @@ reloadMapper: function (object) {
 
                                                     var strategy = strategiesColumnStore.findRecord('identifier', newValue, 0, false, false, true);
                                                     var row = grid.store.indexOf(gridRecord);
-                                                    if (row) {
+                                                    if (typeof(row) !== 'undefined' && row != null) {
                                                         var array = this.object.edit.dataFields.categoryMapping.getValue();
                                                         if (strategy) {
                                                             newValue = strategy.data.identifier;
@@ -265,7 +270,7 @@ reloadMapper: function (object) {
                                                 if (gridRecord.length > 0) {
                                                     gridRecord = gridRecord[0];
                                                     var row = grid.store.indexOf(gridRecord);
-                                                    if (row) {
+                                                    if (typeof(row) !== 'undefined' && row != null) {
                                                         var array = this.object.edit.dataFields.categoryMapping.getValue();
                                                         array[row][3] = newValue;
                                                         this.object.edit.dataFields.categoryMapping.store.loadData(array, false);
@@ -335,7 +340,7 @@ reloadMapper: function (object) {
     getToolbar: function () {
         this.addRow = new Ext.Button({
             iconCls: 'pimcore_icon_add',
-            text: '<b>' + t("Add Row") + '</b>',
+            text: '<b>' + t("Add row") + '</b>',
             tooltip: t("Add new row"),
             handler: function () {
                 Ext.Ajax.request({

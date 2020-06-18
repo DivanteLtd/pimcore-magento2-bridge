@@ -159,8 +159,6 @@ class MapperService
                         $result[] = $resultField;
                     }
                 }
-            } elseif ($field instanceof DataObject\ClassDefinition\Data\Classificationstore) {
-                continue;
             } else {
                 $result[] = $this->getFieldConfiguration($field);
             }
