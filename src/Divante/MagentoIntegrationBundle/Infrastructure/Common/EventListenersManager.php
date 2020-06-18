@@ -28,7 +28,6 @@ class EventListenersManager
             'pimcore.asset.preUpdate'       => $eventDispatcher->getListeners('pimcore.asset.preUpdate'),
             'pimcore.asset.postUpdate'      => $eventDispatcher->getListeners('pimcore.asset.postUpdate')
         ];
-
     }
 
     /**

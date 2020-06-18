@@ -132,6 +132,11 @@ pimcore.plugin.MagentoIntegrationBundle.ProductMapper = Class.create(pimcore.plu
                                         object: this.object,
                                         editable: true,
                                         listeners: {
+                                            focus: function (comp, record, index) {
+                                                if (comp.getValue() === "" || comp.getValue() === "(Empty)") {
+                                                    comp.setValue(null);
+                                                }
+                                            },
                                             select: function (comp, record, index) {
                                                 if (comp.getValue() === "" || comp.getValue() === "(Empty)") {
                                                     comp.setValue(null);
@@ -144,7 +149,7 @@ pimcore.plugin.MagentoIntegrationBundle.ProductMapper = Class.create(pimcore.plu
 
                                                     var fromColumn = fromColumnStore.findRecord('identifier', newValue, 0, false, false, true);
                                                     var row = grid.store.indexOf(gridRecord);
-                                                    if (row) {
+                                                    if (typeof(row) !== 'undefined' && row != null) {
                                                         if (fromColumn) {
                                                             newValue = fromColumn.data.identifier;
                                                         }
@@ -228,7 +233,7 @@ pimcore.plugin.MagentoIntegrationBundle.ProductMapper = Class.create(pimcore.plu
 
                                                     var strategy = strategiesColumnStore.findRecord('identifier', newValue, 0, false, false, true);
                                                     var row = grid.store.indexOf(gridRecord);
-                                                    if (row) {
+                                                    if (typeof(row) !== 'undefined' && row != null) {
                                                         var array = this.object.edit.dataFields.productMapping.getValue();
                                                         if (strategy) {
                                                             newValue = strategy.data.identifier;
@@ -262,7 +267,7 @@ pimcore.plugin.MagentoIntegrationBundle.ProductMapper = Class.create(pimcore.plu
                                                 if (gridRecord.length > 0) {
                                                     gridRecord = gridRecord[0];
                                                     var row = grid.store.indexOf(gridRecord);
-                                                    if (row) {
+                                                    if (typeof(row) !== 'undefined' && row != null) {
                                                         var array = this.object.edit.dataFields.productMapping.getValue();
                                                         array[row][3] = newValue;
                                                         this.object.edit.dataFields.productMapping.store.loadData(array, false);
@@ -437,7 +442,7 @@ pimcore.plugin.MagentoIntegrationBundle.ProductMapper = Class.create(pimcore.plu
     getToolbar: function () {
         this.addRow = new Ext.Button({
             iconCls: 'pimcore_icon_add',
-            text: '<b>' + t("Add Row") + '</b>',
+            text: '<b>' + t("Add row") + '</b>',
             tooltip: t("Add new row"),
             handler: function () {
                 Ext.Ajax.request({
