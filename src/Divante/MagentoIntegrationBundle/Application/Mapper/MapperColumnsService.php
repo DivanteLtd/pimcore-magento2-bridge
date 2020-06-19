@@ -82,7 +82,7 @@ class MapperColumnsService
             return $elem[1] != null;
         });
         $toColumns = array_map([$this, 'getToObjectForMapElement'], $standardStructure);
-        array_push($fromColumns, $this->getEmptyFromColumnValue());
+        array_unshift($fromColumns, $this->getEmptyFromColumnValue());
         $mapping = array_map([$this, 'getMappingForMapElement'], $standardStructure);
 
         return [
