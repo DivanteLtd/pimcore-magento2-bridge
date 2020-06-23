@@ -81,6 +81,9 @@ class MapperService
                     if (!$configuration->canElementBeMapped($element, $mappingArray)) {
                         continue;
                     }
+                    if ($element->name === MapperHelper::LOCALIZED_FIELD_TYPE) {
+                        $element = $this->clearUnmappedFields($element, $mappingArray);
+                    }
                     $label          = $objectClass->getFieldDefinition($element->name)->getTitle();
                     $element->label = $label ? $label : $element->name;
                     $this->mapperContext->map(
@@ -364,5 +367,21 @@ class MapperService
                 $property->data = $modifiedAttributes;
             }
         }
+    }
+
+    /**
+     * @param Element $element
+     * @param array $mappings
+     * @return Element
+     */
+    protected function clearUnmappedFields(Element $element, array $mappings): Element
+    {
+        foreach ($element->value as $key => $localizedElement) {
+            if (!array_key_exists($localizedElement->name, $mappings)) {
+                unset($element->value[$key]);
+            }
+        }
+
+        return $element;
     }
 }
