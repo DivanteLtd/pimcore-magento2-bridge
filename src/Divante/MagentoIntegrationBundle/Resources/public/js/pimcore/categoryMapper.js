@@ -4,17 +4,31 @@ pimcore.plugin.MagentoIntegrationBundle.CategoryMapper = Class.create(pimcore.pl
     initialize: function (object) {
         this.object = object;
         this.requiredFields = ["name", "url_key"];
-},
-reloadMapper: function (object) {
-    this.object = object;
-    this.reloadColumnMapping();
-},
+    },
 
-    getLayout: function () {
+    reloadMapper: function (object, idObject) {
+        this.object = object;
+        this.reloadColumnMapping(idObject);
+    },
+
+    getEmptyHiddenLayout: function (){
+        return Ext.create({
+            xtype: 'panel',
+            layout: 'border',
+            id: 'category-mapping-tab',
+            title: t('Category Mapping'),
+            iconCls: 'pimcore_icon_fieldset',
+            disabled: true,
+            hidden: true
+        });
+    },
+
+    getLayout: function (idObject) {
         if (!this.mappingSettings) {
             this.mappingSettings = Ext.create({
                 xtype: 'panel',
                 layout: 'border',
+                id: 'category-mapping-tab',
                 title: t('Category Mapping'),
                 iconCls: 'pimcore_icon_fieldset',
                 disabled: false
@@ -22,20 +36,21 @@ reloadMapper: function (object) {
         }
         const data = this.object.data.data;
         if (data.categoryClass) {
-            this.reloadColumnMapping();
+            this.reloadColumnMapping(idObject);
         }
 
         return this.mappingSettings;
     },
 
-    reloadColumnMapping: function () {
+    reloadColumnMapping: function (idObject) {
         if (this.mappingSettings) {
             this.mappingSettings.removeAll();
             this.mappingSettings.enable();
             Ext.Ajax.request({
                 url: '/admin/object-mapper/get-columns-category',
                 params: {
-                    configurationId: this.object.id
+                    configurationId: this.object.id,
+                    objectId: idObject
                 },
                 method: 'GET',
                 success: function (result) {

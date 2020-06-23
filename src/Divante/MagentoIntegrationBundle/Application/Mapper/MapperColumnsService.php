@@ -9,6 +9,8 @@
 namespace Divante\MagentoIntegrationBundle\Application\Mapper;
 
 use Divante\MagentoIntegrationBundle\Application\Mapper\Strategy\Custom\CustomStrategyInterface;
+use Divante\MagentoIntegrationBundle\Domain\Common\ObjectTypeHelper;
+use Divante\MagentoIntegrationBundle\Domain\IntegrationConfiguration\ObjectMappingsDefaults;
 use Divante\MagentoIntegrationBundle\Domain\Mapper\Model\FromColumn;
 use Divante\MagentoIntegrationBundle\Domain\Mapper\Model\ToColumn;
 use Pimcore\Model\DataObject;
@@ -19,6 +21,10 @@ use Pimcore\Model\DataObject;
  */
 class MapperColumnsService
 {
+    const PRODUCT_DEFAULT_FIELDS = [
+        "name"
+    ];
+
     /** @var MapperService  */
     private $mapperService;
 
@@ -40,23 +46,22 @@ class MapperColumnsService
      * @param string $className
      * @return array
      */
-    public function getColumnsForClass($configurationId, string $className): array
+    public function getColumnsForClass($configurationId, $objectId, string $className): array
     {
         $returnValue = ['success' => false];
         $definition = null;
         try {
             $configuration = DataObject\IntegrationConfiguration::getById($configurationId);
-            $classAttribute = $className . 'Class';
-            if (!$configuration || !($configuration->get($classAttribute))) {
+            if (!$configuration) {
                 throw new \InvalidArgumentException();
             }
-            $method  = 'get' . ucfirst($classAttribute);
-            $definition = DataObject\ClassDefinition::getById($configuration->{$method}());
+            $definition = DataObject\ClassDefinition::getById($objectId);
             if ($definition instanceof DataObject\ClassDefinition) {
                 $mappingAttribute      = 'get' . ucfirst($className) . 'Mapping';
                 $returnValue           = $this->getDataForClassDefinition(
                     $definition,
-                    $configuration->{$mappingAttribute}()
+                    $configuration->{$mappingAttribute}(),
+                    $className
                 );
                 $emptyValue            = new ToColumn();
                 $emptyValue->fieldtype = 'input';
@@ -69,11 +74,24 @@ class MapperColumnsService
     /**
      * @param $definition
      * @param $standardStructure
+     * @param $type
      * @return array
      * @throws \Exception
      */
-    protected function getDataForClassDefinition($definition, $standardStructure): array
+    protected function getDataForClassDefinition($definition, $standardStructure, $type): array
     {
+        if (!$standardStructure) {
+            switch ($type) {
+                case ObjectTypeHelper::PRODUCT:
+                    $standardStructure = ObjectMappingsDefaults::DEFAULT_PRODUCT_MAPPINGS;
+                    break;
+                case ObjectTypeHelper::CATEGORY:
+                    $standardStructure = ObjectMappingsDefaults::DEFAULT_CATEGORY_MAPPINGS;
+                    break;
+                default:
+                    throw new \InvalidArgumentException("Provided type (" . $type . ") is not supported");
+            }
+        }
         if (!$definition instanceof DataObject\ClassDefinition) {
             return ['success' => false];
         }

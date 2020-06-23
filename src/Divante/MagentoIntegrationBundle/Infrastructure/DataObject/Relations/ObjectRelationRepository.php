@@ -15,11 +15,11 @@ class ObjectRelationRepository
 {
     /**
      * @param AbstractObject $object
-     * @param int $classId
+     * @param string $classId
      * @param string $type
      * @return array
      */
-    public function getByRelationObject(AbstractObject $object, int $classId, string $type): array
+    public function getByRelationObject(AbstractObject $object, string $classId, string $type): array
     {
         $configurationClassDef = ClassDefinition::getByName("IntegrationConfiguration");
         switch ($type) {

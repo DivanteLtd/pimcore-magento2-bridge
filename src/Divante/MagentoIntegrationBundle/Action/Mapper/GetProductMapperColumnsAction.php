@@ -9,6 +9,7 @@
 namespace Divante\MagentoIntegrationBundle\Action\Mapper;
 
 use Divante\MagentoIntegrationBundle\Application\Mapper\MapperColumnsService;
+use Divante\MagentoIntegrationBundle\Domain\Common\ObjectTypeHelper;
 use Divante\MagentoIntegrationBundle\Responder\JsonResponder;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -42,7 +43,11 @@ class GetProductMapperColumnsAction
     public function __invoke(Request $request): JsonResponse
     {
         return $this->responder->createResponse(
-            $this->domain->getColumnsForClass($request->get('configurationId'), 'product')
+            $this->domain->getColumnsForClass(
+                $request->get('configurationId'),
+                $request->get('objectId'),
+                ObjectTypeHelper::PRODUCT
+            )
         );
     }
 }

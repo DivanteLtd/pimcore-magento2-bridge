@@ -4,16 +4,29 @@ pimcore.plugin.MagentoIntegrationBundle.ProductMapper = Class.create(pimcore.plu
         this.object = object;
         this.requiredFields = ["name", "sku", "visibility", "is_active_in_pim", "url_key", "category_ids"];
     },
-    reloadMapper: function (object) {
+    reloadMapper: function (object, idObject) {
         this.object = object;
-        this.reloadColumnMapping();
+        this.reloadColumnMapping(idObject);
     },
 
-    getLayout: function () {
+    getEmptyHiddenLayout: function (){
+        return Ext.create({
+            xtype: 'panel',
+            layout: 'border',
+            id: 'product-mapping-tab',
+            title: t('Product Mapping'),
+            iconCls: 'pimcore_icon_fieldset',
+            disabled: true,
+            hidden: true
+        });
+    },
+
+    getLayout: function (idObject) {
         if (!this.mappingSettings) {
             this.mappingSettings = Ext.create({
                 xtype: 'panel',
                 layout: 'border',
+                id: 'product-mapping-tab',
                 title: t('Product Mapping'),
                 iconCls: 'pimcore_icon_fieldset',
                 disabled: false
@@ -21,19 +34,21 @@ pimcore.plugin.MagentoIntegrationBundle.ProductMapper = Class.create(pimcore.plu
         }
         const data = this.object.data.data;
         if (data.productClass) {
-            this.reloadColumnMapping();
+            this.reloadColumnMapping(idObject);
         }
 
         return this.mappingSettings;
     },
-    reloadColumnMapping: function () {
+
+    reloadColumnMapping: function (idObject) {
         if (this.mappingSettings) {
             this.mappingSettings.removeAll();
             this.mappingSettings.enable();
             Ext.Ajax.request({
                 url: '/admin/object-mapper/get-columns-product',
                 params: {
-                    configurationId: this.object.id
+                    configurationId: this.object.id,
+                    objectId: idObject
                 },
                 method: 'GET',
                 success: function (result) {
