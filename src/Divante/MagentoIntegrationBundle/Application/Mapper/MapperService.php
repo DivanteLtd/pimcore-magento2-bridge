@@ -25,7 +25,6 @@ use Pimcore\Model\Webservice\Data\Mapper;
 class MapperService
 {
     const ELEMENTS_PROPERTY_NAME = 'elements';
-    const EXCLUDED_ATTRIBUTES = ['related_products'];
 
     /** @var MapperContext */
     private $mapperContext;
@@ -181,23 +180,6 @@ class MapperService
         $fromColumn->setIdentifier($field->getName());
 
         return $fromColumn;
-    }
-
-    /**
-     * @param \stdClass $object
-     * @return array
-     */
-    public function getAttributesChecksum(\stdClass $object): array
-    {
-        $attributes = [];
-        foreach ($object->elements as $key => $element) {
-            if (in_array($key, static::EXCLUDED_ATTRIBUTES)) {
-                continue;
-            }
-            $attributes[$key] = $element['type'];
-        }
-        ksort($attributes);
-        return ['algo' => 'md5', 'value' => md5(json_encode($attributes))];
     }
 
     /**
