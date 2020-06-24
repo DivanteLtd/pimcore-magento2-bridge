@@ -190,6 +190,9 @@ class MapperService
     {
         $attributes = [];
         foreach ($object->elements as $key => $element) {
+            if ($element['attr_conf']['is_not_an_attribute']) {
+                continue;
+            }
             $attributes[$key] = $element['type'];
         }
         ksort($attributes);

@@ -71,6 +71,7 @@ abstract class IntegrationConfiguration extends Concrete implements IntegrationC
                             AttributeType::COMPARABLE => $map[6] !== "" ? $map[6] : false,
                             AttributeType::VISIBLE_ON_FRONT => $map[7] !== "" ? $map[7] : false,
                             AttributeType::PRODUCT_LISTING => $map[8] !== "" ? $map[8] : false,
+                            AttributeType::IS_NOT_AN_ATTRIBUTE => is_null($map[9]) ? false : $map[9],
                         ]
                     ];
                 }

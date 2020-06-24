@@ -23,4 +23,5 @@ abstract class AttributeType
     const COMPARABLE = 'comparable';
     const VISIBLE_ON_FRONT = 'visible_on_front';
     const PRODUCT_LISTING = 'used_in_product_listing';
+    const IS_NOT_AN_ATTRIBUTE = 'is_not_an_attribute';
 }

@@ -135,6 +135,7 @@ class MapperColumnsService
             'comparable' => $mapElement[6],
             'visible_on_front' => $mapElement[7],
             'used_in_product_listing' => $mapElement[8],
+            'is_not_an_attribute' => $mapElement[9],
             'interpreterConfig' => null,
             'primaryIdentifier' => false,
             'setter' => null,

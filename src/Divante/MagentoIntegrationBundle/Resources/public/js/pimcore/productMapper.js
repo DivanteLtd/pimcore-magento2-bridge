@@ -382,7 +382,28 @@ pimcore.plugin.MagentoIntegrationBundle.ProductMapper = Class.create(pimcore.plu
                                             }
                                         }
                                     }
-                                }
+                                },
+                                {
+                                    text: t('Is not an attribute in Magento'),
+                                    dataIndex: 'is_not_an_attribute',
+                                    xtype: 'checkcolumn',
+                                    editable: true,
+                                    object: this.object,
+                                    listeners: {
+                                        checkChange: function (column, rowIndex, checked, record, eOpts) {
+                                            gridRecord = grid.getStore().getAt(rowIndex);
+                                            if (gridRecord) {
+                                                var toColumn = toColumnStore.findRecord('identifier', gridRecord.get('toColumn'), 0, false, false, true);
+                                                if (toColumn) {
+                                                    var array = this.object.edit.dataFields.productMapping.getValue();
+                                                    array[rowIndex][9] = checked;
+                                                    this.object.edit.dataFields.productMapping.store.loadData(array, false);
+                                                    this.object.edit.dataFields.productMapping.dirty = true;
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
                             ]
                         },
                         listeners: {
