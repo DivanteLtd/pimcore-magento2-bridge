@@ -1,6 +1,14 @@
 monolog:
     channels: ['connector']
     handlers:
+        application_logger_filter:
+            type: filter
+            channels: [connector]
+            handler: application_logger_db
+            min_level: ERROR
+        application_logger_db:
+            type: service
+            id: Pimcore\Log\Handler\ApplicationLoggerDb
         connector:
             type: stream
             path: "%kernel.logs_dir%/connector/%kernel.environment%.log"
