@@ -44,8 +44,7 @@ class ConfigurableProductValidation implements ObjectValidationRuleInterface
                     "To publish a variant its parent must be published."
                 );
             }
-            $mapping        = $configuration->getDecodedProductMapping();
-            $urlKeyAttrName = array_search(MapperHelper::VALUE_KEY_URL_KEY, $mapping);
+            $urlKeyAttrName = $this->getUrlKeyAttrName($configuration);
             if ($urlKeyAttrName) {
                 $elementUrlKey = $object->get($urlKeyAttrName);
                 if (!$elementUrlKey || $object->getParent()->get($urlKeyAttrName) == $elementUrlKey) {
@@ -79,6 +78,24 @@ class ConfigurableProductValidation implements ObjectValidationRuleInterface
                 throw new ValidationException('Missing value for configurable attribute: ' . $attribute);
             }
         }
+    }
+
+    /**
+     * @param IntegrationConfiguration $configuration
+     * @return string|null
+     */
+    protected function getUrlKeyAttrName(IntegrationConfiguration $configuration): ?string
+    {
+        $mappings = $configuration->getDecodedProductMapping();
+        foreach ($mappings as  $key => $mapping) {
+            foreach ($mapping as $element) {
+                if ($element['field'] === MapperHelper::VALUE_KEY_URL_KEY) {
+                    return $key;
+                }
+            }
+        }
+
+        return null;
     }
 
     /**
