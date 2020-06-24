@@ -93,7 +93,7 @@ class MappedProductService extends AbstractMappedObjectService
                 $object
             );
         }
-        $mappedObject->attr_checksum = $this->mapper->getAttributesChecksum($mappedObject);
+        $mappedObject->attr_checksum = $this->attributeChecksum->getAttributesChecksum($mappedObject);
 
         $this->eventDispatcher->dispatch(
             new PostMappingObjectEvent($object, $configuration, $mappedObject),

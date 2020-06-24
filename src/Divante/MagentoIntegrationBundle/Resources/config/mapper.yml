@@ -16,6 +16,7 @@ services:
         public: true
 
     Divante\MagentoIntegrationBundle\Application\Mapper\MapperService: ~
+    Divante\MagentoIntegrationBundle\Application\Mapper\AttributesChecksumCalculator: ~
 
     Divante\MagentoIntegrationBundle\Application\Mapper\MapperContext: ~
     Divante\MagentoIntegrationBundle\Application\Mapper\MapperManager: ~

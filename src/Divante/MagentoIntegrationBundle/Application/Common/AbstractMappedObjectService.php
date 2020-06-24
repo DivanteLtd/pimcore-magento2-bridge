@@ -9,6 +9,7 @@
 namespace Divante\MagentoIntegrationBundle\Application\Common;
 
 use Divante\MagentoIntegrationBundle\Application\IntegrationConfiguration\IntegrationConfigurationService;
+use Divante\MagentoIntegrationBundle\Application\Mapper\AttributesChecksumCalculator;
 use Divante\MagentoIntegrationBundle\Application\Mapper\MapperService;
 use Divante\MagentoIntegrationBundle\Infrastructure\IntegrationConfiguration\IntegrationConfigurationRepository;
 use Divante\MagentoIntegrationBundle\Infrastructure\Security\ElementPermissionChecker;
@@ -34,6 +35,8 @@ abstract class AbstractMappedObjectService
     protected $integratedObjectRepository;
     /** @var IntegrationConfigurationRepository */
     protected $configRepository;
+    /** @var AttributesChecksumCalculator */
+    protected $attributeChecksum;
 
     /**
      * AbstractMappedObjectService constructor.
@@ -50,7 +53,8 @@ abstract class AbstractMappedObjectService
         MapperService $mapper,
         EventDispatcherInterface $eventDispatcher,
         IntegrationConfigurationRepository $configRepository,
-        IntegratedObjectRepositoryInterface $integratedObjectRepository
+        IntegratedObjectRepositoryInterface $integratedObjectRepository,
+        AttributesChecksumCalculator $attributeChecksum
     ) {
         $this->permissionChecker = $permissionChecker;
         $this->configService     = $configService;
@@ -58,6 +62,7 @@ abstract class AbstractMappedObjectService
         $this->eventDispatcher   = $eventDispatcher;
         $this->configRepository  = $configRepository;
         $this->integratedObjectRepository = $integratedObjectRepository;
+        $this->attributeChecksum = $attributeChecksum;
     }
 
     /**

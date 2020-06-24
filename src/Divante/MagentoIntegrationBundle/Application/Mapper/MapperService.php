@@ -183,20 +183,6 @@ class MapperService
     }
 
     /**
-     * @param \stdClass $object
-     * @return array
-     */
-    public function getAttributesChecksum(\stdClass $object): array
-    {
-        $attributes = [];
-        foreach ($object->elements as $key => $element) {
-            $attributes[$key] = $element['type'];
-        }
-        ksort($attributes);
-        return ['algo' => 'md5', 'value' => md5(json_encode($attributes))];
-    }
-
-    /**
      * @param mixed    $out
      * @param Concrete $object
      * @throws \Exception
