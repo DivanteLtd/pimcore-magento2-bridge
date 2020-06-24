@@ -92,7 +92,8 @@ abstract class IntegrationConfiguration extends Concrete implements IntegrationC
                     $this->mappingArrays["category"][$map[0]][] = [
                         "field" => $map[1],
                         "strategy" => !empty($map[2]) ? $map[2] : null,
-                        "attributes" => !empty($map[3]) ? $map[3] : null
+                        "attributes" => !empty($map[3]) ? $map[3] : null,
+                        "thumbnail" => !empty($map[4]) ? $map[4] : null,
                     ];
                 }
             }

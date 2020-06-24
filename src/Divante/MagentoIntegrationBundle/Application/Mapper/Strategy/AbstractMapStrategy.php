@@ -9,6 +9,7 @@
 namespace Divante\MagentoIntegrationBundle\Application\Mapper\Strategy;
 
 use Divante\MagentoIntegrationBundle\Application\Mapper\Strategy\MapStrategyInterface;
+use Divante\MagentoIntegrationBundle\Domain\Mapper\MapperHelper;
 use Pimcore\Model\Webservice\Data\DataObject\Element;
 use Symfony\Component\Translation\TranslatorInterface;
 
@@ -110,10 +111,10 @@ abstract class AbstractMapStrategy implements MapStrategyInterface
      * @param $name
      * @return string|null
      */
-    protected function getThumbnail($element, $arrayMapping, $name): ?string
+    protected function getThumbnail(Element $element, array $arrayMapping, string $name): ?string
     {
-        if (array_key_exists($element, $arrayMapping)) {
-            foreach ($arrayMapping[$element] as $mapping) {
+        if (array_key_exists($element->name, $arrayMapping) && in_array($element->type, MapperHelper::IMAGE_TYPES)) {
+            foreach ($arrayMapping[$element->name] as $mapping) {
                 if (str_replace('-', '_', strtolower($mapping['field'])) === $name) {
                     return $mapping['thumbnail'];
                 }
