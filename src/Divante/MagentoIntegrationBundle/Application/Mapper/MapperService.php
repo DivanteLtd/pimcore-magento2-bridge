@@ -25,6 +25,7 @@ use Pimcore\Model\Webservice\Data\Mapper;
 class MapperService
 {
     const ELEMENTS_PROPERTY_NAME = 'elements';
+    const EXCLUDED_ATTRIBUTES = ['related_products'];
 
     /** @var MapperContext */
     private $mapperContext;
@@ -190,6 +191,9 @@ class MapperService
     {
         $attributes = [];
         foreach ($object->elements as $key => $element) {
+            if (in_array($key, static::EXCLUDED_ATTRIBUTES)) {
+                continue;
+            }
             $attributes[$key] = $element['type'];
         }
         ksort($attributes);
