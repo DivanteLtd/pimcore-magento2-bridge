@@ -58,6 +58,14 @@ pimcore.plugin.MagentoIntegrationBundle.ProductMapper = Class.create(pimcore.plu
                         data: config.strategies
                     });
 
+                    var thumbnailsStore = new Ext.data.Store({
+                        fields: [
+                            'name',
+                        ],
+                        collapsible: false,
+                        data: config.thumbnails
+                    });
+
                     if (typeof config.toColumns == 'undefined') {
                         config.toColumns = [];
                     }
@@ -270,6 +278,54 @@ pimcore.plugin.MagentoIntegrationBundle.ProductMapper = Class.create(pimcore.plu
                                                     if (typeof(row) !== 'undefined' && row != null) {
                                                         var array = this.object.edit.dataFields.productMapping.getValue();
                                                         array[row][3] = newValue;
+                                                        this.object.edit.dataFields.productMapping.store.loadData(array, false);
+                                                        this.object.edit.dataFields.productMapping.dirty = true;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                {
+                                    text: t('Thumbnail'),
+                                    dataIndex: 'thumbnail',
+                                    flex: 1,
+                                    renderer: function (val) {
+                                        if (val) {
+                                            var rec = thumbnailsStore.findRecord('name', val, 0, false, false, true);
+
+                                            if (rec) {
+                                                return rec.get('name');
+                                            }
+                                        }
+
+                                        return null;
+                                    },
+                                    editor: {
+                                        xtype: 'combo',
+                                        store: thumbnailsStore,
+                                        mode: 'local',
+                                        displayField: 'name',
+                                        valueField: 'name',
+                                        object: this.object,
+                                        editable: true,
+                                        listeners: {
+                                            change: function (combo, newValue, oldValue, eOpts) {
+                                                var gridRecord = combo.up('grid').getSelectionModel().getSelection();
+                                                if (gridRecord.length > 0) {
+                                                    gridRecord = gridRecord[0];
+                                                    gridRecord.thumbnailsStore = thumbnailsStore;
+
+                                                    var thumbnail = thumbnailsStore.findRecord('name', newValue, 0, false, false, true);
+                                                    var row = grid.store.indexOf(gridRecord);
+                                                    if (typeof(row) !== 'undefined' && row != null) {
+                                                        var array = this.object.edit.dataFields.productMapping.getValue();
+                                                        if (thumbnail) {
+                                                            newValue = thumbnail.data.name;
+                                                        } else {
+                                                            newValue = '';
+                                                        }
+                                                        array[row][4] = newValue;
                                                         this.object.edit.dataFields.productMapping.store.loadData(array, false);
                                                         this.object.edit.dataFields.productMapping.dirty = true;
                                                     }

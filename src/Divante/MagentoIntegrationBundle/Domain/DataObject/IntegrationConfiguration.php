@@ -65,12 +65,13 @@ abstract class IntegrationConfiguration extends Concrete implements IntegrationC
                         "field" => $map[1],
                         "strategy" => !empty($map[2]) ? $map[2] : null,
                         "attributes" => !empty($map[3]) ? $map[3] : null,
+                        "thumbnail" => !empty($map[4]) ? $map[4] : null,
                         "attr_conf" => [
-                            AttributeType::SEARCHABLE => $map[4] !== "" ? $map[4] : false,
-                            AttributeType::FILTERABLE => $map[5] !== "" ? $map[5] : false,
-                            AttributeType::COMPARABLE => $map[6] !== "" ? $map[6] : false,
-                            AttributeType::VISIBLE_ON_FRONT => $map[7] !== "" ? $map[7] : false,
-                            AttributeType::PRODUCT_LISTING => $map[8] !== "" ? $map[8] : false,
+                            AttributeType::SEARCHABLE => $map[5] !== "" ? $map[5] : false,
+                            AttributeType::FILTERABLE => $map[6] !== "" ? $map[6] : false,
+                            AttributeType::COMPARABLE => $map[7] !== "" ? $map[7] : false,
+                            AttributeType::VISIBLE_ON_FRONT => $map[8] !== "" ? $map[8] : false,
+                            AttributeType::PRODUCT_LISTING => $map[9] !== "" ? $map[9] : false,
                         ]
                     ];
                 }

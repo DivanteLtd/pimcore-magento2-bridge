@@ -103,4 +103,23 @@ abstract class AbstractMapStrategy implements MapStrategyInterface
     {
         return $this->translator->trans($field->label, [], null, $language);
     }
+
+    /**
+     * @param $element
+     * @param $arrayMapping
+     * @param $name
+     * @return string|null
+     */
+    protected function getThumbnail($element, $arrayMapping, $name): ?string
+    {
+        if (array_key_exists($element, $arrayMapping)) {
+            foreach ($arrayMapping[$element] as $mapping) {
+                if (str_replace('-', '_', strtolower($mapping['field'])) === $name) {
+                    return $mapping['thumbnail'];
+                }
+            }
+        }
+
+        return null;
+    }
 }

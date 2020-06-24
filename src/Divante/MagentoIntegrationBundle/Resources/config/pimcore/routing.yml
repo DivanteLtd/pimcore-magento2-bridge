@@ -29,6 +29,10 @@ magento_integration_api_rest.get.product:
     resource: "@DivanteMagentoIntegrationBundle/Action/Rest/Product/GetProductAction.php"
     type:     annotation
 
+magento_integration_api_rest.get.asset:
+    resource: "@DivanteMagentoIntegrationBundle/Action/Rest/Asset/GetAssetAction.php"
+    type:     annotation
+
 magento_integration_bulk_action.send.products:
     resource: "@DivanteMagentoIntegrationBundle/Action/Admin/SendProductsAction.php"
     type: annotation
