@@ -20,18 +20,66 @@ initialize: function () {
 
     postOpenObject: function (object, type) {
         if (this.isConfiguration(object)) {
-            var key = 'mapper_product_' + object.id;
-            var value = new pimcore.plugin.MagentoIntegrationBundle.ProductMapper(object);
-            pimcore.globalmanager.add(key, value);
+            /**
+             * PRODUCTS SELECT LISTENER
+             */
             var tabs = Ext.getCmp('object_' + object.id);
-            tabs.object.tab.items.items[1].add(value.getLayout());
-            key = 'mapper_category_' + object.id;
-            value = new pimcore.plugin.MagentoIntegrationBundle.CategoryMapper(object);
-            pimcore.globalmanager.add(key, value);
-            tabs = Ext.getCmp('object_' + object.id);
-            tabs.object.tab.items.items[1].add(value.getLayout());
-            this.addSendAllProductsButton(object);
-            this.addSendAllCategoriesButton(object);
+            object.edit.dataFields.productClass.component.on("select", function(data) {
+                var productKey = 'mapper_product_' + object.id;
+                var productValue = new pimcore.plugin.MagentoIntegrationBundle.ProductMapper(object);
+                pimcore.globalmanager.add(productKey, productValue);
+                var productMappingTab = tabs.object.tab.items.items[1].getComponent("product-mapping-tab");
+                tabs.object.tab.items.items[1].remove(productMappingTab);
+                if (data.value !== "") {
+                    tabs.object.tab.items.items[1].insert(7, productValue.getLayout(data.value));
+                } else {
+                    tabs.object.tab.items.items[1].insert(7, productValue.getEmptyHiddenLayout());
+                }
+            });
+
+            /**
+             * PRODUCTS ON POST OPEN
+             */
+            var productClassId = object.edit.dataFields.productClass.component.value;
+            var productKey = 'mapper_product_' + object.id;
+            var productValue = new pimcore.plugin.MagentoIntegrationBundle.ProductMapper(object);
+            if (productClassId !== "") {
+                pimcore.globalmanager.add(productKey, productValue);
+                tabs.object.tab.items.items[1].insert(7, productValue.getLayout(productClassId));
+                this.addSendAllProductsButton(object);
+            } else {
+                tabs.object.tab.items.items[1].insert(7, productValue.getEmptyHiddenLayout());
+            }
+
+            /**
+             * CATEGORY SELECT LISTENER
+             */
+            object.edit.dataFields.categoryClass.component.on("select", function(data) {
+                var categoryKey = 'mapper_category_' + object.id;
+                var categoryValue = new pimcore.plugin.MagentoIntegrationBundle.CategoryMapper(object);
+                pimcore.globalmanager.add(categoryKey, categoryValue);
+                var categoryMappingTabs = tabs.object.tab.items.items[1].getComponent("category-mapping-tab");
+                tabs.object.tab.items.items[1].remove(categoryMappingTabs);
+                if (data.value !== "") {
+                    tabs.object.tab.items.items[1].insert(8, categoryValue.getLayout(data.value));
+                } else {
+                    tabs.object.tab.items.items[1].insert(8, categoryValue.getEmptyHiddenLayout());
+                }
+            });
+
+            /**
+             * CATEGORY ON POST OPEN
+             */
+            var categoryKey = 'mapper_category_' + object.id;
+            var categoryValue = new pimcore.plugin.MagentoIntegrationBundle.CategoryMapper(object);
+            var categoryClassId = object.edit.dataFields.categoryClass.component.value;
+            if (categoryClassId !== "") {
+                pimcore.globalmanager.add(categoryKey, categoryValue);
+                tabs.object.tab.items.items[1].insert(8, categoryValue.getLayout(categoryClassId));
+                this.addSendAllCategoriesButton(object);
+            } else {
+                tabs.object.tab.items.items[1].insert(8, categoryValue.getEmptyHiddenLayout());
+            }
         }
         if (this.isSynchronized(object)) {
             var key = 'magentostatus_' + object.id;
@@ -52,20 +100,28 @@ initialize: function () {
         if (this.isConfiguration(object)) {
             object.edit.dataFields.productMapping.getValue();
             var columnsConfig = pimcore.globalmanager.get('mapping_config_' + object.id).toColumns;
-            columnsConfig.filter(function (element) {
-                return element.config.required
-            });
+            if (columnsConfig) {
+                columnsConfig.filter(function (element) {
+                    return element.config.required
+                });
+            }
         }
 
     },
     postSaveObject: function (object) {
         if (this.isConfiguration(object)) {
+            var productClassId = object.edit.dataFields.productClass.component.value;
+            var categoryClassId = object.edit.dataFields.categoryClass.component.value;
             var key = 'mapper_product_' + object.id;
             var value = pimcore.globalmanager.get(key);
-            value.reloadMapper(object);
+            if (productClassId) {
+                value.reloadMapper(object, productClassId);
+            }
             var key = 'mapper_category_' + object.id;
             var value = pimcore.globalmanager.get(key);
-            value.reloadMapper(object);
+            if (categoryClassId) {
+                value.reloadMapper(object, categoryClassId);
+            }
         }
     },
     isConfiguration: function (object) {
