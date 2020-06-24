@@ -495,11 +495,11 @@
                                 "fieldtype": "table",
                                 "width": "",
                                 "height": "",
-                                "cols": 9,
+                                "cols": 10,
                                 "colsFixed": true,
                                 "rows": "",
                                 "rowsFixed": false,
-                                "data": "|name|||||||\n|sku|||||||\n|visibility|||||||\n|is_active_in_pim|||||||\n|url_key|||||||\n|category_ids|||||||\n|qty|||||||\n|description|||||||\n|short_description|||||||\n|image|||||||\n|small_image|||||||\n|thumbnail|||||||\n|media_gallery|||||||\n|manufacturer|||||||\n|news_from_date|||||||\n|news_to_date|||||||\n|related_products|||||||\n|up_sell_products|||||||\n|cross_sell_products|||||||",
+                                "data": "|name||||||||\n|sku||||||||\n|visibility||||||||\n|is_active_in_pim||||||||\n|url_key||||||||\n|category_ids||||||||\n|qty||||||||\n|description||||||||\n|short_description||||||||\n|image||||||||\n|small_image||||||||\n|thumbnail||||||||\n|media_gallery||||||||\n|manufacturer||||||||\n|news_from_date||||||||\n|news_to_date||||||||\n|related_products||||||||\n|up_sell_products||||||||\n|cross_sell_products||||||||",
                                 "columnConfigActivated": true,
                                 "columnConfig": [
                                     {
@@ -537,6 +537,10 @@
                                     {
                                         "key": 8,
                                         "label": "Used in product listing"
+                                    },
+                                    {
+                                        "key": 9,
+                                        "label": "Is not an attribute in Magento"
                                     }
                                 ],
                                 "queryColumnType": "longtext",
