@@ -52,6 +52,7 @@ services:
         arguments:
             $integratedObjectRepository: '@Divante\MagentoIntegrationBundle\Infrastructure\Product\IntegratedProductRepository'
     Divante\MagentoIntegrationBundle\Application\Asset\MappedAssetService: ~
+    Divante\MagentoIntegrationBundle\Application\Asset\ThumbnailService: ~
     Divante\MagentoIntegrationBundle\Application\Category\MappedCategoryService:
         arguments:
             $integratedObjectRepository: '@Divante\MagentoIntegrationBundle\Infrastructure\Category\IntegratedCategoryRepository'

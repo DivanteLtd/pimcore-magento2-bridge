@@ -4,7 +4,6 @@ namespace Divante\MagentoIntegrationBundle\Application\Asset;
 
 use Pimcore\Model\Asset;
 use Pimcore\Model\Webservice\Data\Mapper;
-use Symfony\Component\Routing\RouterInterface;
 
 /**
  * Class MappedAssetService
@@ -12,19 +11,20 @@ use Symfony\Component\Routing\RouterInterface;
  */
 class MappedAssetService
 {
+    const HASH_ALGO = "sha1";
 
     /**
-     * @var RouterInterface
+     * @var ThumbnailService
      */
-    protected $router;
+    protected $thumbnailService;
 
     /**
      * MappedAssetService constructor.
-     * @param RouterInterface $router
+     * @param ThumbnailService $thumbnailService
      */
-    public function __construct(RouterInterface $router)
+    public function __construct(ThumbnailService $thumbnailService)
     {
-        $this->router = $router;
+        $this->thumbnailService = $thumbnailService;
     }
 
     /**
@@ -37,39 +37,31 @@ class MappedAssetService
     {
         $asset = Asset::getById($id);
         if (!$asset instanceof Asset) {
-            [
+            return [
                 "success" => false,
                 "message" => sprintf("Asset with id: %s not found", $id)
             ];
         }
 
-        $algo = 'sha1';
         $outputAsset = Mapper::map($asset, "Pimcore\Model\Webservice\Data\Asset\File\Out", 'out');
         if ($thumbnail && $asset instanceof Asset\Image) {
-            $thumbnail = $asset->getThumbnail($thumbnail, false);
-            $thumbnailData = file_get_contents(
-                sprintf(
-                    "%s://%s%s",
-                    $this->router->getContext()->getScheme(),
-                    $this->router->getContext()->getHost(),
-                    (string) $thumbnail
-                ));
-
-            $thumbnailOutput = [];
-            $thumbnailOutput['data'] = base64_encode($thumbnailData);
-            $thumbnailOutput['mimetype'] = $thumbnail->getMimeType();
-            $checksum = hash($algo, $thumbnailData);
-            $thumbnailOutput["checksum"] = [
-                'algo' => $algo,
-                'value' => $checksum
-            ];
-            $outputAsset->{"thumbnail"} = $thumbnailOutput;
+            try {
+                $outputAsset->{"thumbnail"} = $this->thumbnailService->getThumbnailData($asset, $thumbnail);
+            } catch (\Exception $exception) {
+                return [
+                    "success" => false,
+                    "message" => sprintf(
+                        "Error retrieving thumbnail data from asset: %s, thumbnail: %s",
+                        $id,
+                        $thumbnail
+                    )
+                ];
+            }
         }
 
-
         $outputAsset->checksum = [
-            'algo' => $algo,
-            'value' => $asset->getChecksum($algo)
+            'algo' => static::HASH_ALGO,
+            'value' => $asset->getChecksum(static::HASH_ALGO)
         ];
 
         return ['data' => $outputAsset];
