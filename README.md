@@ -39,17 +39,32 @@ This module is compatible with Pimcore >= 5.4 and Pimcore 6.0.
 
 ## <a name="usage"></a>Usage/Setting up
 ![Screenshot](doc/images/integrationConfigurationView.png)
-- Go to Settings>Authorisation in your Pimcore panel.
+- First, give your configuration an unique ID.
+- Next, you have to configure `Authorization` section.
 - Fill in **Magento URL** and **Client Secret** with the authorisation data from your Magento2.
 - Save class and reload it.
 - If credentials are correct, please select **Magento store**. In the other case a "**Could not fetch stores**" value will be displayed and the authorization data should be checked.
+- When this is set, fill the `Mappings settings` section.
+- Select the checkbox if only mapped fields should be sent to Magento. Otherwise all object attributes will be sent.
 - Select classes that are used as a product and category classes.
+- When filled, two tabs should appear in the object toolbar menu. We will discuss it later.
 - Select products and categories synchronization root. When an object of one of the selected classes is published in the given root directory, it will be sent to Magento.
 - Select the default language used in synchronization. If a product has localized fields, only one version of this field will be sent.
 - Select the default classification store used in communication. This classification store will be used as an attribute set in Magento.
-- Go to Settings>Mappings in your Pimcore panel.
-- Fill in the left column with names of your fields in your classes. These attribute names will be mapped to the correct names used in communication with Magento.
-- Save and publish the Integration Configuration object.
+- To finish your configuration, you have to set mappings between Pimcore fields and Magento fields. This is our next chapter.
+
+## <a name="mappings"></a>Mappings
+![Screenshot](doc/images/productMappingTab.png)
+- Product and Category mappings are basically the same mechanism, except for attribute configuration which is done only for products.
+- Above the table you have two buttons, to add a row and to remove the last row. You can also remove a row by right clicking it and selecting delete.
+- You can't remove required fields by Magento. There are coloured in red.
+- You can also rename magento fields. Except the required ones.
+- In the first column, select Pimcore fields you want to be mapped as Magento fields.
+- The third column is to select a strategy. It can stay empty. (more info about strategies [here](#custom-strategies)
+- The fourth column is also linked with strategy and you don't have to fill it up either. (more info about strategies [here](#custom-strategies)
+- Next column is named `Thumbnail` it has to be filled only if you send picture to Magento and don't want to send full size image but only a thumbnail.
+- The last five columns are called attribute configuration. You can select if in magento this field will be searchable, filterable, comparable, visible and used in product.
+- Category configuration works the same, but you don't have all these checkboxes.
 
 ## <a name="features"></a>Features
 - The general Pimcore to Magento communication scheme goes as follows:
@@ -76,21 +91,28 @@ This module is compatible with Pimcore >= 5.4 and Pimcore 6.0.
 - Image gallery
 
 ## <a name="custom-strategies"></a>Custom Strategies
-If you have a type that is not supported or want, for a specific class attribute, to be mapped differently from standard types,
-you can define custom strategies.
+If you have a type that is not supported or want, for a specific attribute, to be mapped differently than the standard way,
+you can define a custom strategy.
 
-It's easy, all you need to do is to extends `AbstractCustomStrategy` and implement required methods.
+It's easy, all you need to do is:
+- To create a class
+- Extends `AbstractCustomStrategy`
+- Implement required methods.
 When done, you will see your custom strategy in `Mapping tabs` in your configuration object.
-Moreover if for example you're mapping a relational field. In column `Relation attributes`, you can set fields that will only be mapped in
-the related object. Of course if you set so in your custom strategy.
+Moreover if you're mapping a relational field. In the column `Relation attributes`, you can set fields attributes names.
+This information is passed to the strategy in `$mappingArray`. One use case can be to map only theses fields in your
+related object.
 
 ## <a name="validators"></a>Validators
 Before sending data to Magento, objects have to pass validation rules. The ones defined in connector are general
 and necessary for it to work properly.
 
-If you need to set a custom validation for your project you have to create a validation class and implement `ObjectValidationRuleInterface`.
+If you need to set a custom validation for your project you have to:
+- Create a validation class
+- Implement `ObjectValidationRuleInterface`.
 If object is not fulfilling your rules, throw `Pimcore\Model\Element\ValidationException`, with the message you want to be displayed in
 Pimcore admin panel. It will be shown after save as a popup to inform administrator about the issue.
+One use case can be to write a validator to check if a specific field is filled before sending it to Magento.
 
 ## <a name="bulk-notification"></a>Bulk notification
 A new feature in Magento 2 - Pimcore Integration Module is the ability to send multiple products or categories to Magento.

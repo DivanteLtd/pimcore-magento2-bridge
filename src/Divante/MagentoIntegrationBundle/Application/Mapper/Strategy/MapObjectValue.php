@@ -32,16 +32,23 @@ class MapObjectValue extends AbstractMapStrategy
     public function map(Element $field, \stdClass &$obj, array $arrayMapping, $language, $definition, $className): void
     {
         $names      = $this->getFieldNames($field, $arrayMapping);
-        $pasredData = [
+        $parsedData = [
             'type'  => static::TYPE,
             'value' => $this->getFieldValue($field),
             'label' => $this->getLabel($field, $language),
             static::ATTR_CONF => $this->getAttrConf($field, $arrayMapping)
         ];
+
         foreach ($names as $name) {
-            $obj->{$name} = $pasredData;
+            $thumbnail = $this->getThumbnail($field, $arrayMapping, $name);
+            if ($thumbnail) {
+                $parsedData["thumbnail"] = $thumbnail;
+            }
+            $obj->{$name} = $parsedData;
+            unset($parsedData["thumbnail"]);
         }
     }
+
 
     /**
      * @param Element $field

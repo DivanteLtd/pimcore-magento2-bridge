@@ -44,7 +44,12 @@ class MapMultiObjectValue extends AbstractMapStrategy
         ];
 
         foreach ($names as $name) {
+            $thumbnail = $this->getThumbnail($field, $arrayMapping, $name);
+            if ($thumbnail) {
+                $parsedData["thumbnail"] = $thumbnail;
+            }
             $obj->{$name} = $parsedData;
+            unset($parsedData["thumbnail"]);
         }
     }
 

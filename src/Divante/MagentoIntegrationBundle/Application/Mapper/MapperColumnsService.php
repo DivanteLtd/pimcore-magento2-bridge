@@ -13,6 +13,7 @@ use Divante\MagentoIntegrationBundle\Domain\Common\ObjectTypeHelper;
 use Divante\MagentoIntegrationBundle\Domain\IntegrationConfiguration\ObjectMappingsDefaults;
 use Divante\MagentoIntegrationBundle\Domain\Mapper\Model\FromColumn;
 use Divante\MagentoIntegrationBundle\Domain\Mapper\Model\ToColumn;
+use Pimcore\Model\Asset\Image\Thumbnail;
 use Pimcore\Model\DataObject;
 
 /**
@@ -110,8 +111,18 @@ class MapperColumnsService
             'toColumns'        => $toColumns,
             'bricks'           => [],
             'fieldcollections' => [],
-            'strategies'       => $this->strategies
+            'strategies'       => $this->strategies,
+            'thumbnails'       => $this->getThumbnails()
         ];
+    }
+
+    /**
+     * @return array
+     */
+    protected function getThumbnails(): array
+    {
+        $listing = new Thumbnail\Config\Listing();
+        return $listing->load() ?? [];
     }
 
     /**
@@ -148,11 +159,12 @@ class MapperColumnsService
             'identifier' => $mapElement[0] ?? null,
             'strategy' => $mapElement[2] ?? null,
             'attributes' => $mapElement[3] ?? null,
-            'searchable' => $mapElement[4],
-            'filterable' => $mapElement[5],
-            'comparable' => $mapElement[6],
-            'visible_on_front' => $mapElement[7],
-            'used_in_product_listing' => $mapElement[8],
+            "thumbnail" => $mapElement[4],
+            'searchable' => $mapElement[5],
+            'filterable' => $mapElement[6],
+            'comparable' => $mapElement[7],
+            'visible_on_front' => $mapElement[8],
+            'used_in_product_listing' => $mapElement[9],
             'interpreterConfig' => null,
             'primaryIdentifier' => false,
             'setter' => null,
