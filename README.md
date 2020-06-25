@@ -72,7 +72,7 @@ This module is compatible with Pimcore >= 5.4 and Pimcore 6.0.
 - When a product/category meets the criteria (published, in the selected root tree, has the correct type), information about publication is sent to Magento.
 - Magento sends a request to Pimcore to fetch object data and Pimcore responds with a parsed, mapped object.
 - Endpoints for fetching mapped products, categories.
-- Indicators on product and category views that show synchronization status. Available synchronization statuses: Sent, OK, Error, Deleted.
+- Indicators on product and category views that show synchronization status. Available synchronization statuses: Sent, Success, Error, Deleted.
 ![Screenshot](doc/images/productView.png)
 - Any problem reported by Magento will be stored in object notes and inside Tools -> Application Logger.
 - All assets, if attached to any synchronized product, when updated, will be sent to Magento.
