@@ -423,56 +423,6 @@
                                 "visibleGridView": false,
                                 "visibleSearch": false,
                                 "defaultValueGenerator": ""
-                            },
-                            {
-                                "fieldtype": "table",
-                                "width": "",
-                                "height": "",
-                                "cols": 5,
-                                "colsFixed": true,
-                                "rows": "",
-                                "rowsFixed": false,
-                                "data": "|name|||\n|url_key|||\n|description|||\n|is_active|||\n|image|||",
-                                "columnConfigActivated": false,
-                                "columnConfig": [
-                                    {
-                                        "key": 0,
-                                        "label": 0
-                                    },
-                                    {
-                                        "key": 1,
-                                        "label": 1
-                                    },
-                                    {
-                                        "key": 2,
-                                        "label": 2
-                                    },
-                                    {
-                                        "key": 3,
-                                        "label": 3
-                                    },
-                                    {
-                                        "key": 4,
-                                        "label": 4
-                                    }
-                                ],
-                                "queryColumnType": "longtext",
-                                "columnType": "longtext",
-                                "phpdocType": "array",
-                                "name": "categoryMapping",
-                                "title": "Category Mapping",
-                                "tooltip": "",
-                                "mandatory": false,
-                                "noteditable": false,
-                                "index": false,
-                                "locked": false,
-                                "style": "",
-                                "permissions": null,
-                                "datatype": "data",
-                                "relationType": false,
-                                "invisible": false,
-                                "visibleGridView": false,
-                                "visibleSearch": false
                             }
                         ],
                         "locked": false,
@@ -538,6 +488,56 @@
                                 "datatype": "data",
                                 "relationType": false,
                                 "invisible": true,
+                                "visibleGridView": false,
+                                "visibleSearch": false
+                            },
+                            {
+                                "fieldtype": "table",
+                                "width": "",
+                                "height": "",
+                                "cols": 5,
+                                "colsFixed": true,
+                                "rows": "",
+                                "rowsFixed": false,
+                                "data": "|name|||\n|url_key|||\n|description|||\n|is_active|||\n|image|||",
+                                "columnConfigActivated": false,
+                                "columnConfig": [
+                                    {
+                                        "key": 0,
+                                        "label": 0
+                                    },
+                                    {
+                                        "key": 1,
+                                        "label": 1
+                                    },
+                                    {
+                                        "key": 2,
+                                        "label": 2
+                                    },
+                                    {
+                                        "key": 3,
+                                        "label": 3
+                                    },
+                                    {
+                                        "key": 4,
+                                        "label": 4
+                                    }
+                                ],
+                                "queryColumnType": "longtext",
+                                "columnType": "longtext",
+                                "phpdocType": "array",
+                                "name": "categoryMapping",
+                                "title": "Category Mapping",
+                                "tooltip": "",
+                                "mandatory": false,
+                                "noteditable": false,
+                                "index": false,
+                                "locked": false,
+                                "style": "",
+                                "permissions": null,
+                                "datatype": "data",
+                                "relationType": false,
+                                "invisible": false,
                                 "visibleGridView": false,
                                 "visibleSearch": false
                             },
