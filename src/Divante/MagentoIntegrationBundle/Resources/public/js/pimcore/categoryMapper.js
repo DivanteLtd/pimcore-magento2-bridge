@@ -15,7 +15,7 @@ pimcore.plugin.MagentoIntegrationBundle.CategoryMapper = Class.create(pimcore.pl
         return Ext.create({
             xtype: 'panel',
             layout: 'border',
-            id: 'category-mapping-tab',
+            id: 'category-mapping-tab' + this.object.id,
             title: t('Category Mapping'),
             iconCls: 'pimcore_icon_fieldset',
             disabled: true,
@@ -28,7 +28,7 @@ pimcore.plugin.MagentoIntegrationBundle.CategoryMapper = Class.create(pimcore.pl
             this.mappingSettings = Ext.create({
                 xtype: 'panel',
                 layout: 'border',
-                id: 'category-mapping-tab',
+                id: 'category-mapping-tab' + this.object.id,
                 title: t('Category Mapping'),
                 iconCls: 'pimcore_icon_fieldset',
                 disabled: false

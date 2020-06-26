@@ -13,7 +13,7 @@ pimcore.plugin.MagentoIntegrationBundle.ProductMapper = Class.create(pimcore.plu
         return Ext.create({
             xtype: 'panel',
             layout: 'border',
-            id: 'product-mapping-tab',
+            id: 'product-mapping-tab' + this.object.id,
             title: t('Product Mapping'),
             iconCls: 'pimcore_icon_fieldset',
             disabled: true,
@@ -26,12 +26,13 @@ pimcore.plugin.MagentoIntegrationBundle.ProductMapper = Class.create(pimcore.plu
             this.mappingSettings = Ext.create({
                 xtype: 'panel',
                 layout: 'border',
-                id: 'product-mapping-tab',
+                id: 'product-mapping-tab' + this.object.id,
                 title: t('Product Mapping'),
                 iconCls: 'pimcore_icon_fieldset',
                 disabled: false
             });
         }
+        console.log(this.mappingSettings);
         const data = this.object.data.data;
         if (data.productClass) {
             this.reloadColumnMapping(idObject);
