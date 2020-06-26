@@ -28,7 +28,7 @@ initialize: function () {
                 var productKey = 'mapper_product_' + object.id;
                 var productValue = new pimcore.plugin.MagentoIntegrationBundle.ProductMapper(object);
                 pimcore.globalmanager.add(productKey, productValue);
-                var productMappingTab = tabs.object.tab.items.items[1].getComponent("product-mapping-tab");
+                var productMappingTab = tabs.object.tab.items.items[1].getComponent("product-mapping-tab" + object.id);
                 tabs.object.tab.items.items[1].remove(productMappingTab);
                 if (data.value !== "") {
                     tabs.object.tab.items.items[1].insert(7, productValue.getLayout(data.value));
@@ -58,7 +58,7 @@ initialize: function () {
                 var categoryKey = 'mapper_category_' + object.id;
                 var categoryValue = new pimcore.plugin.MagentoIntegrationBundle.CategoryMapper(object);
                 pimcore.globalmanager.add(categoryKey, categoryValue);
-                var categoryMappingTabs = tabs.object.tab.items.items[1].getComponent("category-mapping-tab");
+                var categoryMappingTabs = tabs.object.tab.items.items[1].getComponent("category-mapping-tab" + object.id);
                 tabs.object.tab.items.items[1].remove(categoryMappingTabs);
                 if (data.value !== "") {
                     tabs.object.tab.items.items[1].insert(8, categoryValue.getLayout(data.value));
