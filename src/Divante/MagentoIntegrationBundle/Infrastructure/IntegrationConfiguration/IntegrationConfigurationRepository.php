@@ -35,9 +35,13 @@ class IntegrationConfigurationRepository
     /**
      * @return \Pimcore\Model\AbstractModel|\Pimcore\Model\Listing\AbstractListing
      */
-    private function getListing()
+    private function getOrderedListing()
     {
-        return $this->factory->build(IntegrationConfiguration\Listing::class);
+        $listing = $this->factory->build(IntegrationConfiguration\Listing::class);
+        $listing->setOrderKey('o_index');
+        $listing->setOrder('asc');
+
+        return $listing;
     }
 
     /**
@@ -45,7 +49,7 @@ class IntegrationConfigurationRepository
      */
     public function getAllConfigurations(): array
     {
-        return $this->getListing()->load();
+        return $this->getOrderedListing()->load();
     }
 
     /**
@@ -54,7 +58,7 @@ class IntegrationConfigurationRepository
      */
     public function getByProduct(AbstractObject $object): array
     {
-        return $this->getListing()
+        return $this->getOrderedListing()
             ->setCondition(
                 ":path LIKE CONCAT('%', productRootPath, '%')",
                 ['path' => $object->getPath()]
@@ -67,7 +71,7 @@ class IntegrationConfigurationRepository
      */
     public function getByCategory(AbstractObject $object): array
     {
-        return $this->getListing()
+        return $this->getOrderedListing()
             ->setCondition(
                 ":path LIKE CONCAT('%', categoryRootPath, '%')",
                 ['path' => $object->getPath()]
@@ -81,7 +85,7 @@ class IntegrationConfigurationRepository
      */
     public function getByIntegrationIds(array $integrationIds): array
     {
-        $configurationListing = $this->getListing();
+        $configurationListing = $this->getOrderedListing();
         $configurationListing
             ->setCondition("integrationId IN (?)", [$integrationIds])
             ->load();
@@ -102,7 +106,7 @@ class IntegrationConfigurationRepository
     ) {
         $conditionData = $this->getConfigurationConditions($instanceUrl, $storeView, $object);
         try {
-            $configurationListing = new IntegrationConfiguration\Listing();
+            $configurationListing = $this->getOrderedListing();
             $configurationListing
                 ->setCondition($conditionData['condition'], $conditionData['data'])
                 ->load();
@@ -125,7 +129,7 @@ class IntegrationConfigurationRepository
     ): array {
         $conditionData = $this->getConfigurationConditions($instanceUrl, $storeView, $object);
         try {
-            $configurationListing = new IntegrationConfiguration\Listing();
+            $configurationListing = $this->getOrderedListing();
             $configurationListing
                 ->setCondition($conditionData['condition'], $conditionData['data'])
                 ->load();
@@ -140,7 +144,7 @@ class IntegrationConfigurationRepository
      */
     public function getAllProductClasses(): array
     {
-        $listing = $this->getListing();
+        $listing = $this->getOrderedListing();
         $productClasses = [];
         /** @var IntegrationConfiguration $object */
         foreach ($listing->getData() as $object) {
@@ -157,7 +161,7 @@ class IntegrationConfigurationRepository
      */
     public function getAllCategoryClasses(): array
     {
-        $listing = $this->getListing();
+        $listing = $this->getOrderedListing();
         $categoryClasses = [];
         /** @var IntegrationConfiguration $object */
         foreach ($listing->getData() as $object) {

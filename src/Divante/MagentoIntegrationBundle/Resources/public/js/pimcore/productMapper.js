@@ -32,7 +32,6 @@ pimcore.plugin.MagentoIntegrationBundle.ProductMapper = Class.create(pimcore.plu
                 disabled: false
             });
         }
-        console.log(this.mappingSettings);
         const data = this.object.data.data;
         if (data.productClass) {
             this.reloadColumnMapping(idObject);
