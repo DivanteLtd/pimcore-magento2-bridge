@@ -49,7 +49,7 @@ class MapperManager implements LoggerAwareInterface
                     throw new \Exception("Invalid type provided: " . $type);
             }
             Version::disable();
-            $config->save();
+            $config->setOmitMandatoryCheck(true)->save();
             Version::enable();
         } catch (\Exception $exception) {
             if ($this->logger instanceof LoggerInterface) {
@@ -96,7 +96,7 @@ class MapperManager implements LoggerAwareInterface
                     throw new \Exception("Invalid type provided: " . $type);
             }
             Version::disable();
-            $config->save();
+            $config->setOmitMandatoryCheck(true)->save();
             Version::enable();
         } catch (ValidationException $exception) {
             return [

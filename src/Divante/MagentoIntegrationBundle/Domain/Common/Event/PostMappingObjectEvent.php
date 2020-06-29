@@ -6,7 +6,7 @@
  * @copyright   Copyright (c) 2020 Divante Ltd. (https://divante.co)
  */
 
-namespace Divante\MagentoIntegrationBundle\Domain\Event;
+namespace Divante\MagentoIntegrationBundle\Domain\Common\Event;
 
 use Divante\MagentoIntegrationBundle\Domain\DataObject\IntegrationConfiguration;
 use Pimcore\Model\Element\AbstractElement;

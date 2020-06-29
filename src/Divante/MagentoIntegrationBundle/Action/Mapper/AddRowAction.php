@@ -39,7 +39,8 @@ class AddRowAction
      */
     public function __invoke(Request $query): JsonResponse
     {
-        $this->domain->addRow($query->request->get("id"), $query->get('type'));
-        return $this->responder->createResponse([]);
+        return $this->responder->createResponse(
+            $this->domain->addRow($query->request->get("id"), $query->get('type'))
+        );
     }
 }
