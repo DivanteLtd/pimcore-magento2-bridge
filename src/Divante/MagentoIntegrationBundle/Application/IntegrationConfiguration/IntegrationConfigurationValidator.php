@@ -9,6 +9,7 @@
 namespace Divante\MagentoIntegrationBundle\Application\IntegrationConfiguration;
 
 use Divante\MagentoIntegrationBundle\Domain\IntegrationConfiguration\IntegrationHelper;
+use Divante\MagentoIntegrationBundle\Infrastructure\IntegrationConfiguration\IntegrationConfigurationRepository;
 use Pimcore\Model\DataObject\IntegrationConfiguration;
 use Pimcore\Model\Element\ValidationException;
 
@@ -19,13 +20,45 @@ use Pimcore\Model\Element\ValidationException;
 class IntegrationConfigurationValidator
 {
     /**
+     * @var IntegrationConfigurationRepository
+     */
+    protected $integrationRepository;
+
+    /**
+     * IntegrationConfigurationValidator constructor.
+     * @param IntegrationConfigurationRepository $integrationRepository
+     */
+    public function __construct(IntegrationConfigurationRepository $integrationRepository)
+    {
+        $this->integrationRepository = $integrationRepository;
+    }
+
+    /**
      * @param IntegrationConfiguration $object
      * @throws ValidationException
      */
     public function validate(IntegrationConfiguration $object): void
     {
+        $this->validateIntegrationId($object);
         $this->validateMappingConsistency($object);
         $this->validateMappingCorrectness($object);
+    }
+
+    /**
+     * @param IntegrationConfiguration $object
+     * @throws ValidationException
+     */
+    protected function validateIntegrationId(IntegrationConfiguration $object)
+    {
+        if (!$object->getIntegrationId()) {
+            throw new ValidationException("IntegrationId field is required!");
+        }
+        $configurations = $this->integrationRepository->getAllConfigurations();
+        foreach ($configurations as $configuration) {
+            if ($object->getIntegrationId() === $configuration->getIntegrationId()) {
+                throw new ValidationException("IntegrationId field has to be unique!");
+            }
+        }
     }
 
     /**
