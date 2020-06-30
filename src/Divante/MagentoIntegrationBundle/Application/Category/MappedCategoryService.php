@@ -9,8 +9,8 @@
 namespace Divante\MagentoIntegrationBundle\Application\Category;
 
 use Divante\MagentoIntegrationBundle\Application\Common\AbstractMappedObjectService;
-use Divante\MagentoIntegrationBundle\Domain\Event\IntegratedObjectEvent;
-use Divante\MagentoIntegrationBundle\Domain\Event\PostMappingObjectEvent;
+use Divante\MagentoIntegrationBundle\Domain\Common\Event\IntegratedObjectEvent;
+use Divante\MagentoIntegrationBundle\Domain\Common\Event\PostMappingObjectEvent;
 use Divante\MagentoIntegrationBundle\Domain\Mapper\MapperEventTypes;
 use Divante\MagentoIntegrationBundle\Domain\DataObject\IntegrationConfiguration;
 use Pimcore\Model\DataObject\Concrete;
