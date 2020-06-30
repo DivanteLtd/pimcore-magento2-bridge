@@ -86,6 +86,8 @@ services:
         class: Divante\MagentoIntegrationBundle\Domain\IntegrationConfiguration\PathCalculator
         public: true
 
+    Divante\MagentoIntegrationBundle\Domain\Mapper\ImporterExporterHelper: ~
+
 ### Infrastructure
     Divante\MagentoIntegrationBundle\Infrastructure\IntegrationConfiguration\IntegrationConfigurationListener:
         tags:
@@ -146,6 +148,7 @@ services:
 
     # Responder
     Divante\MagentoIntegrationBundle\Responder\JsonResponder: ~
+    Divante\MagentoIntegrationBundle\Responder\JsonFileResponder: ~
     Divante\MagentoIntegrationBundle\Responder\MappedObjectJsonResponder: ~
 
     #Monolog

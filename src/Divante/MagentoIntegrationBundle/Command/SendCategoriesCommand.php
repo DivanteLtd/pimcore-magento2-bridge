@@ -16,7 +16,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class SendCategoriesCommand extends AbstractCommand
 {
 
-    private $updateSerice;
+    private $updateService;
     protected static $defaultName = 'integration-magento:send:category';
 
     /**
@@ -27,7 +27,7 @@ class SendCategoriesCommand extends AbstractCommand
     public function __construct(BulkUpdateService $bulkUpdateService, string $name = null)
     {
         parent::__construct($name);
-        $this->updateSerice = $bulkUpdateService;
+        $this->updateService = $bulkUpdateService;
     }
 
     /**
@@ -40,7 +40,7 @@ class SendCategoriesCommand extends AbstractCommand
         $this->addArgument(
             "idCategory",
             InputArgument::REQUIRED,
-            "Id or comma separated ids of produ180cts you want to send or 'all' if you want to send all of them"
+            "Id or comma separated ids of products you want to send or 'all' if you want to send all of them"
         );
 
         $this->addArgument(
@@ -60,8 +60,8 @@ class SendCategoriesCommand extends AbstractCommand
         $start = microtime(true);
         $idCategory = $input->getArgument("idCategory");
         $idConfig = $input->getArgument("idConfiguration");
-        $this->updateSerice->setLogger(new ConsoleLogger($output));
-        $objects = $this->updateSerice->updateCategories($idCategory, $idConfig);
+        $this->updateService->setLogger(new ConsoleLogger($output));
+        $objects = $this->updateService->updateCategories($idCategory, $idConfig);
 
         $timeElapsed = microtime(true) - $start;
         $output->writeln("<fg=green>Send Categories command has succeeded.</>");

@@ -164,6 +164,7 @@ pimcore.plugin.MagentoIntegrationBundle.CategoryMapper = Class.create(pimcore.pl
                                         valueField: 'identifier',
                                         object: this.object,
                                         editable: true,
+                                        minChars: 1,
                                         listeners: {
                                             focus: function (comp, record, index) {
                                                 if (comp.getValue() === "" || comp.getValue() === "(Empty)") {
@@ -468,11 +469,70 @@ pimcore.plugin.MagentoIntegrationBundle.CategoryMapper = Class.create(pimcore.pl
             }.bind(this)
         });
 
+        this.exportMapping = new Ext.Button({
+            iconCls: 'pimcore_icon_download',
+            text: '<b>' + t("Export mapping") + '<b>',
+            tooltip: t("Export current mapping configuration"),
+            href: "/admin/mappings/export/category/" + this.object.id
+        });
+
+        this.importMapping = new Ext.Button({
+            iconCls: 'pimcore_icon_upload',
+            text: '<b>' + t("Import mapping") + '<b>',
+            tooltip: t("Import mapping configuration"),
+            handler: function () {
+                var popup = Ext.create('Ext.window.Window', {
+                    title: 'Upload category mapping',
+                    height: 150,
+                    width: 500,
+                    layout: 'fit',
+                    items: [
+                        new Ext.form.FormPanel({
+                            width: 400,
+                            bodyPadding: 10,
+                            frame: true,
+                            url: '/mappings/import/category/' + this.object.id,
+                            renderTo: Ext.getBody(),
+                            items: [{
+                                xtype: 'filefield',
+                                msgTarget: 'side',
+                                allowBlank: false,
+                                name: 'file',
+                                anchor: '100%',
+                                buttonText: 'Browse'
+                            }],
+                            buttons: [{
+                                text: 'Upload',
+                                handler: function(bt) {
+                                    var form = bt.up('form').getForm();
+                                    if(form.isValid()) {
+                                        form.submit({
+                                            waitMsg: 'Uploading your configuration',
+                                            success: function(fp, o) {
+                                                Ext.Msg.alert('Success', 'Your configuration has been uploaded.');
+                                                popup.close();
+                                            },
+                                            failure: function(fp, o){
+                                                var response = JSON.parse(this.response.responseText);
+                                                Ext.Msg.alert('Error', response.message);
+                                            }
+                                        });
+                                        this.object.reload();
+                                    }
+                                }.bind(this)
+                            }]
+                        })
+                    ]}).show();
+            }.bind(this)
+        });
+
         return new Ext.Toolbar({
             scrollable: "x",
             items: [
                 this.addRow, "-",
-                this.deleteRow, "-",
+                this.deleteRow, "->",
+                this.exportMapping, "-",
+                this.importMapping
             ]
         });
     },

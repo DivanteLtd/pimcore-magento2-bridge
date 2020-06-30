@@ -20,6 +20,8 @@ services:
 
     Divante\MagentoIntegrationBundle\Application\Mapper\MapperContext: ~
     Divante\MagentoIntegrationBundle\Application\Mapper\MapperManager: ~
+    Divante\MagentoIntegrationBundle\Application\Mapper\MapperExporter: ~
+    Divante\MagentoIntegrationBundle\Application\Mapper\MapperImporter: ~
 
     Divante\MagentoIntegrationBundle\Application\Mapper\MapperColumnsService:
         arguments:
