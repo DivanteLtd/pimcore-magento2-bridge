@@ -11,6 +11,7 @@ namespace Divante\MagentoIntegrationBundle\Application\Mapper\Strategy;
 use Divante\MagentoIntegrationBundle\Application\Mapper\Strategy\MapStrategyInterface;
 use Divante\MagentoIntegrationBundle\Domain\DataObject\IntegrationConfiguration\AttributeType;
 use Divante\MagentoIntegrationBundle\Domain\Mapper\MapperHelper;
+use Pimcore\Model\Asset\Image\Thumbnail;
 use Pimcore\Model\Webservice\Data\DataObject\Element;
 use Symfony\Component\Translation\TranslatorInterface;
 

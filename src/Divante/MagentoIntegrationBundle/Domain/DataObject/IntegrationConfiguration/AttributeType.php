@@ -25,4 +25,5 @@ abstract class AttributeType
     const PRODUCT_LISTING = 'used_in_product_listing';
 
     const IMAGE_DEFAULT = "original";
+    const THUMBNAIL_CONCAT = "~";
 }

@@ -36,8 +36,9 @@ class MappedAssetService
      */
     public function getAsset(string $id): array
     {
-        $thumbnail = substr($id, strpos($id, "-") + 1);
-        $id = explode("-", $id)[0];
+        $params = explode(AttributeType::THUMBNAIL_CONCAT, $id);
+        $id = $params[0];
+        $thumbnail = $params[1];
         $asset = Asset::getById($id);
         if (!$asset instanceof Asset) {
             return [
