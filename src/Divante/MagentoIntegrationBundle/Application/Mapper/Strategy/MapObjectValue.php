@@ -42,10 +42,16 @@ class MapObjectValue extends AbstractMapStrategy
         foreach ($names as $name) {
             $thumbnail = $this->getThumbnail($field, $arrayMapping, $name);
             if ($thumbnail) {
-                $parsedData["thumbnail"] = $thumbnail;
+                $parsedData["value"]['id'] .=  "-" . $thumbnail;
             }
             $obj->{$name} = $parsedData;
-            unset($parsedData["thumbnail"]);
+            if (strpos($parsedData["value"]['id'], '-') !== false) {
+                $parsedData["value"]['id'] = substr(
+                    $parsedData["value"]['id'],
+                    0,
+                    strpos($parsedData["value"]['id'], "-")
+                );
+            }
         }
     }
 

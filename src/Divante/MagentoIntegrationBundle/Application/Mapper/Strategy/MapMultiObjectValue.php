@@ -46,10 +46,20 @@ class MapMultiObjectValue extends AbstractMapStrategy
         foreach ($names as $name) {
             $thumbnail = $this->getThumbnail($field, $arrayMapping, $name);
             if ($thumbnail) {
-                $parsedData["thumbnail"] = $thumbnail;
+                foreach ($parsedData["value"] as $key => $element) {
+                    $parsedData["value"][$key]['id'] .= "-" . $thumbnail;
+                }
             }
             $obj->{$name} = $parsedData;
-            unset($parsedData["thumbnail"]);
+            foreach ($parsedData["value"] as $key => $element) {
+                if (strpos($parsedData["value"][$key]['id'], '-') !== false) {
+                    $parsedData["value"][$key]['id'] = substr(
+                        $parsedData["value"][$key]['id'],
+                        0,
+                        strpos($parsedData["value"][$key]['id'], "-")
+                    );
+                }
+            }
         }
     }
 

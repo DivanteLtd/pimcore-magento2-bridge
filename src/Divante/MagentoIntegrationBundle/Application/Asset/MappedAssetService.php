@@ -2,6 +2,7 @@
 
 namespace Divante\MagentoIntegrationBundle\Application\Asset;
 
+use Divante\MagentoIntegrationBundle\Domain\DataObject\IntegrationConfiguration\AttributeType;
 use Pimcore\Model\Asset;
 use Pimcore\Model\Webservice\Data\Mapper;
 
@@ -33,8 +34,10 @@ class MappedAssetService
      * @return array
      * @throws \Exception
      */
-    public function getAsset(string $id, ?string $thumbnail): array
+    public function getAsset(string $id): array
     {
+        $thumbnail = substr($id, strpos($id, "-") + 1);
+        $id = explode("-", $id)[0];
         $asset = Asset::getById($id);
         if (!$asset instanceof Asset) {
             return [
@@ -44,9 +47,10 @@ class MappedAssetService
         }
 
         $outputAsset = Mapper::map($asset, "Pimcore\Model\Webservice\Data\Asset\File\Out", 'out');
-        if ($thumbnail && $asset instanceof Asset\Image) {
+        if ($thumbnail && $thumbnail !== AttributeType::IMAGE_DEFAULT && $asset instanceof Asset\Image) {
             try {
-                $outputAsset->{"thumbnail"} = $this->thumbnailService->getThumbnailData($asset, $thumbnail);
+                $outputAsset->{"data"} = $this->thumbnailService->getThumbnailData($asset, $thumbnail);
+                $outputAsset->{"mimetype"} = $asset->getThumbnail($thumbnail)->getMimeType();
             } catch (\Exception $exception) {
                 return [
                     "success" => false,
@@ -59,9 +63,10 @@ class MappedAssetService
             }
         }
 
-        $outputAsset->checksum = [
+        $checksum = hash(static::HASH_ALGO, $outputAsset->{"data"});
+        $outputAsset->{"checksum"} = [
             'algo' => static::HASH_ALGO,
-            'value' => $asset->getChecksum(static::HASH_ALGO)
+            'value' => $checksum
         ];
 
         return ['data' => $outputAsset];

@@ -31,9 +31,9 @@ class ThumbnailService
     /**
      * @param Asset $asset
      * @param string $thumbnail
-     * @return array
+     * @return string
      */
-    public function getThumbnailData(Asset $asset, string $thumbnail): array
+    public function getThumbnailData(Asset $asset, string $thumbnail): string
     {
         $thumbnail = $asset->getThumbnail($thumbnail, false);
         $thumbnailData = file_get_contents(
@@ -44,15 +44,6 @@ class ThumbnailService
                 (string) $thumbnail
             ));
 
-        $thumbnailOutput = [];
-        $thumbnailOutput['data'] = base64_encode($thumbnailData);
-        $thumbnailOutput['mimetype'] = $thumbnail->getMimeType();
-        $checksum = hash(static::HASH_ALGO, $thumbnailData);
-        $thumbnailOutput["checksum"] = [
-            'algo' => static::HASH_ALGO,
-            'value' => $checksum
-        ];
-
-        return  $thumbnailOutput;
+        return base64_encode($thumbnailData);
     }
 }
