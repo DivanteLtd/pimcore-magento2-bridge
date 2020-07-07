@@ -2,6 +2,7 @@
 
 namespace Divante\MagentoIntegrationBundle\Application\Asset;
 
+use Divante\MagentoIntegrationBundle\Domain\DataObject\IntegrationConfiguration\AttributeType;
 use Pimcore\Model\Asset;
 use Pimcore\Model\Webservice\Data\Mapper;
 
@@ -28,40 +29,45 @@ class MappedAssetService
     }
 
     /**
-     * @param string $id
+     * @param string $idAsset
      * @param string|null $thumbnail
      * @return array
      * @throws \Exception
      */
-    public function getAsset(string $id, ?string $thumbnail): array
+    public function getAsset(string $idAsset): array
     {
-        $asset = Asset::getById($id);
+        $params = explode(AttributeType::THUMBNAIL_CONCAT, $idAsset);
+        $idAsset = $params[0];
+        $thumbnail = $params[1];
+        $asset = Asset::getById($idAsset);
         if (!$asset instanceof Asset) {
             return [
                 "success" => false,
-                "message" => sprintf("Asset with id: %s not found", $id)
+                "message" => sprintf("Asset with id: %s not found", $idAsset)
             ];
         }
 
         $outputAsset = Mapper::map($asset, "Pimcore\Model\Webservice\Data\Asset\File\Out", 'out');
-        if ($thumbnail && $asset instanceof Asset\Image) {
+        if ($thumbnail && $thumbnail !== AttributeType::IMAGE_DEFAULT && $asset instanceof Asset\Image) {
             try {
-                $outputAsset->{"thumbnail"} = $this->thumbnailService->getThumbnailData($asset, $thumbnail);
+                $outputAsset->{"data"} = $this->thumbnailService->getThumbnailData($asset, $thumbnail);
+                $outputAsset->{"mimetype"} = $asset->getThumbnail($thumbnail)->getMimeType();
             } catch (\Exception $exception) {
                 return [
                     "success" => false,
                     "message" => sprintf(
                         "Error retrieving thumbnail data from asset: %s, thumbnail: %s",
-                        $id,
+                        $idAsset,
                         $thumbnail
                     )
                 ];
             }
         }
 
-        $outputAsset->checksum = [
+        $checksum = hash(static::HASH_ALGO, $outputAsset->{"data"});
+        $outputAsset->{"checksum"} = [
             'algo' => static::HASH_ALGO,
-            'value' => $asset->getChecksum(static::HASH_ALGO)
+            'value' => $checksum
         ];
 
         return ['data' => $outputAsset];

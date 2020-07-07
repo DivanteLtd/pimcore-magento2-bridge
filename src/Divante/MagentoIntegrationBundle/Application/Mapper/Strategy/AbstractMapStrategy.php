@@ -9,7 +9,9 @@
 namespace Divante\MagentoIntegrationBundle\Application\Mapper\Strategy;
 
 use Divante\MagentoIntegrationBundle\Application\Mapper\Strategy\MapStrategyInterface;
+use Divante\MagentoIntegrationBundle\Domain\DataObject\IntegrationConfiguration\AttributeType;
 use Divante\MagentoIntegrationBundle\Domain\Mapper\MapperHelper;
+use Pimcore\Model\Asset\Image\Thumbnail;
 use Pimcore\Model\Webservice\Data\DataObject\Element;
 use Symfony\Component\Translation\TranslatorInterface;
 
@@ -116,7 +118,7 @@ abstract class AbstractMapStrategy implements MapStrategyInterface
         if (array_key_exists($element->name, $arrayMapping) && in_array($element->type, MapperHelper::IMAGE_TYPES)) {
             foreach ($arrayMapping[$element->name] as $mapping) {
                 if (str_replace('-', '_', strtolower($mapping['field'])) === $name) {
-                    return $mapping['thumbnail'];
+                    return $mapping['thumbnail'] ?? AttributeType::IMAGE_DEFAULT;
                 }
             }
         }

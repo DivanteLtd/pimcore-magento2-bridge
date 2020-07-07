@@ -43,11 +43,6 @@ class GetAssetAction
      */
     public function __invoke(AssetRequest $query): JsonResponse
     {
-        return $this->responder->createResponse(
-            $this->domain->getAsset(
-                $query->id,
-                $query->thumbnail
-            )
-        );
+        return $this->responder->createResponse($this->domain->getAsset($query->id));
     }
 }

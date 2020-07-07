@@ -9,6 +9,7 @@
 namespace Divante\MagentoIntegrationBundle\Application\Mapper\Strategy;
 
 use Divante\MagentoIntegrationBundle\Application\Mapper\Strategy\AbstractMapStrategy;
+use Divante\MagentoIntegrationBundle\Domain\DataObject\IntegrationConfiguration\AttributeType;
 use Pimcore\Model\Webservice\Data\DataObject\Element;
 use Divante\MagentoIntegrationBundle\Domain\Mapper\MapperHelper;
 
@@ -42,10 +43,16 @@ class MapObjectValue extends AbstractMapStrategy
         foreach ($names as $name) {
             $thumbnail = $this->getThumbnail($field, $arrayMapping, $name);
             if ($thumbnail) {
-                $parsedData["thumbnail"] = $thumbnail;
+                $parsedData["value"]['id'] .=  AttributeType::THUMBNAIL_CONCAT . $thumbnail;
             }
             $obj->{$name} = $parsedData;
-            unset($parsedData["thumbnail"]);
+            if (strpos($parsedData["value"]['id'], AttributeType::THUMBNAIL_CONCAT) !== false) {
+                $parsedData["value"]['id'] = substr(
+                    $parsedData["value"]['id'],
+                    0,
+                    strpos($parsedData["value"]['id'], AttributeType::THUMBNAIL_CONCAT)
+                );
+            }
         }
     }
 
