@@ -70,6 +70,9 @@ class MappedAssetService
             'value' => $checksum
         ];
 
-        return ['data' => $outputAsset];
+        return [
+            'success' => true,
+            'data' => $outputAsset
+        ];
     }
 }
