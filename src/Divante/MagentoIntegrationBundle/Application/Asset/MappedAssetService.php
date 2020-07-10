@@ -48,7 +48,6 @@ class MappedAssetService
         }
 
         $outputAsset = Mapper::map($asset, "Pimcore\Model\Webservice\Data\Asset\File\Out", 'out');
-        $checksum = $asset->getChecksum(static::HASH_ALGO);
         if ($thumbnail && $thumbnail !== AttributeType::IMAGE_DEFAULT && $asset instanceof Asset\Image) {
             try {
                 $outputAsset->data = $this->thumbnailService->getThumbnailData($asset, $thumbnail);
@@ -64,6 +63,8 @@ class MappedAssetService
                     )
                 ];
             }
+        } else {
+            $checksum = $asset->getChecksum(static::HASH_ALGO);
         }
 
         $outputAsset->checksum = [
