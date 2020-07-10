@@ -43,7 +43,7 @@ class IntegratedObjectValidator
             try {
                 $validator->isValid($object, $configuration, $type);
             } catch (\Exception $exception) {
-                if ($silent) {
+                if ($silent || $validator->isSilent()) {
                     return false;
                 }
                 throw $exception;

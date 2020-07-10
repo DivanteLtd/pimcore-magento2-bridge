@@ -24,4 +24,9 @@ interface ObjectValidationRuleInterface
      * @return int
      */
     public static function getPriority(): int;
+
+    /**
+     * @return bool
+     */
+    public function isSilent(): bool;
 }

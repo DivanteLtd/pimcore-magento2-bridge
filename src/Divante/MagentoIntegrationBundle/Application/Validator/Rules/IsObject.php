@@ -35,4 +35,11 @@ class IsObject implements ObjectValidationRuleInterface
         return 10;
     }
 
+    /**
+     * @inheritDoc
+     */
+    public function isSilent(): bool
+    {
+        return false;
+    }
 }
