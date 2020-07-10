@@ -48,10 +48,12 @@ class MappedAssetService
         }
 
         $outputAsset = Mapper::map($asset, "Pimcore\Model\Webservice\Data\Asset\File\Out", 'out');
+        $checksum = $asset->getChecksum(static::HASH_ALGO);
         if ($thumbnail && $thumbnail !== AttributeType::IMAGE_DEFAULT && $asset instanceof Asset\Image) {
             try {
-                $outputAsset->{"data"} = $this->thumbnailService->getThumbnailData($asset, $thumbnail);
-                $outputAsset->{"mimetype"} = $asset->getThumbnail($thumbnail)->getMimeType();
+                $outputAsset->data = $this->thumbnailService->getThumbnailData($asset, $thumbnail);
+                $outputAsset->mimetype = $asset->getThumbnail($thumbnail)->getMimeType();
+                $checksum = $asset->getThumbnail($thumbnail)->getChecksum(static::HASH_ALGO);
             } catch (\Exception $exception) {
                 return [
                     "success" => false,
@@ -64,8 +66,7 @@ class MappedAssetService
             }
         }
 
-        $checksum = hash(static::HASH_ALGO, $outputAsset->{"data"});
-        $outputAsset->{"checksum"} = [
+        $outputAsset->checksum = [
             'algo' => static::HASH_ALGO,
             'value' => $checksum
         ];
