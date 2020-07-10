@@ -41,4 +41,12 @@ class CategoryParentsMustBePublished implements ObjectValidationRuleInterface
     {
         return 0;
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function isSilent(): bool
+    {
+        return false;
+    }
 }
