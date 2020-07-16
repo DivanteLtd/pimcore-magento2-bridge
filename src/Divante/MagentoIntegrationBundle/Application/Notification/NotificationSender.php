@@ -66,13 +66,14 @@ class NotificationSender
      * @param Concrete $concrete
      * @param IntegrationConfiguration[] $configurations
      * @param string $type
+     * @param bool $silent
      * @throws \Exception
      */
     public function sendDeleteStatus(
         Concrete $concrete,
         array $configurations,
         string $type,
-        bool $silent = false
+        bool $silent = true
     ) {
         if (!$configurations) {
             return;
@@ -90,7 +91,7 @@ class NotificationSender
         }
         foreach ($configurations as $configuration) {
             if (!$this->validator->validateAbstractObject($concrete, $configuration, $type, $silent)) {
-                return;
+                continue;
             }
             $sender->sendDelete($concrete, $configuration);
         }

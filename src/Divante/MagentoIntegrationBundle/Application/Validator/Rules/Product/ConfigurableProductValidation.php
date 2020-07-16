@@ -17,7 +17,6 @@ use Pimcore\Model\Element\ValidationException;
  */
 class ConfigurableProductValidation implements ObjectValidationRuleInterface
 {
-
     /**
      * @inheritDoc
      */
