@@ -491,7 +491,7 @@ pimcore.plugin.MagentoIntegrationBundle.CategoryMapper = Class.create(pimcore.pl
                             width: 400,
                             bodyPadding: 10,
                             frame: true,
-                            url: '/mappings/import/category/' + this.object.id,
+                            url: '/admin/mappings/import/category/' + this.object.id,
                             renderTo: Ext.getBody(),
                             items: [{
                                 xtype: 'filefield',
@@ -507,6 +507,9 @@ pimcore.plugin.MagentoIntegrationBundle.CategoryMapper = Class.create(pimcore.pl
                                     var form = bt.up('form').getForm();
                                     if(form.isValid()) {
                                         form.submit({
+                                            params: {
+                                                csrfToken: pimcore.settings['csrfToken']
+                                            },
                                             waitMsg: 'Uploading your configuration',
                                             success: function(fp, o) {
                                                 Ext.Msg.alert('Success', 'Your configuration has been uploaded.');

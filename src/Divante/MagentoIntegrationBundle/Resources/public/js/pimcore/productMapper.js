@@ -593,7 +593,7 @@ pimcore.plugin.MagentoIntegrationBundle.ProductMapper = Class.create(pimcore.plu
                             width: 400,
                             bodyPadding: 10,
                             frame: true,
-                            url: '/mappings/import/product/' + this.object.id,
+                            url: '/admin/mappings/import/product/' + this.object.id,
                             renderTo: Ext.getBody(),
                             items: [{
                                 xtype: 'filefield',
@@ -609,6 +609,9 @@ pimcore.plugin.MagentoIntegrationBundle.ProductMapper = Class.create(pimcore.plu
                                     var form = bt.up('form').getForm();
                                     if(form.isValid()) {
                                         form.submit({
+                                            params: {
+                                                csrfToken: pimcore.settings['csrfToken']
+                                            },
                                             waitMsg: 'Uploading your configuration',
                                             success: function(fp, o) {
                                                 Ext.Msg.alert('Success', 'Your configuration has been uploaded.');

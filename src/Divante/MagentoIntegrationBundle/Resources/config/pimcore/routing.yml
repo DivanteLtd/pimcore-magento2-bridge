@@ -60,4 +60,5 @@ magento_integration_mapper.export:
 
 magento_integration_mapper.import:
     resource: "@DivanteMagentoIntegrationBundle/Action/Mapper/ImportAction.php"
+    prefix: /admin
     type: annotation
