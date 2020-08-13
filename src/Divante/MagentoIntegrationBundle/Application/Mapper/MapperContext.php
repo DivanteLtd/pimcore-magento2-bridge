@@ -9,6 +9,7 @@
 namespace Divante\MagentoIntegrationBundle\Application\Mapper;
 
 use Divante\MagentoIntegrationBundle\Application\Mapper\Strategy\MapStrategyInterface;
+use Divante\MagentoIntegrationBundle\Domain\Mapper\Model\IntegratedObject;
 use Pimcore\Model\Webservice\Data\DataObject\Element;
 
 /**
@@ -29,18 +30,24 @@ class MapperContext
     }
 
     /**
-     * @param Element   $field
+     * @param Element $field
      * @param \stdClass $obj
-     * @param array     $arrayMapping
-     * @param mixed     $language
-     * @param mixed     $definition
-     * @param string    $className
+     * @param array $arrayMapping
+     * @param mixed $language
+     * @param mixed $definition
+     * @param $integratedObject
      */
-    public function map(Element $field, \stdClass &$obj, array $arrayMapping, $language, $definition, $className): void
-    {
+    public function map(
+        Element $field,
+        \stdClass &$obj,
+        array $arrayMapping,
+        $language,
+        $definition,
+        IntegratedObject $integratedObject
+    ): void {
         foreach ($this->strategies as $strategy) {
             if ($strategy->canProcess($field, $arrayMapping)) {
-                $strategy->map($field, $obj, $arrayMapping, $language, $definition, $className);
+                $strategy->map($field, $obj, $arrayMapping, $language, $definition, $integratedObject);
             }
         }
     }

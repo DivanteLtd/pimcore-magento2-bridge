@@ -12,6 +12,7 @@ use Divante\MagentoIntegrationBundle\Domain\IntegrationConfiguration\Integration
 use Divante\MagentoIntegrationBundle\Domain\Mapper\MapperHelper;
 use Divante\MagentoIntegrationBundle\Domain\DataObject\IntegrationConfiguration;
 use Divante\MagentoIntegrationBundle\Domain\Mapper\Model\FromColumn;
+use Divante\MagentoIntegrationBundle\Domain\Mapper\Model\IntegratedObject;
 use Pimcore\Cache\Core\Exception\InvalidArgumentException;
 use Pimcore\Model\DataObject;
 use Pimcore\Model\DataObject\Concrete;
@@ -92,7 +93,7 @@ class MapperService
                         $mappingArray,
                         $configuration->getDefaultLanguage(),
                         $objectClass,
-                        $out->className
+                        $this->createIntegratedObject($out)
                     );
                 }
                 $object->{self::ELEMENTS_PROPERTY_NAME} = $elements;
@@ -100,6 +101,19 @@ class MapperService
         }
         $this->removeUnusedAttributes($object);
         return $object;
+    }
+
+    /**
+     * @param $out
+     * @return IntegratedObject
+     */
+    protected function createIntegratedObject($out): IntegratedObject
+    {
+        $integratedObject = new IntegratedObject();
+        $integratedObject->setClassName($out->className);
+        $integratedObject->setObjectId($out->id);
+
+        return $integratedObject;
     }
 
     /**

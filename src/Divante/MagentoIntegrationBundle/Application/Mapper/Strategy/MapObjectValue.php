@@ -23,14 +23,14 @@ class MapObjectValue extends AbstractMapStrategy
     const ALLOWED_TYPES_ARRAY = MapperHelper::OBJECT_TYPES;
 
     /**
-     * @param Element     $field
-     * @param \stdClass   $obj
-     * @param array       $arrayMapping
+     * @param Element $field
+     * @param \stdClass $obj
+     * @param array $arrayMapping
      * @param string|null $language
-     * @param mixed       $definition
-     * @param string      $className
+     * @param mixed $definition
+     * @param $integratedObject
      */
-    public function map(Element $field, \stdClass &$obj, array $arrayMapping, $language, $definition, $className): void
+    public function map(Element $field, \stdClass &$obj, array $arrayMapping, $language, $definition, $integratedObject): void
     {
         $names      = $this->getFieldNames($field, $arrayMapping);
         $parsedData = [

@@ -22,14 +22,14 @@ class MapMultiSelectValue extends MapTextValue
     const ALLOWED_TYPES_ARRAY = MapperHelper::MULTI_SELECT_TYPES;
 
     /**
-     * @param Element   $field
+     * @param Element $field
      * @param \stdClass $obj
-     * @param array     $arrayMapping
-     * @param null      $language
-     * @param mixed     $definition
-     * @param string    $className
+     * @param array $arrayMapping
+     * @param null $language
+     * @param mixed $definition
+     * @param $integratedObject
      */
-    public function map(Element $field, \stdClass &$obj, array $arrayMapping, $language, $definition, $className): void
+    public function map(Element $field, \stdClass &$obj, array $arrayMapping, $language, $definition, $integratedObject): void
     {
         if (!$field->value) {
             return;

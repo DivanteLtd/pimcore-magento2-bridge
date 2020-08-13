@@ -37,16 +37,21 @@ class MapObjectBricks extends AbstractMapStrategy
     }
 
     /**
-     * @param Element     $field
-     * @param \stdClass   $obj
-     * @param array       $arrayMapping
+     * @param Element $field
+     * @param \stdClass $obj
+     * @param array $arrayMapping
      * @param string|null $language
-     * @param string      $className
-     * @param mixed       $definition
-     * @throws \Exception
+     * @param mixed $definition
+     * @param $integratedObject
      */
-    public function map(Element $field, \stdClass &$obj, array $arrayMapping, $language, $definition, $className): void
-    {
+    public function map(
+        Element $field,
+        \stdClass &$obj,
+        array $arrayMapping,
+        $language,
+        $definition,
+        $integratedObject
+    ): void {
         /** @var Element $brick */
         foreach ($field->value as $brick) {
             /** @var Objectbrick\Definition $brickDefinition */
@@ -61,7 +66,14 @@ class MapObjectBricks extends AbstractMapStrategy
                 $fieldDefinition = $brickDefinition->getFieldDefinition($attribute->name);
                 $attribute->label = $fieldDefinition ? $fieldDefinition->getTitle() : $attribute->name;
                 $attribute->name = $field->name . '_' . $brick->type . '_' . $attribute->name;
-                $this->mapperContext->map($attribute, $obj, $arrayMapping, $language, $brickDefinition, $className);
+                $this->mapperContext->map(
+                    $attribute,
+                    $obj,
+                    $arrayMapping,
+                    $language,
+                    $brickDefinition,
+                    $integratedObject
+                );
             }
         }
     }

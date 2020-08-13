@@ -38,15 +38,21 @@ class MapStructuredValue extends AbstractMapStrategy
     }
 
     /**
-     * @param Element     $field
-     * @param \stdClass   $obj
-     * @param array       $configuration
+     * @param Element $field
+     * @param \stdClass $obj
+     * @param array $configuration
      * @param string|null $language
-     * @param mixed       $definition
-     * @param string      $className
+     * @param mixed $definition
+     * @param $integratedObject
      */
-    public function map(Element $field, \stdClass &$obj, array $configuration, $language, $definition, $className): void
-    {
+    public function map(
+        Element $field,
+        \stdClass &$obj,
+        array $configuration,
+        $language,
+        $definition,
+        $integratedObject
+    ): void {
         if (!$field->value) {
             return;
         }
@@ -63,7 +69,7 @@ class MapStructuredValue extends AbstractMapStrategy
                 $fieldDefinition = $fields->getFielddefinition($value->name);
                 $value->label = $fieldDefinition ? $fieldDefinition->title : $value->name;
                 $value->name = $prefix . $value->name;
-                $this->mapperContext->map($value, $obj, $configuration, $language, $definition, $className);
+                $this->mapperContext->map($value, $obj, $configuration, $language, $definition, $integratedObject);
             }
         }
     }
