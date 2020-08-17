@@ -93,7 +93,7 @@ class MapperService
                         $mappingArray,
                         $configuration->getDefaultLanguage(),
                         $objectClass,
-                        $this->createIntegratedObject($out)
+                        $out
                     );
                 }
                 $object->{self::ELEMENTS_PROPERTY_NAME} = $elements;
@@ -103,18 +103,6 @@ class MapperService
         return $object;
     }
 
-    /**
-     * @param $out
-     * @return IntegratedObject
-     */
-    protected function createIntegratedObject($out): IntegratedObject
-    {
-        $integratedObject = new IntegratedObject();
-        $integratedObject->setClassName($out->className);
-        $integratedObject->setObjectId($out->id);
-
-        return $integratedObject;
-    }
 
     /**
      * @param Element                    $element

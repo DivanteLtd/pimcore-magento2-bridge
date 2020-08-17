@@ -27,9 +27,9 @@ class MapMultiSelectValue extends MapTextValue
      * @param array $arrayMapping
      * @param null $language
      * @param mixed $definition
-     * @param $integratedObject
+     * @param $outObject
      */
-    public function map(Element $field, \stdClass &$obj, array $arrayMapping, $language, $definition, $integratedObject): void
+    public function map(Element $field, \stdClass &$obj, array $arrayMapping, $language, $definition, $outObject): void
     {
         if (!$field->value) {
             return;

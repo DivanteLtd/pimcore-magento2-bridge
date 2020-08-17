@@ -41,10 +41,10 @@ class MapClassificationStoreValue extends AbstractMapStrategy
      * @param array $arrayMapping
      * @param string|null $language
      * @param             $definition
-     * @param $integratedObject
+     * @param $outObject
      * @return void
      */
-    public function map(Element $field, \stdClass &$obj, array $arrayMapping, $language, $definition, $integratedObject): void
+    public function map(Element $field, \stdClass &$obj, array $arrayMapping, $language, $definition, $outObject): void
     {
         if (!is_array($field->value['groups'])) {
             return;

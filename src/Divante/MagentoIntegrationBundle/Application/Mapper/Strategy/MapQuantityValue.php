@@ -28,9 +28,9 @@ class MapQuantityValue extends AbstractMapStrategy
      * @param array $arrayMapping
      * @param string|null $language
      * @param mixed $definition
-     * @param $integratedObject
+     * @param $outObject
      */
-    public function map(Element $field, \stdClass &$obj, array $arrayMapping, $language, $definition, $integratedObject): void
+    public function map(Element $field, \stdClass &$obj, array $arrayMapping, $language, $definition, $outObject): void
     {
         $names      = $this->getFieldNames($field, $arrayMapping);
         $parsedData = [

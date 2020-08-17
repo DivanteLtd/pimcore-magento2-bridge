@@ -35,7 +35,7 @@ class MapperContext
      * @param array $arrayMapping
      * @param mixed $language
      * @param mixed $definition
-     * @param $integratedObject
+     * @param $outObject
      */
     public function map(
         Element $field,
@@ -43,11 +43,11 @@ class MapperContext
         array $arrayMapping,
         $language,
         $definition,
-        IntegratedObject $integratedObject
+        $outObject
     ): void {
         foreach ($this->strategies as $strategy) {
             if ($strategy->canProcess($field, $arrayMapping)) {
-                $strategy->map($field, $obj, $arrayMapping, $language, $definition, $integratedObject);
+                $strategy->map($field, $obj, $arrayMapping, $language, $definition, $outObject);
             }
         }
     }

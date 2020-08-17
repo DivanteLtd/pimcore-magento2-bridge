@@ -22,7 +22,7 @@ interface MapStrategyInterface
      * @param array $arrayMapping
      * @param           $language
      * @param mixed $definition
-     * @param $integratedObject
+     * @param $outObject
      * @return mixed
      */
     public function map(
@@ -31,7 +31,7 @@ interface MapStrategyInterface
         array $arrayMapping,
         $language,
         $definition,
-        $integratedObject
+        $outObject
     );
 
     /**

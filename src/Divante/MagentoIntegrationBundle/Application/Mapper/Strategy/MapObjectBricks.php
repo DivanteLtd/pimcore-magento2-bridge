@@ -42,7 +42,7 @@ class MapObjectBricks extends AbstractMapStrategy
      * @param array $arrayMapping
      * @param string|null $language
      * @param mixed $definition
-     * @param $integratedObject
+     * @param $outObject
      */
     public function map(
         Element $field,
@@ -50,7 +50,7 @@ class MapObjectBricks extends AbstractMapStrategy
         array $arrayMapping,
         $language,
         $definition,
-        $integratedObject
+        $outObject
     ): void {
         /** @var Element $brick */
         foreach ($field->value as $brick) {
@@ -72,7 +72,7 @@ class MapObjectBricks extends AbstractMapStrategy
                     $arrayMapping,
                     $language,
                     $brickDefinition,
-                    $integratedObject
+                    $outObject
                 );
             }
         }
