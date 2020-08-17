@@ -17,15 +17,22 @@ use Pimcore\Model\Webservice\Data\DataObject\Element;
 interface MapStrategyInterface
 {
     /**
-     * @param Element   $field
+     * @param Element $field
      * @param \stdClass $obj
-     * @param array     $arrayMapping
+     * @param array $arrayMapping
      * @param           $language
-     * @param mixed     $definition
-     * @param           $className
+     * @param mixed $definition
+     * @param $outObject
      * @return mixed
      */
-    public function map(Element $field, \stdClass &$obj, array $arrayMapping, $language, $definition, $className);
+    public function map(
+        Element $field,
+        \stdClass &$obj,
+        array $arrayMapping,
+        $language,
+        $definition,
+        $outObject
+    );
 
     /**
      * @param Element $field
