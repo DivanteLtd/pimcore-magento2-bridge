@@ -61,8 +61,8 @@ class OnUpdateEventSubscriber implements EventSubscriberInterface
         if ($object->getType() === AbstractObject::OBJECT_TYPE_FOLDER) {
             return;
         }
-        
-        if ($this->isSaveOnly($objectEvent)) {
+
+        if (!$this->canNotifyMagento($objectEvent)) {
             return;
         }
 
@@ -87,12 +87,12 @@ class OnUpdateEventSubscriber implements EventSubscriberInterface
      * @param DataObjectEvent $objectEvent
      * @return bool
      */
-    protected function isSaveOnly(DataObjectEvent $objectEvent): bool
+    protected function canNotifyMagento(DataObjectEvent $objectEvent): bool
     {
         if ($objectEvent->hasArgument("saveVersionOnly")) {
-            return true;
+            return false;
         }
 
-        return !$objectEvent->getObject()->isPublished();
+        return $objectEvent->getObject()->getProperty('notify_magento') ?? true;
     }
 }
