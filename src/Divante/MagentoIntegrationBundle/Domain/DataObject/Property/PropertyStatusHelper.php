@@ -12,4 +12,6 @@ class PropertyStatusHelper
     const STATUS_SENT = "SENT";
     const STATUS_OK = "SUCCESS";
     const STATUS_ERROR = "ERROR";
+
+    const PROPERTY_NOTIFY_MAGENTO = "notify_magento";
 }

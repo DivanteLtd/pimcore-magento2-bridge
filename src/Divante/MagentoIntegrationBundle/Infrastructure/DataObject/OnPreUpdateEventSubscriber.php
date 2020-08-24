@@ -2,9 +2,12 @@
 
 namespace Divante\MagentoIntegrationBundle\Infrastructure\DataObject;
 
+use Divante\MagentoIntegrationBundle\Application\DataObject\ObjectPropertyUpdater;
+use Divante\MagentoIntegrationBundle\Application\DataObject\StatusUpdater;
 use Pimcore\Event\DataObjectEvents;
 use Pimcore\Event\Model\DataObjectEvent;
 use Pimcore\Model\DataObject\AbstractObject;
+use Pimcore\Model\DataObject\Concrete;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
@@ -13,6 +16,20 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 class OnPreUpdateEventSubscriber implements EventSubscriberInterface
 {
+    /**
+     * @var StatusUpdater
+     */
+    protected $propertyUpdater;
+
+    /**
+     * OnPreUpdateEventSubscriber constructor.
+     * @param ObjectPropertyUpdater $propertyUpdater
+     */
+    public function __construct(ObjectPropertyUpdater $propertyUpdater)
+    {
+        $this->propertyUpdater = $propertyUpdater;
+    }
+
     /**
      * @inheritDoc
      */
@@ -31,18 +48,14 @@ class OnPreUpdateEventSubscriber implements EventSubscriberInterface
     public function setNotificationAttribute(DataObjectEvent $objectEvent)
     {
         $preUpdateObject = $objectEvent->getObject();
-        $databaseObject = AbstractObject::getById($preUpdateObject->getId(), 1);
-        if ($preUpdateObject->getType() === AbstractObject::OBJECT_TYPE_FOLDER) {
+        $databaseObject = Concrete::getById($preUpdateObject->getId(), 1);
+        if (!$preUpdateObject instanceof Concrete) {
             return;
         }
         if (!$databaseObject instanceof $preUpdateObject) {
             return;
         }
 
-        if (!$databaseObject->isPublished() && !$preUpdateObject->isPublished()) {
-            $preUpdateObject->setProperty("notify_magento", 'bool', false);
-        } else {
-            $preUpdateObject->setProperty("notify_magento", 'bool', true);
-        }
+        $this->propertyUpdater->setMagentoNotificationProperty($databaseObject, $preUpdateObject);
     }
 }
