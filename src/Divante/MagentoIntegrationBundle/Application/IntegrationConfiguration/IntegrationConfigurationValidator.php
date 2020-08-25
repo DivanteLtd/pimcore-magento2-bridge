@@ -53,9 +53,13 @@ class IntegrationConfigurationValidator
         if (!$object->getIntegrationId()) {
             throw new ValidationException("IntegrationId field is required!");
         }
+        if ($object->getId() === 0) {
+            return;
+        }
         $configurations = $this->integrationRepository->getAllConfigurations();
         foreach ($configurations as $configuration) {
-            if ($object->getIntegrationId() === $configuration->getIntegrationId()) {
+            if ($object->getIntegrationId() === $configuration->getIntegrationId()
+            && $object->getId() !== $configuration->getId()) {
                 throw new ValidationException("IntegrationId field has to be unique!");
             }
         }
