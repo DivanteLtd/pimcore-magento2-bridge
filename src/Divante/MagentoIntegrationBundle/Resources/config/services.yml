@@ -103,6 +103,8 @@ services:
         tags: ['kernel.event_subscriber']
     Divante\MagentoIntegrationBundle\Infrastructure\DataObject\OnDeleteEventSubscriber:
         tags: ['kernel.event_subscriber']
+    Divante\MagentoIntegrationBundle\Infrastructure\DataObject\OnPreUpdateEventSubscriber:
+        tags: ['kernel.event_subscriber']
     Divante\MagentoIntegrationBundle\Infrastructure\DataObject\OnUpdateEventSubscriber:
         tags: ['kernel.event_subscriber']
     Divante\MagentoIntegrationBundle\Infrastructure\DataObject\Relations\ObjectRelationSubscriber:

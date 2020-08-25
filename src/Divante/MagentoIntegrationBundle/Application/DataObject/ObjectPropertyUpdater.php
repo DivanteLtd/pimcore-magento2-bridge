@@ -4,6 +4,7 @@ namespace Divante\MagentoIntegrationBundle\Application\DataObject;
 
 use Divante\MagentoIntegrationBundle\Domain\DataObject\Property\PropertyStatusHelper;
 use Divante\MagentoIntegrationBundle\Infrastructure\Common\EventListenersManager;
+use Pimcore\Model\DataObject\AbstractObject;
 use Pimcore\Model\DataObject\Concrete;
 use Pimcore\Model\DataObject\IntegrationConfiguration;
 use Pimcore\Model\Element\AbstractElement;
@@ -85,6 +86,24 @@ class ObjectPropertyUpdater implements LoggerAwareInterface
         $childStatuses = $properties[PropertyStatusHelper::PROPERTY_NAME];
 
         return json_decode($childStatuses->getData(), true);
+    }
+
+    /**
+     * @param Concrete $dbObject
+     * @param Concrete $updatedObject
+     * @return Concrete
+     */
+    public function setMagentoNotificationProperty(
+        Concrete $dbObject,
+        Concrete $updatedObject
+    ): Concrete {
+        if (!$dbObject->isPublished() && !$updatedObject->isPublished()) {
+            $updatedObject->setProperty(PropertyStatusHelper::PROPERTY_NOTIFY_MAGENTO, 'bool', false);
+        } else {
+            $updatedObject->setProperty(PropertyStatusHelper::PROPERTY_NOTIFY_MAGENTO, 'bool', true);
+        }
+
+        return $updatedObject;
     }
 
     /**
