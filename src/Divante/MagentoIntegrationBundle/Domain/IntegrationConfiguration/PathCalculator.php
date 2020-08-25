@@ -19,9 +19,9 @@ class PathCalculator
     public static function compute(Concrete $object, CalculatedValue $context)
     {
         if ($context->getFieldname() == 'productRootPath') {
-            return $object->getProductRoot() ? $object->getProductRoot()->getFullPath() : '';
+            return $object->getProductRoot() ? $object->getProductRoot()->getFullPath() : null;
         } elseif ($context->getFieldname() == 'categoryRootPath') {
-            return $object->getCategoryRoot() ? $object->getCategoryRoot()->getFullPath() : '';
+            return $object->getCategoryRoot() ? $object->getCategoryRoot()->getFullPath() : null;
         } else {
             throw new \InvalidArgumentException(
                 sprintf(
