@@ -97,6 +97,9 @@ class MapperColumnsService
             return ['success' => false];
         }
         $fromColumns = $this->mapperService->getClassDefinitionForFieldSelection($definition);
+        usort($fromColumns, function ($a, $b) {
+            return strcmp(strtolower($a->getLabel()), strtolower($b->getLabel()));
+        });
         $standardStructure =  array_filter($standardStructure, function ($elem) {
             return $elem[1] != null;
         });
