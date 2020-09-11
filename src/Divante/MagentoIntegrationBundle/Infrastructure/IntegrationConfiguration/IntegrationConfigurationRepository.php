@@ -38,6 +38,7 @@ class IntegrationConfigurationRepository
     private function getOrderedListing()
     {
         $listing = $this->factory->build(IntegrationConfiguration\Listing::class);
+        $listing->setCondition('o_published = :published', ["published" => true]);
         $listing->setOrderKey('o_index');
         $listing->setOrder('asc');
 
@@ -59,7 +60,7 @@ class IntegrationConfigurationRepository
     public function getByProduct(AbstractObject $object): array
     {
         return $this->getOrderedListing()
-            ->setCondition(
+            ->addConditionParam(
                 ":path LIKE CONCAT('%', productRootPath, '%')",
                 ['path' => $object->getPath()]
             )->load();
@@ -72,7 +73,7 @@ class IntegrationConfigurationRepository
     public function getByCategory(AbstractObject $object): array
     {
         return $this->getOrderedListing()
-            ->setCondition(
+            ->addConditionParam(
                 ":path LIKE CONCAT('%', categoryRootPath, '%')",
                 ['path' => $object->getPath()]
             )->load();
@@ -87,7 +88,7 @@ class IntegrationConfigurationRepository
     {
         $configurationListing = $this->getOrderedListing();
         $configurationListing
-            ->setCondition("integrationId IN (?)", [$integrationIds])
+            ->addConditionParam("integrationId IN (?)", [$integrationIds])
             ->load();
         return $configurationListing->getObjects();
     }
@@ -108,7 +109,7 @@ class IntegrationConfigurationRepository
         try {
             $configurationListing = $this->getOrderedListing();
             $configurationListing
-                ->setCondition($conditionData['condition'], $conditionData['data'])
+                ->addConditionParam($conditionData['condition'], $conditionData['data'])
                 ->load();
         } catch (\Exception $exception) {
             return [];
@@ -131,7 +132,7 @@ class IntegrationConfigurationRepository
         try {
             $configurationListing = $this->getOrderedListing();
             $configurationListing
-                ->setCondition($conditionData['condition'], $conditionData['data'])
+                ->addConditionParam($conditionData['condition'], $conditionData['data'])
                 ->load();
         } catch (\Exception $exception) {
             return [];
