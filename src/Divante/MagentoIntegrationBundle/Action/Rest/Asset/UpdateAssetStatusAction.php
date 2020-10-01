@@ -29,7 +29,7 @@ class UpdateAssetStatusAction
 
     /**
      * UpdateAssetStatusAction constructor.
-     * @param UpdateStatusRequest $domain
+     * @param StatusUpdater $domain
      * @param JsonResponder $jsonResponder
      */
     public function __construct(StatusUpdater $domain, JsonResponder $jsonResponder)

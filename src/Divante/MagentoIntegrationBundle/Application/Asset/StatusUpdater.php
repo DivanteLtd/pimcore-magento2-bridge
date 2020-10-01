@@ -4,14 +4,12 @@ namespace Divante\MagentoIntegrationBundle\Application\Asset;
 
 use Divante\MagentoIntegrationBundle\Application\DataObject\ObjectPropertyUpdater;
 use Divante\MagentoIntegrationBundle\Domain\Common\Exception\NotPermittedException;
-use Divante\MagentoIntegrationBundle\Domain\DataObject\Property\PropertyStatusHelper;
+use Divante\MagentoIntegrationBundle\Domain\DataObject\IntegrationConfiguration\AttributeType;
 use Divante\MagentoIntegrationBundle\Infrastructure\IntegrationConfiguration\IntegrationConfigurationRepository;
 use Divante\MagentoIntegrationBundle\Infrastructure\Security\ElementPermissionChecker;
 use Pimcore\Model\Asset;
-use Pimcore\Model\DataObject\IntegrationConfiguration;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
-use Psr\Log\LoggerInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 /**
@@ -65,7 +63,8 @@ class StatusUpdater implements LoggerAwareInterface
             $storeViewId
         );
         $configuration = reset($configurations);
-        $asset = Asset::getById($id);
+        $assetId = explode(AttributeType::THUMBNAIL_CONCAT, $id)[0];
+        $asset = Asset::getById($assetId);
         if (!$asset instanceof Asset) {
             return [
                 'success' => false,
@@ -83,57 +82,5 @@ class StatusUpdater implements LoggerAwareInterface
         }
 
         return ['success' => true];
-    }
-
-    /**
-     * @param UpdateStatus      $updateRequest
-     * @param Asset                    $asset
-     * @param IntegrationConfiguration $configuration
-     * @return array
-     */
-    protected function setStatus(
-        UpdateStatus $updateRequest,
-        Asset $asset,
-        IntegrationConfiguration $configuration
-    ): array {
-        if ($updateRequest->status == PropertyStatusHelper::STATUS_ERROR && $this->logger instanceof LoggerInterface) {
-            $this->logger->error(sprintf(
-                "Sync error for Asset (%s) instance (%s). Message: %s",
-                $updateRequest->id,
-                $updateRequest->instaceUrl,
-                $updateRequest->message
-            ));
-        }
-        $property = $asset->getProperty(PropertyStatusHelper::PROPERTY_NAME);
-        if ($property) {
-            $data = json_decode($property, true);
-        }
-        if (!$data) {
-            $data = [];
-        }
-        $data[sprintf("Store (%d)", $configuration->getMagentoStore())] = $updateRequest->status;
-        $asset->setProperty(PropertyStatusHelper::PROPERTY_NAME, 'text', json_encode($data));
-        try {
-            $this->removeListeners();
-            $asset->save();
-        } catch (\Exception $exception) {
-            return [
-                'success' => false,
-                'message' => $exception->getMessage()
-            ];
-        }
-
-        return ['success' => true];
-    }
-
-    /**
-     * @return void
-     */
-    protected function removeListeners(): void
-    {
-        $this->eventDispatcher->removeListener(
-            'pimcore.asset.preUpdate',
-            [$this->assetListener, 'onPreUpdate']
-        );
     }
 }
