@@ -118,11 +118,11 @@ class StatusUpdater implements LoggerAwareInterface
         );
         $configuration = reset($configurations);
         if (!$configuration instanceof IntegrationConfiguration) {
-            return ['success' => false];
+            return ['success' => false, "message" => "Configuration not found"];
         }
         $objects = $repository->getObjects(explode(',', $id), $configuration);
         if (count($objects) == 0) {
-            return ['success' => false];
+            return ['success' => false, "message" => "Object(s) to update not found"];
         }
         $object = reset($objects);
         if ($status == PropertyStatusHelper::STATUS_ERROR && $this->logger instanceof LoggerInterface) {
