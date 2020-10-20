@@ -88,7 +88,7 @@ class IntegrationConfigurationRepository
     {
         $configurationListing = $this->getOrderedListing();
         $configurationListing
-            ->setCondition("integrationId IN ('" . implode("','", $integrationIds) . "')")
+            ->setCondition("integrationId IN (?)", implode(",", $integrationIds))
             ->load();
         $configurationListing->getQuery();
 
