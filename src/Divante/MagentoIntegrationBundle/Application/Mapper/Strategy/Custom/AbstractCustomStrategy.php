@@ -2,14 +2,13 @@
 
 namespace Divante\MagentoIntegrationBundle\Application\Mapper\Strategy\Custom;
 
-use Divante\MagentoIntegrationBundle\Application\Mapper\Strategy\Custom\CustomStrategyInterface;
 use Divante\MagentoIntegrationBundle\Application\Mapper\Strategy\MapStrategyInterface;
 use Pimcore\Model\Webservice\Data\DataObject\Element;
 use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * Class AbstractCustomStrategy
- * @package Divante\MagentoIntegrationBundle\Domain\Mapper\Strategy\Custom
+ * @package Divante\MagentoIntegrationBundle\Application\Mapper\Strategy\Custom
  */
 abstract class AbstractCustomStrategy implements CustomStrategyInterface, MapStrategyInterface
 {
