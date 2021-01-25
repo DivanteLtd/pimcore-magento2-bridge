@@ -52,3 +52,13 @@ magento_integration_mapper.remove-row:
     resource: "@DivanteMagentoIntegrationBundle/Action/Mapper/RemoveRowAction.php"
     type: annotation
     prefix: /admin
+
+magento_integration_mapper.export:
+    resource: "@DivanteMagentoIntegrationBundle/Action/Mapper/ExportAction.php"
+    type: annotation
+    prefix: /admin
+
+magento_integration_mapper.import:
+    resource: "@DivanteMagentoIntegrationBundle/Action/Mapper/ImportAction.php"
+    prefix: /admin
+    type: annotation
