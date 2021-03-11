@@ -21,9 +21,9 @@ interface ObjectValidationRuleInterface
 
     /**
      * Returns Validator priority 0 - highest
-     * @return int
+     * @return string
      */
-    public static function getPriority(): int;
+    public static function getPriority(): string;
 
     /**
      * @return bool

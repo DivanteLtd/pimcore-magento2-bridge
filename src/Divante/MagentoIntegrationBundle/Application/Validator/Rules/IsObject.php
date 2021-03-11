@@ -30,9 +30,9 @@ class IsObject implements ObjectValidationRuleInterface
     /**
      * @inheritDoc
      */
-    public static function getPriority(): int
+    public static function getPriority(): string
     {
-        return 10;
+        return "10";
     }
 
     /**

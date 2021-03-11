@@ -100,9 +100,9 @@ class ConfigurableProductValidation implements ObjectValidationRuleInterface
     /**
      * @inheritDoc
      */
-    public static function getPriority(): int
+    public static function getPriority(): string
     {
-        return 0;
+        return "0";
     }
 
     /**
