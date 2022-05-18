@@ -343,8 +343,8 @@ class MapperService
                 $element = $object->elements->{$attribute};
                 unset($object->elements->{$attribute});
                 $object->elements->{$attribute . '_conf'} = $element;
-                $modifiedAttributesArray[]                = $attribute . '_conf';
             }
+            $modifiedAttributesArray[] = $attribute . '_conf';
         }
         $modifiedAttributes = implode(',', $modifiedAttributesArray);
         if (!$object->properties) {

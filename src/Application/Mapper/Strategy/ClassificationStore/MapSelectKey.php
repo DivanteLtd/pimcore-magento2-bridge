@@ -40,9 +40,6 @@ class MapSelectKey extends AbstractMapKeyStrategy
     ): void {
         $names         = $this->mapStringNames($attribute['name'], $group['name'], $arrayMapping);
         $valuesWithKey = $this->getFieldValue($field, $attribute, $language);
-        if (!$valuesWithKey) {
-            return;
-        }
         $parsedData = [
             'type'  => MapSelectValue::TYPE,
             'label' => $this->getLabel($field->getTitle(), $language),
