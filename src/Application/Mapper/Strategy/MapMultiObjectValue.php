@@ -33,9 +33,6 @@ class MapMultiObjectValue extends AbstractMapStrategy
      */
     public function map(Element $field, \stdClass &$obj, array $arrayMapping, $language, $definition, $outObject): void
     {
-        if (!$field->value) {
-            return;
-        }
         $names      = $this->getFieldNames($field, $arrayMapping);
         $parsedData = [
             'type'  => self::TYPE,

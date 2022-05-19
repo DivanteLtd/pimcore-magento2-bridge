@@ -31,9 +31,6 @@ class MapMultiSelectValue extends MapTextValue
      */
     public function map(Element $field, \stdClass &$obj, array $arrayMapping, $language, $definition, $outObject): void
     {
-        if (!$field->value) {
-            return;
-        }
         $names = $this->getFieldNames($field, $arrayMapping);
         $parsedData = [
             'value' => $this->getFieldValues($field, $language),
@@ -55,13 +52,15 @@ class MapMultiSelectValue extends MapTextValue
     protected function getFieldValues(Element $field, $language)
     {
         $values = [];
-        foreach ($field->value as $value) {
-            $key = is_array($value) ? $value['key'] : $value;
-            $values[] =
-                (object)[
-                    'key'   => $this->translator->trans($key, [], null, $language),
-                    'value' => is_array($value) ? $value['value'] : $value
-                ];
+        if (is_iterable($field->value)) {
+            foreach ($field->value as $value) {
+                $key = is_array($value) ? $value['key'] : $value;
+                $values[] =
+                    (object)[
+                        'key'   => $this->translator->trans($key, [], null, $language),
+                        'value' => is_array($value) ? $value['value'] : $value
+                    ];
+            }
         }
         return $values;
     }
