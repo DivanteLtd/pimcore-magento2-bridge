@@ -46,7 +46,7 @@ class MapSelectKey extends AbstractMapKeyStrategy
             'value' => $valuesWithKey
         ];
         
-        if (count($valuesWithKey) == 1) {
+        if ($field->getType() == 'select') {
             $parsedData['value'] = $parsedData['value'][0];
             $parsedData['type']  = self::SINGLE_TYPE;
         } else {
