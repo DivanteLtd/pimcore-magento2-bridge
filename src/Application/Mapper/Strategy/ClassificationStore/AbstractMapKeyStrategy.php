@@ -71,7 +71,9 @@ abstract class AbstractMapKeyStrategy implements MapKeyStrategyInterface
         } else {
             $names = [$name];
         }
-        return str_replace(' ', '', str_replace('-', '_', array_map('strtolower', $names)));
+        $code = str_replace(' ', '', str_replace('-', '_', array_map('strtolower', $names)));
+        $code = str_replace(['å','ä'], 'a', str_replace('ö', 'o', $code));
+        return $code;
     }
 
     /**
